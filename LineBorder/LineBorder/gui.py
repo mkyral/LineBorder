@@ -1,19 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-import math
-from gimpfu import *
-
+#
+#
+# Copyright, V2.2
 #
 # Marian Kyral (mkyral@email.cz)
-# (C) 2006, 2008, 2010, Frydek-Mistek, Czech
+# (C) 2006, 2008, 2010, Frydek-Mistek, Czech Republic
 #
 # This plugin was tested with Gimp 2.6
 #
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -22,7 +21,24 @@ from gimpfu import *
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+#
+# Changelog
+#
+# 28.10.2010 - v2.2
+# * ADD: allow to put sign/watermark inside the image
+#
+# 25.10.2010 - v2.1
+# * CHANGE: use own glade dialog
+# * CHANGE: remember plugin setting between sessions
+# * CHANGE: Text could have more lines
+# * ADD: posibility to place text on sides and on upper border
+# * ADD: sizes could be in pixels or in percents
+# * ADD: corner rounding
+
+import math
+from gimpfu import *
 
 import os
 import ConfigParser
@@ -61,7 +77,6 @@ class LineBorderApp():
       self.drawable = Drawable
       self.dialog = builder.get_object("window1")
       self.about = builder.get_object("aboutdialog1")
-      self.alert = builder.get_object("alertdialog")
 
       self.border_width = builder.get_object("spinbutton_width")
       self.border_width_units = builder.get_object("combobox_units_width")
@@ -104,6 +119,24 @@ class LineBorderApp():
       self.label_border_color = builder.get_object("label13")
       self.label_rotate_text = builder.get_object("label24")
 
+      self.wm_type_text = builder.get_object('radiobutton_wm_text')
+      self.wm_type_image = builder.get_object('radiobutton_wm_image')
+      self.wm_opacity = builder.get_object('spinbutton_wm_opacity')
+      self.wm_rotation = builder.get_object('spinbutton_wm_rotation')
+      self.wm_position = builder.get_object('combobox_wm_position')
+      self.wm_dist_to_border = builder.get_object('spinbutton_wm_dist_to_border')
+      self.wm_dist_to_border_units = builder.get_object('combobox_wm_dist_to_border_units')
+      self.wm_font = builder.get_object('fontbutton_wm_font')
+      self.wm_justify = builder.get_object('combobox_wm_justify')
+      self.wm_color = builder.get_object('colorbutton_wm_color')
+      self.wm_text = builder.get_object('textview_wm_text')
+      self.wm_image_path = builder.get_object('entry_wm_image_path')
+
+      self.label_wm_font = builder.get_object('label_wm_font')
+      self.label_wm_justify = builder.get_object('label_wm_justify')
+      self.label_wm_color = builder.get_object('label_wm_color')
+      self.button_wm_file_open = builder.get_object('button_wm_file_open')
+
       # Config file
       self.config_dir = gimp.directory
       self.config_file = os.path.join(self.config_dir, "LineBorder.cfg")
@@ -115,6 +148,8 @@ class LineBorderApp():
         self.border_inner_size.set_value(1)
         self.border_dist_to_image.set_value(1)
         self.border_dist_to_border.set_value(1)
+        self.wm_opacity.set_value(25)
+        self.wm_dist_to_border.set_value(5)
 
       self.dialog.show()
 
@@ -155,6 +190,61 @@ class LineBorderApp():
       else:
         self.rotate_text.set_sensitive(False)
         self.label_rotate_text.set_sensitive(False)
+
+  def on_radiobutton_wm_text_toggled(self, widget):
+      if self.wm_type_text.get_active() == True:
+         self.wm_image_path.set_sensitive(False)
+         self.button_wm_file_open.set_sensitive(False)
+
+         self.wm_font.set_sensitive(True)
+         self.wm_justify.set_sensitive(True)
+         self.wm_color.set_sensitive(True)
+         self.wm_text.set_sensitive(True)
+         self.label_wm_font.set_sensitive(True)
+         self.label_wm_justify.set_sensitive(True)
+         self.label_wm_color.set_sensitive(True)
+      else:
+         self.wm_image_path.set_sensitive(True)
+         self.button_wm_file_open.set_sensitive(True)
+
+         self.wm_font.set_sensitive(False)
+         self.wm_justify.set_sensitive(False)
+         self.wm_color.set_sensitive(False)
+         self.wm_text.set_sensitive(False)
+         self.label_wm_font.set_sensitive(False)
+         self.label_wm_justify.set_sensitive(False)
+         self.label_wm_color.set_sensitive(False)
+
+  def on_button_wm_file_open_clicked(self, widget):
+      chooser = gtk.FileChooserDialog (
+                      title='Open image',
+                      action=gtk.FILE_CHOOSER_ACTION_OPEN,
+                      buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK)
+                    )
+
+      if self.wm_image_path.get_text():
+        chooser.set_filename(self.wm_image_path.get_text())
+
+      filter = gtk.FileFilter()
+      filter.set_name("Images (*.png, *.jpg, *.gif, *.tif, *.svg, *.xpm)")
+      filter.add_mime_type("image/png")
+      filter.add_mime_type("image/jpeg")
+      filter.add_mime_type("image/gif")
+      filter.add_mime_type("image/svg")
+      filter.add_pattern("*.png")
+      filter.add_pattern("*.jpg")
+      filter.add_pattern("*.gif")
+      filter.add_pattern("*.tif")
+      filter.add_pattern("*.xpm")
+      filter.add_pattern("*.svg")
+      chooser.add_filter(filter)
+
+      response = chooser.run()
+      if response == gtk.RESPONSE_OK:
+          self.wm_image_path.set_text(chooser.get_filename())
+      elif response == gtk.RESPONSE_CANCEL:
+          pass
+      chooser.destroy()
 
   def on_button_ok_clicked(self, widget):
       self.call_LineBorder()
@@ -199,10 +289,19 @@ class LineBorderApp():
       blue_hexa = inColor.to_string()[9:11]
       return (self.hex2dec(red_hexa), self.hex2dec(green_hexa), self.hex2dec(blue_hexa))
 
+  # get watermark type (text or image)
+  def get_wm_type(self):
+      if self.wm_type_text.get_active() == True :
+        return "text"
+      else :
+        return "image"
+
   # Extract parameters, call main function
   def call_LineBorder(self):
       image = self.image
       drawable = self.drawable
+
+      # Border tab
       width = self.border_width.get_value()
       width_units = self.border_width_units.get_active_text()
       height = self.border_height.get_value()
@@ -231,6 +330,7 @@ class LineBorderApp():
       flatten_image = self.flatten_image.get_active()
       work_on_copy = self.work_on_copy.get_active()
 
+      # Text tab
       left_text_font = self.extract_font_name(self.left_text_font.get_font_name())
       left_text_font_size = self.extract_font_size(self.left_text_font.get_font_name())
       left_text_justify = self.left_text_justify.get_active_text()
@@ -246,6 +346,20 @@ class LineBorderApp():
       text_position = self.text_position.get_active_text()
       rotate_text = self.rotate_text.get_active()
 
+      # Watermark tab
+      wm_type = self.get_wm_type()
+      wm_opacity = self.wm_opacity.get_value()
+      wm_rotation = self.wm_rotation.get_value()
+      wm_position = self.wm_position.get_active_text()
+      wm_dist_to_border = self.wm_dist_to_border.get_value()
+      wm_dist_to_border_units = self.wm_dist_to_border_units.get_active_text()
+      wm_font_name = self.extract_font_name(self.wm_font.get_font_name())
+      wm_font_size = self.extract_font_size(self.wm_font.get_font_name())
+      wm_justify = self.wm_justify.get_active_text()
+      wm_color =  self.extract_color(self.wm_color.get_color())
+      wm_text = self.extract_text(self.wm_text)
+      wm_image_path = self.wm_image_path.get_text()
+
       self.save_config( 'DEFAULT', width, width_units,
                         height, height_units,
                         ext_text, ext_text_units,
@@ -260,7 +374,18 @@ class LineBorderApp():
                         center_text_font, center_text_font_size, center_text_justify, center_text,
                         right_text_font, right_text_font_size, right_text_justify, right_text,
                         text_position, rotate_text,
-                        flatten_image, work_on_copy)
+                        flatten_image, work_on_copy,
+                        wm_type, wm_opacity, wm_rotation, wm_position,
+                        wm_dist_to_border, wm_dist_to_border_units,
+                        wm_font_name, wm_font_size,
+                        wm_justify, wm_color, wm_text, wm_image_path
+                      )
+
+      if wm_type == 'image' and wm_image_path :
+        if not os.path.exists(wm_image_path):
+          print "Cannot find the image file: " + wm_image_path
+          self.on_error("File does not exists!", "The watermark image file: \n\n" + wm_image_path + "\n\ndoes not exists or is not readable!\n")
+          return
 
       LineBorder ( image, drawable,
                    width, width_units,
@@ -277,7 +402,11 @@ class LineBorderApp():
                    center_text_font, center_text_font_size, center_text_justify, center_text,
                    right_text_font, right_text_font_size, right_text_justify, right_text,
                    text_position, rotate_text,
-                   flatten_image, work_on_copy
+                   flatten_image, work_on_copy,
+                   wm_type, wm_opacity, wm_rotation, wm_position,
+                   wm_dist_to_border, wm_dist_to_border_units,
+                   wm_font_name, wm_font_size,
+                   wm_justify, wm_color, wm_text, wm_image_path
                  )
       gtk.main_quit()
 
@@ -286,7 +415,8 @@ class LineBorderApp():
       sec_color = profile +':' + 'color'
       sec_text = profile +':' + 'text'
       sec_general = profile +':' + 'general'
-      return sec_border, sec_color, sec_text, sec_general
+      sec_wm = profile +':' + 'watermark'
+      return sec_border, sec_color, sec_text, sec_general, sec_wm
 
   # Save plugin options for nex time
   def save_config(self, profile, width, width_units,
@@ -303,9 +433,14 @@ class LineBorderApp():
                         center_text_font, center_text_font_size, center_text_justify, center_text,
                         right_text_font, right_text_font_size, right_text_justify, right_text,
                         text_position, rotate_text,
-                        flatten_image, work_on_copy):
+                        flatten_image, work_on_copy,
+                        wm_type, wm_opacity, wm_rotation, wm_position,
+                        wm_dist_to_border, wm_dist_to_border_units,
+                        wm_font_name, wm_font_size,
+                        wm_justify, wm_color, wm_text, wm_image_path
+                 ):
 
-      sec_border, sec_color, sec_text, sec_general = self.profile_sections(profile)
+      sec_border, sec_color, sec_text, sec_general, sec_wm = self.profile_sections(profile)
 
       cfg = ConfigParser.RawConfigParser()
       cfg.add_section(sec_border)
@@ -353,9 +488,27 @@ class LineBorderApp():
       cfg.set (sec_text, 'right_text', right_text.replace('\n','.\n'))
       cfg.set (sec_text, 'text_position', text_position)
       cfg.set (sec_text, 'rotate_text', rotate_text)
+
       cfg.add_section(sec_general)
       cfg.set (sec_general, 'flatten_image', flatten_image)
       cfg.set (sec_general, 'work_on_copy', work_on_copy)
+
+      cfg.add_section(sec_wm)
+      cfg.set (sec_wm, 'wm_type', wm_type)
+      cfg.set (sec_wm, 'wm_opacity', wm_opacity)
+      cfg.set (sec_wm, 'wm_rotation', wm_rotation)
+      cfg.set (sec_wm, 'wm_position', wm_position)
+      cfg.set (sec_wm, 'wm_dist_to_border', wm_dist_to_border)
+      cfg.set (sec_wm, 'wm_dist_to_border_units', wm_dist_to_border_units)
+      cfg.set (sec_wm, 'wm_font_name', wm_font_name)
+      cfg.set (sec_wm, 'wm_font_size', wm_font_size)
+      cfg.set (sec_wm, 'wm_justify', wm_justify)
+      cfg.set (sec_wm, 'wm_color.r', wm_color[0])
+      cfg.set (sec_wm, 'wm_color.g', wm_color[1])
+      cfg.set (sec_wm, 'wm_color.b', wm_color[2])
+      cfg.set (sec_wm, 'wm_text', wm_text.replace('\n','.\n'))
+      cfg.set (sec_wm, 'wm_image_path', wm_image_path)
+
       with open(self.config_file, 'wb') as configfile:
           cfg.write(configfile)
 
@@ -388,11 +541,12 @@ class LineBorderApp():
               #print "ERROR: cannot read from file " + self.config_file
               #return False
 
-          sec_border, sec_color, sec_text, sec_general = self.profile_sections(profile)
+          sec_border, sec_color, sec_text, sec_general, sec_wm = self.profile_sections(profile)
 
           cfg = ConfigParser.RawConfigParser()
           cfg.read(self.config_file)
 
+          # Section: Border
           try:
             try:
               width = cfg.getfloat(sec_border, 'width')
@@ -527,6 +681,7 @@ class LineBorderApp():
           except ConfigParser.NoSectionError, err:
             print "Missing section in config file. %s" %err
 
+          # Section: Text
           try:
             # Left text
             try:
@@ -621,7 +776,11 @@ class LineBorderApp():
               pass
             except ValueError, err:
               pass
+          except ConfigParser.NoSectionError, err:
+            print "Missing section in config file. %s" %err
 
+          # Section: General
+          try:
             try:
               flatten_image = cfg.getboolean(sec_general, 'flatten_image')
               self.flatten_image.set_active(flatten_image)
@@ -637,6 +796,100 @@ class LineBorderApp():
               pass
             except ValueError, err:
               pass
+          except ConfigParser.NoSectionError, err:
+            print "Missing section in config file. %s" %err
+
+          # Section:Watermark
+          try:
+            try:
+              wm_type = cfg.get(sec_wm, 'wm_type')
+              if wm_type == 'text':
+                self.wm_type_text.set_active(True)
+                self.on_radiobutton_wm_text_toggled(self.dialog) # trigger call on_radiobutton_wm_text_toggled()
+              else:
+                self.wm_type_image.set_active(True)
+            except ConfigParser.NoOptionError, err:
+              pass
+            except ValueError, err:
+              pass
+
+            try:
+              wm_opacity = cfg.getfloat(sec_wm, 'wm_opacity')
+              self.wm_opacity.set_value(wm_opacity)
+            except ConfigParser.NoOptionError, err:
+              pass
+            except ValueError, err:
+              pass
+
+            try:
+              wm_rotation = cfg.getfloat(sec_wm, 'wm_rotation')
+              self.wm_rotation.set_value(wm_rotation)
+            except ConfigParser.NoOptionError, err:
+              pass
+            except ValueError, err:
+              pass
+
+            try:
+              wm_position = cfg.get(sec_wm, 'wm_position')
+              self.set_combobox(self.wm_position, wm_position)
+            except ConfigParser.NoOptionError, err:
+              pass
+            except ValueError, err:
+              pass
+
+            try:
+              wm_dist_to_border = cfg.getfloat(sec_wm, 'wm_dist_to_border')
+              wm_dist_to_border_units = cfg.get(sec_wm, 'wm_dist_to_border_units')
+              self.wm_dist_to_border.set_value(wm_dist_to_border)
+              self.set_combobox(self.wm_dist_to_border_units, wm_dist_to_border_units)
+            except ConfigParser.NoOptionError, err:
+              pass
+            except ValueError, err:
+              pass
+
+            try:
+              wm_font_name = cfg.get(sec_wm, 'wm_font_name')
+              wm_font_size = cfg.getfloat(sec_wm, 'wm_font_size')
+              self.wm_font.set_font_name(wm_font_name + " " + str(wm_font_size))
+            except ConfigParser.NoOptionError, err:
+              pass
+            except ValueError, err:
+              pass
+
+            try:
+              wm_justify = cfg.get(sec_wm, 'wm_justify')
+              self.set_combobox(self.wm_justify, wm_justify)
+            except ConfigParser.NoOptionError, err:
+              pass
+            except ValueError, err:
+              pass
+
+            try:
+              wm_color_r = cfg.getint(sec_wm, 'wm_color.r')
+              wm_color_g = cfg.getint(sec_wm, 'wm_color.g')
+              wm_color_b = cfg.getint(sec_wm, 'wm_color.b')
+              self.wm_color.set_color(gtk.gdk.Color(wm_color_r * 257, wm_color_g * 257, wm_color_b * 257))
+            except ConfigParser.NoOptionError, err:
+              pass
+            except ValueError, err:
+              pass
+
+            try:
+              wm_text = cfg.get(sec_wm, 'wm_text')
+              self.set_text(self.wm_text, wm_text.replace('.\n','\n'))
+            except ConfigParser.NoOptionError, err:
+              pass
+            except ValueError, err:
+              pass
+
+            try:
+              wm_image_path = cfg.get(sec_wm, 'wm_image_path')
+              self.wm_image_path.set_text(wm_image_path)
+            except ConfigParser.NoOptionError, err:
+              pass
+            except ValueError, err:
+              pass
+
           except ConfigParser.NoSectionError, err:
             print "Missing section in config file. %s" %err
 

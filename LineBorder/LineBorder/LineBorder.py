@@ -1,21 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-import math
-from gimpfu import *
-
 #
-# Copyright, V2.1
+#
+# Copyright, V2.2
 #
 # Marian Kyral (mkyral@email.cz)
-# (C) 2006, 2008, 2010, Frydek-Mistek, Czech
+# (C) 2006, 2008, 2010, Frydek-Mistek, Czech Republic
 #
 # This plugin was tested with Gimp 2.6
 #
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -24,9 +21,13 @@ from gimpfu import *
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
 #
 # Changelog
+#
+# 28.10.2010 - v2.2
+# * ADD: allow to put sign/watermark inside the image
 #
 # 25.10.2010 - v2.1
 # * ADD: Units could be pixels or %
@@ -52,6 +53,10 @@ from gimpfu import *
 # * ADD: Text in the border
 #
 
+
+import math
+from gimpfu import *
+
 #
 # Helper functions
 #
@@ -76,6 +81,9 @@ def recalc_units (InUnit, InValue, InBase):
         return 0
       else :
         return bigger(round((InBase * InValue / 100)), 1)
+
+def degree2radians(degree):
+    return degree * 0.0174532925
 #
 # Define the function
 #
@@ -94,7 +102,12 @@ def LineBorder (InImage, InLayer,
                 InCenterFont, InCenterTextSize, InCenterTextJustify, InCenterText,
                 InRightFont, InRightTextSize, InRightTextJustify, InRightText,
                 InTextPosition, InRotateText,
-                InFlattenImage, InWorkOnCopy) :
+                InFlattenImage, InWorkOnCopy,
+                InWmType, InWmOpacity, InWmRotation, InWmPosition,
+                InWmDistToBorder, InWmDistToBorderUnits,
+                InWmFontName, InWmFontSize,
+                InWmJustify, InWmColor, InWmText, InWmImagePath
+               ) :
 #
 # Inicialize variables
 #
@@ -160,6 +173,15 @@ def LineBorder (InImage, InLayer,
   else :
     RightTextJustify = TEXT_JUSTIFY_FILL
 
+  if InWmJustify == "Center" :
+    WmJustify = TEXT_JUSTIFY_CENTER
+  elif InWmJustify == "Left" :
+    WmJustify = TEXT_JUSTIFY_LEFT
+  elif InWmJustify == "Right" :
+    WmJustify = TEXT_JUSTIFY_RIGHT
+  else :
+    WmJustify = TEXT_JUSTIFY_FILL
+
   if InWorkOnCopy :
     TheImage = InImage.duplicate()
     pdb.gimp_image_undo_disable(TheImage)
@@ -190,6 +212,8 @@ def LineBorder (InImage, InLayer,
   total_border_height = recalc_units (InOuterTotalHeightUnit, InOuterTotalHeight, TheHeight)
   image_width = TheWidth + (2 * total_border_width)
   image_height = TheHeight + (2 * total_border_height)
+
+  wm_dist_to_border = recalc_units (InWmDistToBorderUnits, InWmDistToBorder, TheWidth)
 
   TheBackupColor = pdb.gimp_context_get_foreground()
 
@@ -410,6 +434,65 @@ def LineBorder (InImage, InLayer,
     pdb.gimp_layer_set_offsets( RightTextLayer, x, y)
     pdb.gimp_layer_resize_to_image_size(RightTextLayer)
 
+#
+# WaterMark
+#
+  if ( InWmType == "text" and InWmText ) or ( InWmType == "image" and InWmImagePath ) :
+    if ( InWmType == "text" and InWmText ) :
+      # render text in new layer
+      pdb.gimp_palette_set_foreground(InWmColor)
+      WmLayer = pdb.gimp_text_layer_new(TheImage, InWmText, InWmFontName, InWmFontSize, PIXELS)
+      pdb.gimp_image_add_layer(TheImage, WmLayer, -1)
+      pdb.gimp_text_layer_set_justification(WmLayer, RightTextJustify)
+      # rotate text
+      if InWmRotation != 0 :
+        WmLayer = pdb.gimp_drawable_transform_rotate(WmLayer, degree2radians(InWmRotation), True, 0, 0, TRANSFORM_FORWARD, INTERPOLATION_CUBIC, False, 3, TRANSFORM_RESIZE_ADJUST )
+      else :
+        pdb.gimp_text_layer_set_antialias(WmLayer, True)
+    elif ( InWmType == "image" and InWmImagePath ) :
+      # Load an image as a new layer
+      WmLayer = pdb.gimp_file_load_layer(TheImage, InWmImagePath)
+      pdb.gimp_image_add_layer(TheImage, WmLayer, -1)
+      if InWmRotation != 0 :
+        WmLayer = pdb.gimp_drawable_transform_rotate(WmLayer, degree2radians(InWmRotation), True, 0, 0, TRANSFORM_FORWARD, INTERPOLATION_CUBIC, False, 3, TRANSFORM_RESIZE_ADJUST )
+
+    # get layer size
+    WmLayerWidth = pdb.gimp_drawable_width(WmLayer)
+    WmLayerHeight = pdb.gimp_drawable_height(WmLayer)
+
+    # move text to correct position
+    pdb.gimp_layer_resize(WmLayer, WmLayerWidth, WmLayerHeight, 0, 0)
+    if   InWmPosition == "Upper-Left":
+      x = total_border_width + wm_dist_to_border
+      y = total_border_height + wm_dist_to_border
+    elif InWmPosition == "Upper-Center":
+      x = total_border_width + (TheWidth / 2) - (WmLayerWidth / 2)
+      y = total_border_height + wm_dist_to_border
+    elif InWmPosition == "Upper-Right":
+      x = total_border_width + TheWidth - WmLayerWidth - wm_dist_to_border
+      y = total_border_height + wm_dist_to_border
+    if   InWmPosition == "Middle-Left":
+      x = total_border_width + wm_dist_to_border
+      y = total_border_height + (TheHeight / 2) - (WmLayerHeight / 2)
+    elif InWmPosition == "Center":
+      x = total_border_width + (TheWidth / 2) - (WmLayerWidth / 2)
+      y = total_border_height + (TheHeight / 2) - (WmLayerHeight / 2)
+    elif InWmPosition == "Middle-Right":
+      x = total_border_width + TheWidth - WmLayerWidth - wm_dist_to_border
+      y = total_border_height + (TheHeight / 2) - (WmLayerHeight / 2)
+    if   InWmPosition == "Bottom-Left":
+      x = total_border_width + wm_dist_to_border
+      y = total_border_height + TheHeight - WmLayerHeight - wm_dist_to_border
+    elif InWmPosition == "Bottom-Center":
+      x = total_border_width + (TheWidth / 2) - (WmLayerWidth / 2)
+      y = total_border_height + TheHeight - WmLayerHeight - wm_dist_to_border
+    elif InWmPosition == "Bottom-Right":
+      x = total_border_width + TheWidth - WmLayerWidth - wm_dist_to_border
+      y = total_border_height + TheHeight - WmLayerHeight - wm_dist_to_border
+
+    pdb.gimp_layer_set_offsets( WmLayer, x, y)
+    pdb.gimp_layer_resize_to_image_size(WmLayer)
+    pdb.gimp_layer_set_opacity(WmLayer, InWmOpacity)
 #
 # Finish work
 #
