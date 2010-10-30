@@ -53,6 +53,14 @@
 # * ADD: Text in the border
 #
 
+import os, locale, gettext
+
+APP = "LineBorder"               #name of the translation file
+PO_DIR = os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)),APP), 'locale')
+
+locale.setlocale(locale.LC_ALL, '')
+gettext.install(APP, PO_DIR, unicode=True)
+
 # create an output function that redirects to gimp's Error Console
 def gprint( text ):
   pdb.gimp_message(text)
@@ -70,17 +78,16 @@ if __name__ == "__main__":
   from gimpfu import *
   register(
     "python-fu-Line-Border",
-    "Generate a line border around an image and optionaly place text on borders, inside the image.",
-    "Line border 2.2",
+    _("Generate a line border around an image and optionaly place text on borders and inside the image."),
+    _("Generate a line border around an image and optionaly place text on borders and inside the image."),
     "Marian Kyral (mkyral@email.cz)",
-    "Copyright 2010, Marian Kyral, Czech",
+    "Copyright 2010, Marian Kyral, Czech Republic",
     "28.10.2010",
-    "<Image>/Filters/Decor/Borders/Line Border 2",
+    "<Image>/Filters/Decor/Borders/Line border 2",
     "RGB*,GRAY*",
     [],
     [],
-    plugin_main
-    #  , menu="<Image>/Filters/Decor/Borders/Line Border 2"
+    plugin_main #, menu="<Image>/Filters/Decor/Borders"
     )
 
   main()

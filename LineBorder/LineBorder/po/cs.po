@@ -1,0 +1,395 @@
+# Czech translations for PACKAGE package.
+# Copyright (C) 2010 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+#  <mkyral@email.cz>, 2010.
+# Marian Kyral <mkyral@email.cz>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-30 10:47+0200\n"
+"PO-Revision-Date: 2010-10-30 10:41+0200\n"
+"Last-Translator: Marian Kyral <mkyral@email.cz>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Lokalize 1.1\n"
+
+#: ../../kym-Border.py:81 ../../kym-Border.py:82
+msgid ""
+"Generate a line border around an image and optionaly place text on borders "
+"and inside the image."
+msgstr "Vytvoří rámeček okolo obrázku včetně textu v rámečku a v obrázku."
+
+#: ../LineBorder.py:77 ../LineBorder.glade.h:83
+msgid "pixels"
+msgstr "body"
+
+#: ../LineBorder.py:139 ../LineBorder.glade.h:37
+msgid "Inner"
+msgstr "Vnitřní"
+
+#: ../LineBorder.py:139 ../LineBorder.py:144 ../LineBorder.glade.h:11
+msgid "Both"
+msgstr "Obě"
+
+#: ../LineBorder.py:144 ../LineBorder.glade.h:48
+msgid "Outer"
+msgstr "Vnější"
+
+#: ../LineBorder.py:149 ../LineBorder.py:158 ../LineBorder.py:167
+#: ../LineBorder.py:176 ../LineBorder.py:477 ../LineBorder.glade.h:16
+msgid "Center"
+msgstr "Uprostřed"
+
+#. rotate text
+#: ../LineBorder.py:151 ../LineBorder.py:160 ../LineBorder.py:169
+#: ../LineBorder.py:178 ../LineBorder.py:244 ../LineBorder.py:339
+#: ../LineBorder.py:355 ../LineBorder.py:375 ../LineBorder.py:391
+#: ../LineBorder.py:411 ../LineBorder.py:427 ../gui.py:183
+#: ../LineBorder.glade.h:40
+msgid "Left"
+msgstr "Vlevo"
+
+#: ../LineBorder.py:153 ../LineBorder.py:162 ../LineBorder.py:171
+#: ../LineBorder.py:180 ../LineBorder.py:339 ../LineBorder.py:375
+#: ../LineBorder.py:411 ../gui.py:183 ../LineBorder.glade.h:51
+msgid "Right"
+msgstr "Vpravo"
+
+#: ../LineBorder.py:228
+msgid "Layer With Border"
+msgstr "Vrstva s rámečkem"
+
+#. extend the bottom border
+#: ../LineBorder.py:236 ../LineBorder.py:349 ../LineBorder.py:385
+#: ../LineBorder.py:421 ../LineBorder.glade.h:12
+msgid "Bottom"
+msgstr "Dole"
+
+#: ../LineBorder.py:240 ../LineBorder.py:352 ../LineBorder.py:388
+#: ../LineBorder.py:424 ../LineBorder.glade.h:75
+msgid "Upper"
+msgstr "Nahoře"
+
+#: ../LineBorder.py:465 ../LineBorder.glade.h:77
+msgid "Upper-Left"
+msgstr "Vlevo nahoře"
+
+#: ../LineBorder.py:468 ../LineBorder.glade.h:76
+msgid "Upper-Center"
+msgstr "Nahoře uprostřed"
+
+#: ../LineBorder.py:471 ../LineBorder.glade.h:78
+msgid "Upper-Right"
+msgstr "Vpravo nahoře"
+
+#: ../LineBorder.py:474 ../LineBorder.glade.h:44
+msgid "Middle-Left"
+msgstr "Vlevo uprostřed"
+
+#: ../LineBorder.py:480 ../LineBorder.glade.h:45
+msgid "Middle-Right"
+msgstr "Vpravo uprostřed"
+
+#: ../LineBorder.py:483 ../LineBorder.glade.h:14
+msgid "Bottom-Left"
+msgstr "Vlevo dole"
+
+#: ../LineBorder.py:486 ../LineBorder.glade.h:13
+msgid "Bottom-Center"
+msgstr "Dole uprostřed"
+
+#: ../LineBorder.py:489 ../LineBorder.glade.h:15
+msgid "Bottom-Right"
+msgstr "Vpravo dole"
+
+#: ../gui.py:64
+msgid "Cannot find the glade file: "
+msgstr "Nelze najít glade soubor:"
+
+#: ../gui.py:65
+msgid "No dialog file found!"
+msgstr "Soubor rozhraní nenalezen!"
+
+#: ../gui.py:65
+msgid ""
+"Sorry, the dialog file LineBorder.glade was not found.\n"
+"Check your installation please!"
+msgstr ""
+"Lituji, soubor rozhraní LineBorder.glade nebyl nalezen.\n"
+"Zkontrolujte svou instalaci prosím!"
+
+#: ../gui.py:216
+msgid "Open image"
+msgstr "Otevřít obrázek"
+
+#: ../gui.py:225
+msgid "Images"
+msgstr "Obrázky"
+
+#: ../gui.py:382
+msgid "Cannot find the image file:"
+msgstr "Soubor s obrázkem nebyl nalezen:"
+
+#: ../gui.py:383
+msgid "File does not exists!"
+msgstr "Soubor neexistuje!"
+
+#: ../gui.py:383
+msgid "The watermark image file:"
+msgstr "Soubor vodoznaku:"
+
+#: ../gui.py:383
+msgid "does not exists or is not readable!\n"
+msgstr "neexistuje nebo nelze číst!\n"
+
+#: ../gui.py:645 ../gui.py:678 ../gui.py:776 ../gui.py:796 ../gui.py:890
+#, python-format
+msgid "Missing section in config file. %s"
+msgstr "Chybějící sekce v konfiguračním souboru. %s"
+
+#: ../gui.py:895
+#, python-format
+msgid "Cannot parse configuration file. %s"
+msgstr "Konfigurační soubor nelze parsovat. %s"
+
+#: ../gui.py:896
+msgid "Configuration file error"
+msgstr "Chyba konfiguračního souboru"
+
+#: ../gui.py:896
+msgid "Cannot parse configuration file. "
+msgstr "Nelze parsovat konfigurační soubor."
+
+#: ../gui.py:899
+msgid "Configuration file loading error"
+msgstr "Problém při nahrávání konfiguračního souboru."
+
+#: ../gui.py:899
+msgid "Problem opening configuration file."
+msgstr "Problém s otevřením konfiguračního souboru."
+
+#: ../LineBorder.glade.h:2
+#, no-c-format
+msgid "%"
+msgstr "%"
+
+#: ../LineBorder.glade.h:3
+msgid "(c) 2010 Mari&#xE1;n Kyral"
+msgstr "(c) 2010 Marián Kyral"
+
+#: ../LineBorder.glade.h:4
+msgid "<b>Center / Middle text</b>"
+msgstr "<b>Text: Uprostřed</b>"
+
+#: ../LineBorder.glade.h:5
+msgid "<b>Left / Upper text</b>"
+msgstr "<b>Text: Vlevo nebo nahoře</b>"
+
+#: ../LineBorder.glade.h:6
+msgid "<b>Right / Bottom text</b>"
+msgstr "<b>Text: Vpravo nebo dole</b>"
+
+#: ../LineBorder.glade.h:7
+msgid "About"
+msgstr "O programu"
+
+#: ../LineBorder.glade.h:8
+msgid "Block"
+msgstr "Blok"
+
+#: ../LineBorder.glade.h:9
+msgid "Border"
+msgstr "Rámeček"
+
+#: ../LineBorder.glade.h:10
+msgid "Border color:"
+msgstr "Barva rámečku:"
+
+#: ../LineBorder.glade.h:17
+msgid "Color:"
+msgstr "Barva:"
+
+#: ../LineBorder.glade.h:18
+msgid "Distance to border:"
+msgstr "Vzdálenost k okraji"
+
+#: ../LineBorder.glade.h:19
+msgid "Distance to image:"
+msgstr "Vzdálenost od obrázku"
+
+#: ../LineBorder.glade.h:20
+msgid "Distance:"
+msgstr "Vzdálenost:"
+
+#: ../LineBorder.glade.h:21
+msgid "Extend text border:"
+msgstr "Rozšíření rámečku s textem"
+
+#: ../LineBorder.glade.h:22
+msgid "Feather line:"
+msgstr "Rozmazat linky rámečku:"
+
+#: ../LineBorder.glade.h:23
+msgid "Flatten image:"
+msgstr "Zploštit obrázek:"
+
+#: ../LineBorder.glade.h:24
+msgid "Font:"
+msgstr "Písmo:"
+
+#: ../LineBorder.glade.h:25
+msgid ""
+"Generate a line border around an image\n"
+"with optional text on border and\n"
+"inside the image\n"
+"\n"
+"Based on Eg-Border.scm script \n"
+"from Martin Egger. \n"
+"Thanks!\n"
+"\n"
+"Thanks to Elmar Sullock Enzlin\n"
+"for hint about glade dialogs.\n"
+msgstr ""
+"Generate a line border around an image\n"
+"with optional text on border and\n"
+"inside the image\n"
+"\n"
+"Based on Eg-Border.scm script \n"
+"from Martin Egger. \n"
+"Thanks!\n"
+"\n"
+"Thanks to Elmar Sullock Enzlin\n"
+"for hint about glade dialogs.\n"
+
+#: ../LineBorder.glade.h:36
+msgid "Image"
+msgstr "Obrázek"
+
+#: ../LineBorder.glade.h:38
+msgid "Inner line size:"
+msgstr "Síla vnitřní linky:"
+
+#: ../LineBorder.glade.h:39
+msgid "Justify:"
+msgstr "Zarovnání:"
+
+#: ../LineBorder.glade.h:41
+msgid "Line Border 2 on registry.gimp.org"
+msgstr "Line Border 2 na registry.gimp.org"
+
+#: ../LineBorder.glade.h:42
+msgid "Line border 2"
+msgstr "Line border 2"
+
+#: ../LineBorder.glade.h:43
+msgid "Line color:"
+msgstr "Barva linky:"
+
+#: ../LineBorder.glade.h:46
+msgid "None"
+msgstr "Žádnou"
+
+#: ../LineBorder.glade.h:47
+msgid "Opacity: "
+msgstr "Průhlednost:"
+
+#: ../LineBorder.glade.h:49
+msgid "Outer line size:"
+msgstr "Síla vnější linky:"
+
+#: ../LineBorder.glade.h:50
+msgid "Position:"
+msgstr "Pozice:"
+
+#: ../LineBorder.glade.h:52
+msgid "Rotate text to left if is placed to side"
+msgstr "Text umístěný na stranách otočit doleva."
+
+#: ../LineBorder.glade.h:53
+msgid "Rotate text:"
+msgstr "Otočit text:"
+
+#: ../LineBorder.glade.h:54
+msgid "Rotation:"
+msgstr "Otočení:"
+
+#: ../LineBorder.glade.h:55
+msgid "Round inner line corners:"
+msgstr "Zaoblit rohy vnitřní linky:"
+
+#: ../LineBorder.glade.h:56
+msgid "Round outer line corners:"
+msgstr "Zaoblit rohy vnější linky:"
+
+#: ../LineBorder.glade.h:57
+msgid "Text"
+msgstr "Text"
+
+#: ../LineBorder.glade.h:58
+msgid ""
+"This program is free software; you can redistribute it and/or\n"
+"modify it under the terms of the GNU General Public License\n"
+"as published by the Free Software Foundation; either version 2\n"
+"of the License, or (at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, "
+"USA.\n"
+msgstr ""
+"This program is free software; you can redistribute it and/or\n"
+"modify it under the terms of the GNU General Public License\n"
+"as published by the Free Software Foundation; either version 2\n"
+"of the License, or (at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, "
+"USA.\n"
+
+#: ../LineBorder.glade.h:72
+msgid "Total border size (height):"
+msgstr "Celková velikost rámečku (výška):"
+
+#: ../LineBorder.glade.h:73
+msgid "Total border size (width):"
+msgstr "Celková velikost rámečku (šířka):"
+
+#: ../LineBorder.glade.h:74
+msgid "Units"
+msgstr "Jednotky"
+
+#: ../LineBorder.glade.h:79
+msgid "Use actual palette colors:"
+msgstr "Použít aktuální barevnou paletu:"
+
+#: ../LineBorder.glade.h:80
+msgid "Watermark"
+msgstr "Vodoznak"
+
+#: ../LineBorder.glade.h:81
+msgid "Where is text placed"
+msgstr "Kde je text umístěn"
+
+#: ../LineBorder.glade.h:82
+msgid "Work on copy:"
+msgstr "Pracovat s kopií:"
+
+#~ msgid "Borders"
+#~ msgstr "Rámečky"

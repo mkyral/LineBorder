@@ -40,33 +40,29 @@
 import math
 from gimpfu import *
 
-import os
-import ConfigParser
-import gtk
-import gtk.glade
+import os, ConfigParser
+import gtk, gtk.glade
 import pygtk
 pygtk.require("2.0")
-import locale, gettext
-
-
 from LineBorder import LineBorder
 
-APP = "LineBorder"               #name of the translation file
-#DIR = gimp.locale_directory     #locale dir of gimp
-#DIR=os.path.join(os.path.dirname()
+import locale, gettext
 
-#locale.setlocale(locale.LC_ALL, '')
-#gettext.install(APP, DIR, unicode=True)
-#gtk.glade.bindtextdomain(APP,DIR)
-#gtk.glade.textdomain(APP)
+APP = "LineBorder"               #name of the translation file
+PO_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'locale')
+
+locale.setlocale(locale.LC_ALL, '')
+gettext.install(APP, PO_DIR, unicode=True)
+gtk.glade.bindtextdomain(APP,PO_DIR)
+gtk.glade.textdomain(APP)
 
 UI_FILENAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'LineBorder.glade')
 
 class LineBorderApp():
   def __init__(self, Image = None, Drawable = None):
       if not os.path.exists(UI_FILENAME):
-        print "Cannot find the glade file: " + UI_FILENAME
-        self.on_error("No dialog file found!", "Sorry, the dialog file LineBorder.glade was not found.\nCheck your installation please!")
+        print _("Cannot find the glade file: ") + UI_FILENAME
+        self.on_error(_("No dialog file found!"), _("Sorry, the dialog file LineBorder.glade was not found.\nCheck your installation please!"))
         return
 
       builder = gtk.Builder()
@@ -184,7 +180,7 @@ class LineBorderApp():
 
   def on_combobox_text_position_changed(self, widget):
       active = self.text_position.get_active_text()
-      if active == "Left" or active == "Right" :
+      if active == _("Left") or active == _("Right") :
         self.rotate_text.set_sensitive(True)
         self.label_rotate_text.set_sensitive(True)
       else:
@@ -217,7 +213,7 @@ class LineBorderApp():
 
   def on_button_wm_file_open_clicked(self, widget):
       chooser = gtk.FileChooserDialog (
-                      title='Open image',
+                      title=_('Open image'),
                       action=gtk.FILE_CHOOSER_ACTION_OPEN,
                       buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK)
                     )
@@ -226,7 +222,7 @@ class LineBorderApp():
         chooser.set_filename(self.wm_image_path.get_text())
 
       filter = gtk.FileFilter()
-      filter.set_name("Images (*.png, *.jpg, *.gif, *.tif, *.svg, *.xpm)")
+      filter.set_name(_("Images") + " (*.png, *.jpg, *.gif, *.tif, *.svg, *.xpm)")
       filter.add_mime_type("image/png")
       filter.add_mime_type("image/jpeg")
       filter.add_mime_type("image/gif")
@@ -383,8 +379,8 @@ class LineBorderApp():
 
       if wm_type == 'image' and wm_image_path :
         if not os.path.exists(wm_image_path):
-          print "Cannot find the image file: " + wm_image_path
-          self.on_error("File does not exists!", "The watermark image file: \n\n" + wm_image_path + "\n\ndoes not exists or is not readable!\n")
+          print _("Cannot find the image file:") + " " + wm_image_path
+          self.on_error(_("File does not exists!"), _("The watermark image file:") + "\n\n" + wm_image_path + "\n\n" + _("does not exists or is not readable!\n"))
           return
 
       LineBorder ( image, drawable,
@@ -646,7 +642,7 @@ class LineBorderApp():
             except ValueError, err:
               pass
           except ConfigParser.NoSectionError, err:
-            print "Missing section in config file. %s" %err
+            print _("Missing section in config file. %s") %err
 
           try:
             try:
@@ -679,7 +675,7 @@ class LineBorderApp():
               pass
 
           except ConfigParser.NoSectionError, err:
-            print "Missing section in config file. %s" %err
+            print _("Missing section in config file. %s") %err
 
           # Section: Text
           try:
@@ -777,7 +773,7 @@ class LineBorderApp():
             except ValueError, err:
               pass
           except ConfigParser.NoSectionError, err:
-            print "Missing section in config file. %s" %err
+            print _("Missing section in config file. %s") %err
 
           # Section: General
           try:
@@ -797,7 +793,7 @@ class LineBorderApp():
             except ValueError, err:
               pass
           except ConfigParser.NoSectionError, err:
-            print "Missing section in config file. %s" %err
+            print _("Missing section in config file. %s") %err
 
           # Section:Watermark
           try:
@@ -891,13 +887,13 @@ class LineBorderApp():
               pass
 
           except ConfigParser.NoSectionError, err:
-            print "Missing section in config file. %s" %err
+            print _("Missing section in config file. %s") %err
 
           return True
 
         except ConfigParser.Error, err:
-          print "Cannot parse configuration file. %s" %err
-          self.on_error("Configuration file error", "Cannot parse configuration file. " + str(err))
+          print _("Cannot parse configuration file. %s") %err
+          self.on_error(_("Configuration file error"), _("Cannot parse configuration file. ") + str(err))
         except IOError, err:
           print "Problem opening configuration file. %s" %err
-          self.on_error("Configuration file loading error", "Problem opening configuration file." + str(err))
+          self.on_error(_("Configuration file loading error"), _("Problem opening configuration file.") + str(err))
