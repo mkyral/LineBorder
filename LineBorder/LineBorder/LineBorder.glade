@@ -3,7 +3,6 @@
   <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy project-wide -->
   <object class="GtkWindow" id="window1">
-    <property name="width_request">333</property>
     <property name="title" translatable="yes">Line border 2</property>
     <signal name="destroy" handler="on_window1_destroy"/>
     <signal name="destroy" handler="on_window1_destroy"/>
@@ -1212,15 +1211,6 @@
                               </packing>
                             </child>
                             <child>
-                              <placeholder/>
-                            </child>
-                            <child>
-                              <placeholder/>
-                            </child>
-                            <child>
-                              <placeholder/>
-                            </child>
-                            <child>
                               <object class="GtkSpinButton" id="spinbutton_wm_dist_to_border">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -1252,6 +1242,15 @@
                                 <property name="top_attach">2</property>
                                 <property name="bottom_attach">3</property>
                               </packing>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
+                              <placeholder/>
                             </child>
                           </object>
                         </child>
@@ -1653,7 +1652,7 @@
     <property name="type_hint">normal</property>
     <property name="program_name">Line border</property>
     <property name="version">2.2</property>
-    <property name="copyright" translatable="yes">(c) 2010 Mari&#xE1;n Kyral</property>
+    <property name="copyright" translatable="yes">(c) 2010 Marian Kyral</property>
     <property name="comments" translatable="yes">Generate a line border around an image
 with optional text on border and
 inside the image
