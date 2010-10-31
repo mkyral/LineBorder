@@ -91,12 +91,14 @@ def LineBorder (InImage, InLayer,
                 InOuterTotalWidth, InOuterTotalWidthUnit,
                 InOuterTotalHeight, InOuterTotalHeightUnit,
                 InExtBottomBorder, InExtBottomBorderUnit,
-                InInnerSize, InInnerSizeUnit,
+                InRoundInnerBorder, InRoundInnerBorderUnits,
+                InRoundOuterBorder, InRoundOuterBorderUnits,
+                InInnerLineFlag, InInnerSize, InInnerSizeUnit,
                 InDistanceImage, InDistanceImageUnit,
-                InOuterSize, InOuterSizeUnit,
+                InOuterLineFlag, InOuterSize, InOuterSizeUnit,
                 InDistanceBorder, InDistanceBorderUnit,
-                InRoundOuter, InRoundOuterUnits,
                 InRoundInner, InRoundInnerUnits,
+                InRoundOuter, InRoundOuterUnits,
                 InUseSysColors, InLineColor, InBorderColor, InFeather,
                 InLeftFont, InLeftTextSize, InLeftTextJustify, InLeftText,
                 InCenterFont, InCenterTextSize, InCenterTextJustify, InCenterText,
@@ -197,19 +199,33 @@ def LineBorder (InImage, InLayer,
   TheWidth = pdb.gimp_image_width(TheImage)
   TheHeight = pdb.gimp_image_height(TheImage)
 
-  inner_border_width = recalc_units (InInnerSizeUnit, InInnerSize, smaller(TheWidth, TheHeight))
-  inner_border_height = inner_border_width
-  distance_to_image = recalc_units(InDistanceImageUnit, InDistanceImage, smaller(TheWidth, TheHeight))
-  round_inner = recalc_units(InRoundInnerUnits, InRoundInner, smaller(TheWidth, TheHeight))
+  if InInnerLineFlag :
+    inner_border_width = recalc_units (InInnerSizeUnit, InInnerSize, smaller(TheWidth, TheHeight))
+    inner_border_height = inner_border_width
+    distance_to_image = recalc_units(InDistanceImageUnit, InDistanceImage, smaller(TheWidth, TheHeight))
+    round_inner = recalc_units(InRoundInnerUnits, InRoundInner, smaller(TheWidth, TheHeight))
+  else :
+    inner_border_width = 0
+    inner_border_height = 0
+    distance_to_image = 0
+    round_inner = 0
 
-  outer_border_width  = recalc_units (InOuterSizeUnit, InOuterSize, smaller(TheWidth, TheHeight))
-  outer_border_height = outer_border_width
-  distance_to_border = recalc_units (InDistanceBorderUnit, InDistanceBorder, smaller(TheWidth, TheHeight))
-  extent_border = recalc_units(InExtBottomBorderUnit, InExtBottomBorder, TheHeight)
-  round_outer = recalc_units(InRoundOuterUnits, InRoundOuter, smaller(TheWidth, TheHeight))
+  if InOuterLineFlag :
+    outer_border_width  = recalc_units (InOuterSizeUnit, InOuterSize, smaller(TheWidth, TheHeight))
+    outer_border_height = outer_border_width
+    distance_to_border = recalc_units (InDistanceBorderUnit, InDistanceBorder, smaller(TheWidth, TheHeight))
+    round_outer = recalc_units(InRoundOuterUnits, InRoundOuter, smaller(TheWidth, TheHeight))
+  else :
+    outer_border_width  = 0
+    outer_border_height = 0
+    distance_to_border = 0
+    round_outer = 0
 
   total_border_width  = recalc_units (InOuterTotalWidthUnit, InOuterTotalWidth, TheWidth)
   total_border_height = recalc_units (InOuterTotalHeightUnit, InOuterTotalHeight, TheHeight)
+  extent_border = recalc_units(InExtBottomBorderUnit, InExtBottomBorder, TheHeight)
+  round_inner_border = recalc_units(InRoundInnerBorderUnits, InRoundInnerBorder, smaller(TheWidth, TheHeight))
+  round_outer_border = recalc_units(InRoundOuterBorderUnits, InRoundOuterBorder, smaller(TheWidth, TheHeight))
   image_width = TheWidth + (2 * total_border_width)
   image_height = TheHeight + (2 * total_border_height)
 
@@ -250,77 +266,76 @@ def LineBorder (InImage, InLayer,
       image_width = image_width + ext_right
       pdb.gimp_image_resize(TheImage, image_width, image_height, 0, 0)
 
-  BorderLayer = pdb.gimp_layer_new(TheImage, image_width, image_height, RGBA_IMAGE, "TempLayer", 100, NORMAL_MODE)
-
+  BorderLayer = pdb.gimp_layer_new(TheImage, image_width, image_height, RGBA_IMAGE, _("Layer With Border"), 100, NORMAL_MODE)
   pdb.gimp_image_add_layer(TheImage, BorderLayer, -1)
+  pdb.gimp_layer_add_alpha(BorderLayer)
   pdb.gimp_edit_clear(BorderLayer)
 
-  pdb.gimp_rect_select(TheImage, 0, 0, image_width, image_height, CHANNEL_OP_REPLACE, False, 0)
-  pdb.gimp_rect_select(TheImage, total_border_width + ext_left, total_border_height + ext_upper, TheWidth, TheHeight, CHANNEL_OP_SUBTRACT, False, 0)
-  pdb.gimp_palette_set_foreground(TheBorderColor)
-  pdb.gimp_edit_fill(BorderLayer, FOREGROUND_FILL)
-  #
-  # Make the outer border line
-  #
-  if outer_border_width > 0 :
-    pdb.gimp_round_rect_select(TheImage, distance_to_border,
-                                   distance_to_border,
-                         (image_width - (distance_to_border * 2)),
-                         (image_height  - (distance_to_border * 2)),
-                         round_inner, round_inner,
-                         CHANNEL_OP_REPLACE, True, FeatherOuter, (1.2 * outer_border_width), (1.2 * outer_border_width)
-                        )
-
-    pdb.gimp_rect_select(TheImage,
-                               total_border_width + ext_left, total_border_height + ext_upper,
-                               TheWidth, TheHeight,
-                               CHANNEL_OP_SUBTRACT, False, 0)
-    pdb.gimp_palette_set_foreground(TheLineColor)
-    pdb.gimp_edit_fill(BorderLayer, FOREGROUND_FILL)
-
-    pdb.gimp_round_rect_select(TheImage, (outer_border_width + distance_to_border),
-                                         (outer_border_height + distance_to_border),
-                        (image_width - ((outer_border_width * 2) + (distance_to_border * 2))),
-                        (image_height - ((outer_border_height * 2) + (distance_to_border * 2))),
-                         round_inner, round_inner,
-                         CHANNEL_OP_REPLACE, True,
-                         FeatherOuter, (1.2 * outer_border_width),(1.2 * outer_border_width)
-                        )
-
-    pdb.gimp_rect_select(TheImage, total_border_width + ext_left, total_border_height + ext_upper, TheWidth, TheHeight, CHANNEL_OP_SUBTRACT, False, 0)
+  if total_border_width > 0 or total_border_height > 0 or extent_border > 0 :
+    pdb.gimp_round_rect_select( TheImage,
+                                0, 0, image_width, image_height,
+                                round_outer_border, round_outer_border,
+                                CHANNEL_OP_REPLACE, True, False, 0, 0)
+    pdb.gimp_round_rect_select( TheImage,
+                                total_border_width + ext_left,
+                                total_border_height + ext_upper,
+                                TheWidth, TheHeight,
+                                round_inner_border, round_inner_border,
+                                CHANNEL_OP_SUBTRACT, True, False, 0, 0)
     pdb.gimp_palette_set_foreground(TheBorderColor)
     pdb.gimp_edit_fill(BorderLayer, FOREGROUND_FILL)
-  #
-  # Make the inner border line
-  #
-  if InInnerSize > 0 :
-    pdb.gimp_round_rect_select(TheImage,
-                                (total_border_width - (inner_border_width + distance_to_image) + ext_left),
-                                (total_border_height - (inner_border_height + distance_to_image) + ext_upper),
-                        (image_width - ((total_border_width * 2) - ((inner_border_width + distance_to_image) * 2)) - ext_left - ext_right),
-                        ((image_height - ((total_border_height * 2) - ((inner_border_width + distance_to_image) * 2)) ) - ext_bottom - ext_upper),
-                        round_outer, round_outer,
-                         CHANNEL_OP_REPLACE, True, FeatherInner, (1.2 * inner_border_width), (1.2 * inner_border_width)
-                        )
-    pdb.gimp_rect_select(TheImage, total_border_width + ext_left, total_border_height + ext_upper, TheWidth, TheHeight, CHANNEL_OP_SUBTRACT, False, 0)
-    pdb.gimp_palette_set_foreground(TheLineColor)
-    pdb.gimp_edit_fill(BorderLayer, FOREGROUND_FILL)
+    #
+    # Make the outer border line
+    #
+    if InOuterLineFlag and ( outer_border_width > 0 or outer_border_height > 0 ) :
+      distance_to_border_width = smaller(distance_to_border, (total_border_width - outer_border_width))
+      distance_to_border_height = smaller(distance_to_border, (total_border_height - outer_border_height))
 
-    if distance_to_image > 0 :
+      pdb.gimp_round_rect_select(TheImage, distance_to_border_width,
+                                           distance_to_border_height,
+                          (image_width - (distance_to_border_width * 2)),
+                          (image_height  - (distance_to_border_height * 2)),
+                          round_outer, round_outer,
+                          CHANNEL_OP_REPLACE, True, FeatherOuter, (1.2 * outer_border_width), (1.2 * outer_border_width)
+                          )
+
+      pdb.gimp_round_rect_select(TheImage, (outer_border_width + distance_to_border_width),
+                                          (outer_border_height + distance_to_border_height),
+                          (image_width - ((outer_border_width * 2) + (distance_to_border_width * 2))),
+                          (image_height - ((outer_border_height * 2) + (distance_to_border_height * 2))),
+                          round_outer, round_outer,
+                          CHANNEL_OP_SUBTRACT, True,
+                          FeatherOuter, (1.2 * outer_border_width),(1.2 * outer_border_width)
+                          )
+
+      pdb.gimp_palette_set_foreground(TheLineColor)
+      pdb.gimp_edit_fill(BorderLayer, FOREGROUND_FILL)
+    #
+    # Make the inner border line
+    #
+    if InInnerLineFlag and ( inner_border_width > 0 or outer_border_height > 0 ) :
+      pdb.gimp_round_rect_select(TheImage,
+                                  (total_border_width - (inner_border_width + distance_to_image) + ext_left),
+                                  (total_border_height - (inner_border_height + distance_to_image) + ext_upper),
+                          (image_width - ((total_border_width * 2) - ((inner_border_width + distance_to_image) * 2)) - ext_left - ext_right),
+                          ((image_height - ((total_border_height * 2) - ((inner_border_width + distance_to_image) * 2)) ) - ext_bottom - ext_upper),
+                          round_inner, round_inner,
+                          CHANNEL_OP_REPLACE, True, FeatherInner, (1.2 * inner_border_width), (1.2 * inner_border_width)
+                          )
       pdb.gimp_round_rect_select(TheImage,
                                   (total_border_width - distance_to_image + ext_left),
                                   (total_border_height - distance_to_image + ext_upper),
                           (image_width - ((total_border_width * 2) - (distance_to_image * 2)) - ext_left - ext_right),
                           ((image_height - ((total_border_height * 2) - (distance_to_image * 2))) - ext_bottom - ext_upper),
-                          round_outer, round_outer,
-                          CHANNEL_OP_REPLACE, True, FeatherInner, (1.2 * inner_border_width), (1.2 * inner_border_width)
+                          round_inner, round_inner,
+                          CHANNEL_OP_SUBTRACT, True, FeatherInner, (1.2 * inner_border_width), (1.2 * inner_border_width)
                           )
-      pdb.gimp_rect_select(TheImage, total_border_width + ext_left, total_border_height + ext_upper, TheWidth, TheHeight, CHANNEL_OP_SUBTRACT, False, 0)
-      pdb.gimp_palette_set_foreground(TheBorderColor)
+      pdb.gimp_palette_set_foreground(TheLineColor)
       pdb.gimp_edit_fill(BorderLayer, FOREGROUND_FILL)
   #
   if InFlattenImage :
     pdb.gimp_image_merge_down(TheImage, BorderLayer, CLIP_TO_IMAGE)
+
   pdb.gimp_selection_none(TheImage)
 
 # Add text if entered

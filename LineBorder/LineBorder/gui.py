@@ -80,34 +80,54 @@ class LineBorderApp():
       self.border_height_units = builder.get_object("combobox_units_height")
       self.border_ext_text = builder.get_object("spinbutton_ext_text")
       self.border_ext_text_units = builder.get_object("combobox_units_ext_text")
+      self.border_inner_border_round = builder.get_object("spinbutton_border_round_inner")
+      self.border_inner_border_round_units = builder.get_object("combobox_units_border_round_inner")
+      self.border_outer_border_round = builder.get_object("spinbutton_border_round_outer")
+      self.border_outer_border_round_units = builder.get_object("combobox_units_border_round_outer")
+
+      self.border_inner_line = builder.get_object("checkbutton_inner_line")
       self.border_inner_size = builder.get_object("spinbutton_inner_size")
       self.border_inner_size_units = builder.get_object("combobox_units_inner")
       self.border_inner_round = builder.get_object("spinbutton_inner_round")
       self.border_inner_round_units = builder.get_object("combobox_units_inner_round")
       self.border_dist_to_image = builder.get_object("spinbutton_dist_to_image")
       self.border_dist_to_image_units = builder.get_object("combobox_units_dist_to_image")
+
+      self.border_outer_line = builder.get_object("checkbutton_outer_line")
       self.border_outer_size = builder.get_object("spinbutton_outer_size")
       self.border_outer_size_units = builder.get_object("combobox_units_outer")
       self.border_outer_round = builder.get_object("spinbutton_outer_round")
       self.border_outer_round_units = builder.get_object("combobox_units_outer_round")
       self.border_dist_to_border = builder.get_object("spinbutton_dist_to_border")
       self.border_dist_to_border_units = builder.get_object("combobox_units_dist_to_border")
+
       self.actual_pallete_colors = builder.get_object("checkbutton_actual_palette")
       self.line_color = builder.get_object("line_color")
       self.border_color = builder.get_object("border_color")
+
       self.feather_line = builder.get_object("combobox_feather_line")
       self.flatten_image = builder.get_object("checkbutton_flatten_image")
       self.work_on_copy = builder.get_object("checkbutton_work_on_copy")
 
+      self.label_border_inner_size = builder.get_object("label_inner_size")
+      self.label_border_dist_to_image = builder.get_object("label_dist_to_image")
+      self.label_border_inner_round = builder.get_object("label_inner_round")
+      self.label_border_outer_size = builder.get_object("label_outer_size")
+      self.label_border_dist_to_border = builder.get_object("label_dist_to_border")
+      self.label_border_outer_round = builder.get_object("label_outer_round")
+
       self.left_text_font = builder.get_object("fontbutton_left")
       self.left_text_justify = builder.get_object("combobox_left_justify")
       self.left_text = builder.get_object("textview_left")
+
       self.center_text_font = builder.get_object("fontbutton_center")
       self.center_text_justify = builder.get_object("combobox_center_justify")
       self.center_text = builder.get_object("textview_center")
+
       self.right_text_font = builder.get_object("fontbutton_right")
       self.right_text_justify = builder.get_object("combobox_right_justify")
       self.right_text = builder.get_object("textview_right")
+
       self.text_position = builder.get_object("combobox_text_position")
       self.rotate_text = builder.get_object("checkbutton_rotate_text")
 
@@ -242,6 +262,30 @@ class LineBorderApp():
           pass
       chooser.destroy()
 
+  def on_checkbutton_inner_line_toggled(self, widget):
+      state = self.border_inner_line.get_active()
+      self.border_inner_size.set_sensitive(state)
+      self.border_inner_size_units.set_sensitive(state)
+      self.border_inner_round.set_sensitive(state)
+      self.border_inner_round_units.set_sensitive(state)
+      self.border_dist_to_image.set_sensitive(state)
+      self.border_dist_to_image_units.set_sensitive(state)
+      self.label_border_inner_size.set_sensitive(state)
+      self.label_border_dist_to_image.set_sensitive(state)
+      self.label_border_inner_round.set_sensitive(state)
+
+  def on_checkbutton_outer_line_toggled(self, widget):
+      state = self.border_outer_line.get_active()
+      self.border_outer_size.set_sensitive(state)
+      self.border_outer_size_units.set_sensitive(state)
+      self.border_outer_round.set_sensitive(state)
+      self.border_outer_round_units.set_sensitive(state)
+      self.border_dist_to_border.set_sensitive(state)
+      self.border_dist_to_border_units.set_sensitive(state)
+      self.label_border_outer_size.set_sensitive(state)
+      self.label_border_dist_to_border.set_sensitive(state)
+      self.label_border_outer_round.set_sensitive(state)
+
   def on_button_ok_clicked(self, widget):
       self.call_LineBorder()
       gtk.main_quit()
@@ -304,7 +348,12 @@ class LineBorderApp():
       height_units = self.border_height_units.get_active_text()
       ext_text = self.border_ext_text.get_value()
       ext_text_units = self.border_ext_text_units.get_active_text()
+      round_inner_border = self.border_inner_border_round.get_value()
+      round_inner_border_units = self.border_inner_border_round_units.get_active_text()
+      round_outer_border = self.border_outer_border_round.get_value()
+      round_outer_border_units = self.border_outer_border_round_units.get_active_text()
 
+      inner_line = self.border_inner_line.get_active()
       inner_size = self.border_inner_size.get_value()
       inner_units = self.border_inner_size_units.get_active_text()
       inner_round = self.border_inner_round.get_value()
@@ -312,6 +361,7 @@ class LineBorderApp():
       dist_to_image = self.border_dist_to_image.get_value()
       dist_to_image_units = self.border_dist_to_image_units.get_active_text()
 
+      outer_line = self.border_outer_line.get_active()
       outer_size = self.border_outer_size.get_value()
       outer_units = self.border_outer_size_units.get_active_text()
       outer_round = self.border_outer_round.get_value()
@@ -359,9 +409,11 @@ class LineBorderApp():
       self.save_config( 'DEFAULT', width, width_units,
                         height, height_units,
                         ext_text, ext_text_units,
-                        inner_size, inner_units,
+                        round_inner_border, round_inner_border_units,
+                        round_outer_border, round_outer_border_units,
+                        inner_line, inner_size, inner_units,
                         dist_to_image, dist_to_image_units,
-                        outer_size, outer_units,
+                        outer_line, outer_size, outer_units,
                         dist_to_border, dist_to_border_units,
                         inner_round, inner_round_units,
                         outer_round, outer_round_units,
@@ -387,9 +439,11 @@ class LineBorderApp():
                    width, width_units,
                    height, height_units,
                    ext_text, ext_text_units,
-                   inner_size, inner_units,
+                   round_inner_border, round_inner_border_units,
+                   round_outer_border, round_outer_border_units,
+                   inner_line, inner_size, inner_units,
                    dist_to_image, dist_to_image_units,
-                   outer_size, outer_units,
+                   outer_line, outer_size, outer_units,
                    dist_to_border, dist_to_border_units,
                    inner_round, inner_round_units,
                    outer_round, outer_round_units,
@@ -418,9 +472,11 @@ class LineBorderApp():
   def save_config(self, profile, width, width_units,
                         height, height_units,
                         ext_text, ext_text_units,
-                        inner_size, inner_units,
+                        round_inner_border, round_inner_border_units,
+                        round_outer_border, round_outer_border_units,
+                        inner_line, inner_size, inner_units,
                         dist_to_image, dist_to_image_units,
-                        outer_size, outer_units,
+                        outer_line, outer_size, outer_units,
                         dist_to_border, dist_to_border_units,
                         inner_round, inner_round_units,
                         outer_round, outer_round_units,
@@ -446,12 +502,18 @@ class LineBorderApp():
       cfg.set (sec_border, 'height_units', height_units)
       cfg.set (sec_border, 'ext_text', ext_text)
       cfg.set (sec_border, 'ext_text_units', ext_text_units)
+      cfg.set (sec_border, 'round_inner_border', round_inner_border)
+      cfg.set (sec_border, 'round_inner_border_units', round_inner_border_units)
+      cfg.set (sec_border, 'round_outer_border', round_outer_border)
+      cfg.set (sec_border, 'round_outer_border_units', round_outer_border_units)
+      cfg.set (sec_border, 'inner_line', inner_line)
       cfg.set (sec_border, 'inner_size', inner_size)
       cfg.set (sec_border, 'inner_units', inner_units)
       cfg.set (sec_border, 'dist_to_image', dist_to_image)
       cfg.set (sec_border, 'dist_to_image_units', dist_to_image_units)
       cfg.set (sec_border, 'inner_round', inner_round)
       cfg.set (sec_border, 'inner_round_units', inner_round_units)
+      cfg.set (sec_border, 'outer_line', outer_line)
       cfg.set (sec_border, 'outer_size', outer_size)
       cfg.set (sec_border, 'outer_units', outer_units)
       cfg.set (sec_border, 'outer_round', outer_round)
@@ -575,6 +637,34 @@ class LineBorderApp():
               pass
 
             try:
+              round_inner_border = cfg.getfloat(sec_border, 'round_inner_border')
+              round_inner_border_units = cfg.get(sec_border, 'round_inner_border_units')
+              self.border_inner_border_round.set_value(round_inner_border)
+              self.set_combobox(self.border_inner_border_round_units, round_inner_border_units)
+            except ConfigParser.NoOptionError, err:
+              pass
+            except ValueError, err:
+              pass
+
+            try:
+              round_outer_border = cfg.getfloat(sec_border, 'round_outer_border')
+              round_outer_border_units = cfg.get(sec_border, 'round_outer_border_units')
+              self.border_outer_border_round.set_value(round_outer_border)
+              self.set_combobox(self.border_outer_border_round_units, round_outer_border_units)
+            except ConfigParser.NoOptionError, err:
+              pass
+            except ValueError, err:
+              pass
+
+            try:
+              inner_line = cfg.getboolean(sec_border, 'inner_line')
+              self.border_inner_line.set_active(inner_line)
+            except ConfigParser.NoOptionError, err:
+              self.border_inner_line.set_active(True)
+            except ValueError, err:
+              pass
+
+            try:
               inner_size = cfg.getfloat(sec_border, 'inner_size')
               inner_units = cfg.get(sec_border, 'inner_units')
               self.border_inner_size.set_value(inner_size)
@@ -601,6 +691,14 @@ class LineBorderApp():
               self.set_combobox(self.border_dist_to_image_units, dist_to_image_units)
             except ConfigParser.NoOptionError, err:
               pass
+            except ValueError, err:
+              pass
+
+            try:
+              outer_line = cfg.getboolean(sec_border, 'outer_line')
+              self.border_outer_line.set_active(outer_line)
+            except ConfigParser.NoOptionError, err:
+              self.border_outer_line.set_active(True)
             except ValueError, err:
               pass
 
@@ -805,7 +903,8 @@ class LineBorderApp():
               else:
                 self.wm_type_image.set_active(True)
             except ConfigParser.NoOptionError, err:
-              pass
+                self.wm_type_text.set_active(True)
+                self.on_radiobutton_wm_text_toggled(self.dialog) # trigger call on_radiobutton_wm_text_toggled()
             except ValueError, err:
               pass
 

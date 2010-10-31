@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-30 16:55+0200\n"
+"POT-Creation-Date: 2010-10-31 08:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,86 +23,86 @@ msgid ""
 "and inside the image."
 msgstr ""
 
-#: ../LineBorder.py:77 ../LineBorder.glade.h:83
+#: ../LineBorder.py:77 ../LineBorder.glade.h:88
 msgid "pixels"
 msgstr ""
 
-#: ../LineBorder.py:139 ../LineBorder.glade.h:37
+#: ../LineBorder.py:141 ../LineBorder.glade.h:43
 msgid "Inner"
 msgstr ""
 
-#: ../LineBorder.py:139 ../LineBorder.py:144 ../LineBorder.glade.h:11
+#: ../LineBorder.py:141 ../LineBorder.py:146 ../LineBorder.glade.h:18
 msgid "Both"
 msgstr ""
 
-#: ../LineBorder.py:144 ../LineBorder.glade.h:48
+#: ../LineBorder.py:146 ../LineBorder.glade.h:53
 msgid "Outer"
 msgstr ""
 
-#: ../LineBorder.py:149 ../LineBorder.py:158 ../LineBorder.py:167
-#: ../LineBorder.py:176 ../LineBorder.py:477 ../LineBorder.glade.h:16
+#: ../LineBorder.py:151 ../LineBorder.py:160 ../LineBorder.py:169
+#: ../LineBorder.py:178 ../LineBorder.py:492 ../LineBorder.glade.h:23
 msgid "Center"
 msgstr ""
 
 #. rotate text
-#: ../LineBorder.py:151 ../LineBorder.py:160 ../LineBorder.py:169
-#: ../LineBorder.py:178 ../LineBorder.py:244 ../LineBorder.py:339
-#: ../LineBorder.py:355 ../LineBorder.py:375 ../LineBorder.py:391
-#: ../LineBorder.py:411 ../LineBorder.py:427 ../gui.py:183
-#: ../LineBorder.glade.h:40
+#: ../LineBorder.py:153 ../LineBorder.py:162 ../LineBorder.py:171
+#: ../LineBorder.py:180 ../LineBorder.py:260 ../LineBorder.py:354
+#: ../LineBorder.py:370 ../LineBorder.py:390 ../LineBorder.py:406
+#: ../LineBorder.py:426 ../LineBorder.py:442 ../gui.py:203
+#: ../LineBorder.glade.h:45
 msgid "Left"
 msgstr ""
 
-#: ../LineBorder.py:153 ../LineBorder.py:162 ../LineBorder.py:171
-#: ../LineBorder.py:180 ../LineBorder.py:339 ../LineBorder.py:375
-#: ../LineBorder.py:411 ../gui.py:183 ../LineBorder.glade.h:51
+#: ../LineBorder.py:155 ../LineBorder.py:164 ../LineBorder.py:173
+#: ../LineBorder.py:182 ../LineBorder.py:354 ../LineBorder.py:390
+#: ../LineBorder.py:426 ../gui.py:203 ../LineBorder.glade.h:55
 msgid "Right"
 msgstr ""
 
-#: ../LineBorder.py:228
+#: ../LineBorder.py:244 ../LineBorder.py:269
 msgid "Layer With Border"
 msgstr ""
 
 #. extend the bottom border
-#: ../LineBorder.py:236 ../LineBorder.py:349 ../LineBorder.py:385
-#: ../LineBorder.py:421 ../LineBorder.glade.h:12
+#: ../LineBorder.py:252 ../LineBorder.py:364 ../LineBorder.py:400
+#: ../LineBorder.py:436 ../LineBorder.glade.h:19
 msgid "Bottom"
 msgstr ""
 
-#: ../LineBorder.py:240 ../LineBorder.py:352 ../LineBorder.py:388
-#: ../LineBorder.py:424 ../LineBorder.glade.h:75
+#: ../LineBorder.py:256 ../LineBorder.py:367 ../LineBorder.py:403
+#: ../LineBorder.py:439 ../LineBorder.glade.h:80
 msgid "Upper"
 msgstr ""
 
-#: ../LineBorder.py:465 ../LineBorder.glade.h:77
+#: ../LineBorder.py:480 ../LineBorder.glade.h:82
 msgid "Upper-Left"
 msgstr ""
 
-#: ../LineBorder.py:468 ../LineBorder.glade.h:76
+#: ../LineBorder.py:483 ../LineBorder.glade.h:81
 msgid "Upper-Center"
 msgstr ""
 
-#: ../LineBorder.py:471 ../LineBorder.glade.h:78
+#: ../LineBorder.py:486 ../LineBorder.glade.h:83
 msgid "Upper-Right"
 msgstr ""
 
-#: ../LineBorder.py:474 ../LineBorder.glade.h:44
+#: ../LineBorder.py:489 ../LineBorder.glade.h:49
 msgid "Middle-Left"
 msgstr ""
 
-#: ../LineBorder.py:480 ../LineBorder.glade.h:45
+#: ../LineBorder.py:495 ../LineBorder.glade.h:50
 msgid "Middle-Right"
 msgstr ""
 
-#: ../LineBorder.py:483 ../LineBorder.glade.h:14
+#: ../LineBorder.py:498 ../LineBorder.glade.h:21
 msgid "Bottom-Left"
 msgstr ""
 
-#: ../LineBorder.py:486 ../LineBorder.glade.h:13
+#: ../LineBorder.py:501 ../LineBorder.glade.h:20
 msgid "Bottom-Center"
 msgstr ""
 
-#: ../LineBorder.py:489 ../LineBorder.glade.h:15
+#: ../LineBorder.py:504 ../LineBorder.glade.h:22
 msgid "Bottom-Right"
 msgstr ""
 
@@ -120,53 +120,53 @@ msgid ""
 "Check your installation please!"
 msgstr ""
 
-#: ../gui.py:216
+#: ../gui.py:236
 msgid "Open image"
 msgstr ""
 
-#: ../gui.py:225
+#: ../gui.py:245
 msgid "Images"
 msgstr ""
 
-#: ../gui.py:382
+#: ../gui.py:434
 msgid "Cannot find the image file:"
 msgstr ""
 
-#: ../gui.py:383
+#: ../gui.py:435
 msgid "File does not exists!"
 msgstr ""
 
-#: ../gui.py:383
+#: ../gui.py:435
 msgid "The watermark image file:"
 msgstr ""
 
-#: ../gui.py:383
+#: ../gui.py:435
 msgid "does not exists or is not readable!\n"
 msgstr ""
 
-#: ../gui.py:645 ../gui.py:678 ../gui.py:776 ../gui.py:796 ../gui.py:890
+#: ../gui.py:743 ../gui.py:776 ../gui.py:874 ../gui.py:894 ../gui.py:989
 #, python-format
 msgid "Missing section in config file. %s"
 msgstr ""
 
-#: ../gui.py:895
+#: ../gui.py:994
 #, python-format
 msgid "Cannot parse configuration file. %s"
 msgstr ""
 
-#: ../gui.py:896
+#: ../gui.py:995
 msgid "Configuration file error"
 msgstr ""
 
-#: ../gui.py:896
+#: ../gui.py:995
 msgid "Cannot parse configuration file. "
 msgstr ""
 
-#: ../gui.py:899
+#: ../gui.py:998
 msgid "Configuration file loading error"
 msgstr ""
 
-#: ../gui.py:899
+#: ../gui.py:998
 msgid "Problem opening configuration file."
 msgstr ""
 
@@ -180,66 +180,94 @@ msgid "(c) 2010 Marian Kyral"
 msgstr ""
 
 #: ../LineBorder.glade.h:4
-msgid "<b>Center / Middle text</b>"
+msgid "<b>Border</b>"
 msgstr ""
 
 #: ../LineBorder.glade.h:5
-msgid "<b>Left / Upper text</b>"
+msgid "<b>Center / Middle text</b>"
 msgstr ""
 
 #: ../LineBorder.glade.h:6
-msgid "<b>Right / Bottom text</b>"
+msgid "<b>Colors</b>"
 msgstr ""
 
 #: ../LineBorder.glade.h:7
-msgid "About"
+msgid "<b>General</b>"
 msgstr ""
 
 #: ../LineBorder.glade.h:8
-msgid "Block"
+msgid "<b>Image</b>"
 msgstr ""
 
 #: ../LineBorder.glade.h:9
-msgid "Border"
+msgid "<b>Inner line</b>"
 msgstr ""
 
 #: ../LineBorder.glade.h:10
-msgid "Border color:"
+msgid "<b>Left / Upper text</b>"
+msgstr ""
+
+#: ../LineBorder.glade.h:11
+msgid "<b>Outer line</b>"
+msgstr ""
+
+#: ../LineBorder.glade.h:12
+msgid "<b>Right / Bottom text</b>"
+msgstr ""
+
+#: ../LineBorder.glade.h:13
+msgid "<b>Text</b>"
+msgstr ""
+
+#: ../LineBorder.glade.h:14
+msgid "About"
+msgstr ""
+
+#: ../LineBorder.glade.h:15
+msgid "Block"
+msgstr ""
+
+#: ../LineBorder.glade.h:16
+msgid "Border"
 msgstr ""
 
 #: ../LineBorder.glade.h:17
-msgid "Color:"
-msgstr ""
-
-#: ../LineBorder.glade.h:18
-msgid "Distance to border:"
-msgstr ""
-
-#: ../LineBorder.glade.h:19
-msgid "Distance to image:"
-msgstr ""
-
-#: ../LineBorder.glade.h:20
-msgid "Distance:"
-msgstr ""
-
-#: ../LineBorder.glade.h:21
-msgid "Extend text border:"
-msgstr ""
-
-#: ../LineBorder.glade.h:22
-msgid "Feather line:"
-msgstr ""
-
-#: ../LineBorder.glade.h:23
-msgid "Flatten image:"
+msgid "Border color:"
 msgstr ""
 
 #: ../LineBorder.glade.h:24
-msgid "Font:"
+msgid "Color:"
 msgstr ""
 
 #: ../LineBorder.glade.h:25
+msgid "Distance to border:"
+msgstr ""
+
+#: ../LineBorder.glade.h:26
+msgid "Distance to image:"
+msgstr ""
+
+#: ../LineBorder.glade.h:27
+msgid "Distance:"
+msgstr ""
+
+#: ../LineBorder.glade.h:28
+msgid "Extend text border:"
+msgstr ""
+
+#: ../LineBorder.glade.h:29
+msgid "Feather line:"
+msgstr ""
+
+#: ../LineBorder.glade.h:30
+msgid "Flatten image:"
+msgstr ""
+
+#: ../LineBorder.glade.h:31
+msgid "Font:"
+msgstr ""
+
+#: ../LineBorder.glade.h:32
 msgid ""
 "Generate a line border around an image\n"
 "with optional text on border and\n"
@@ -253,71 +281,67 @@ msgid ""
 "for hint about glade dialogs.\n"
 msgstr ""
 
-#: ../LineBorder.glade.h:36
-msgid "Image"
-msgstr ""
-
-#: ../LineBorder.glade.h:38
-msgid "Inner line size:"
-msgstr ""
-
-#: ../LineBorder.glade.h:39
+#: ../LineBorder.glade.h:44
 msgid "Justify:"
 msgstr ""
 
-#: ../LineBorder.glade.h:41
+#: ../LineBorder.glade.h:46
 msgid "Line Border 2 on registry.gimp.org"
 msgstr ""
 
-#: ../LineBorder.glade.h:42
+#: ../LineBorder.glade.h:47
 msgid "Line border 2"
 msgstr ""
 
-#: ../LineBorder.glade.h:43
+#: ../LineBorder.glade.h:48
 msgid "Line color:"
 msgstr ""
 
-#: ../LineBorder.glade.h:46
+#: ../LineBorder.glade.h:51
 msgid "None"
 msgstr ""
 
-#: ../LineBorder.glade.h:47
+#: ../LineBorder.glade.h:52
 msgid "Opacity: "
 msgstr ""
 
-#: ../LineBorder.glade.h:49
-msgid "Outer line size:"
-msgstr ""
-
-#: ../LineBorder.glade.h:50
+#: ../LineBorder.glade.h:54
 msgid "Position:"
 msgstr ""
 
-#: ../LineBorder.glade.h:52
+#: ../LineBorder.glade.h:56
 msgid "Rotate text to left if is placed to side"
 msgstr ""
 
-#: ../LineBorder.glade.h:53
+#: ../LineBorder.glade.h:57
 msgid "Rotate text:"
 msgstr ""
 
-#: ../LineBorder.glade.h:54
+#: ../LineBorder.glade.h:58
 msgid "Rotation:"
 msgstr ""
 
-#: ../LineBorder.glade.h:55
-msgid "Round inner line corners:"
+#: ../LineBorder.glade.h:59
+msgid "Round corners:"
 msgstr ""
 
-#: ../LineBorder.glade.h:56
-msgid "Round outer line corners:"
+#: ../LineBorder.glade.h:60
+msgid "Round inner corners:"
 msgstr ""
 
-#: ../LineBorder.glade.h:57
+#: ../LineBorder.glade.h:61
+msgid "Round outer corners:"
+msgstr ""
+
+#: ../LineBorder.glade.h:62
+msgid "Size:"
+msgstr ""
+
+#: ../LineBorder.glade.h:63
 msgid "Text"
 msgstr ""
 
-#: ../LineBorder.glade.h:58
+#: ../LineBorder.glade.h:64
 msgid ""
 "This program is free software; you can redistribute it and/or\n"
 "modify it under the terms of the GNU General Public License\n"
@@ -335,30 +359,26 @@ msgid ""
 "USA.\n"
 msgstr ""
 
-#: ../LineBorder.glade.h:72
-msgid "Total border size (height):"
-msgstr ""
-
-#: ../LineBorder.glade.h:73
-msgid "Total border size (width):"
-msgstr ""
-
-#: ../LineBorder.glade.h:74
-msgid "Units"
+#: ../LineBorder.glade.h:78
+msgid "Total size (height):"
 msgstr ""
 
 #: ../LineBorder.glade.h:79
-msgid "Use actual palette colors:"
+msgid "Total size (width):"
 msgstr ""
 
-#: ../LineBorder.glade.h:80
+#: ../LineBorder.glade.h:84
+msgid "Use actual palette colors"
+msgstr ""
+
+#: ../LineBorder.glade.h:85
 msgid "Watermark"
 msgstr ""
 
-#: ../LineBorder.glade.h:81
+#: ../LineBorder.glade.h:86
 msgid "Where is text placed"
 msgstr ""
 
-#: ../LineBorder.glade.h:82
+#: ../LineBorder.glade.h:87
 msgid "Work on copy:"
 msgstr ""

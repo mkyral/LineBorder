@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-30 16:55+0200\n"
+"POT-Creation-Date: 2010-10-31 08:25+0100\n"
 "PO-Revision-Date: 2010-10-30 10:41+0200\n"
 "Last-Translator: Elmar Sullock Enzlin <moroquendo@gmail.com>\n"
 "Language-Team: Dutch <kde-i18n-doc@kde.org>\n"
@@ -27,86 +27,86 @@ msgstr ""
 "Maakt een rand rondom een afbeelding en plaatst tekst in de rand of in de "
 "afbeelding."
 
-#: ../LineBorder.py:77 ../LineBorder.glade.h:83
+#: ../LineBorder.py:77 ../LineBorder.glade.h:88
 msgid "pixels"
 msgstr "body"
 
-#: ../LineBorder.py:139 ../LineBorder.glade.h:37
+#: ../LineBorder.py:141 ../LineBorder.glade.h:43
 msgid "Inner"
 msgstr "Binnenkant"
 
-#: ../LineBorder.py:139 ../LineBorder.py:144 ../LineBorder.glade.h:11
+#: ../LineBorder.py:141 ../LineBorder.py:146 ../LineBorder.glade.h:18
 msgid "Both"
 msgstr "Beide"
 
-#: ../LineBorder.py:144 ../LineBorder.glade.h:48
+#: ../LineBorder.py:146 ../LineBorder.glade.h:53
 msgid "Outer"
 msgstr "Buitenkant"
 
-#: ../LineBorder.py:149 ../LineBorder.py:158 ../LineBorder.py:167
-#: ../LineBorder.py:176 ../LineBorder.py:477 ../LineBorder.glade.h:16
+#: ../LineBorder.py:151 ../LineBorder.py:160 ../LineBorder.py:169
+#: ../LineBorder.py:178 ../LineBorder.py:492 ../LineBorder.glade.h:23
 msgid "Center"
 msgstr "Gecentreerd"
 
 #. rotate text
-#: ../LineBorder.py:151 ../LineBorder.py:160 ../LineBorder.py:169
-#: ../LineBorder.py:178 ../LineBorder.py:244 ../LineBorder.py:339
-#: ../LineBorder.py:355 ../LineBorder.py:375 ../LineBorder.py:391
-#: ../LineBorder.py:411 ../LineBorder.py:427 ../gui.py:183
-#: ../LineBorder.glade.h:40
+#: ../LineBorder.py:153 ../LineBorder.py:162 ../LineBorder.py:171
+#: ../LineBorder.py:180 ../LineBorder.py:260 ../LineBorder.py:354
+#: ../LineBorder.py:370 ../LineBorder.py:390 ../LineBorder.py:406
+#: ../LineBorder.py:426 ../LineBorder.py:442 ../gui.py:203
+#: ../LineBorder.glade.h:45
 msgid "Left"
 msgstr "Links"
 
-#: ../LineBorder.py:153 ../LineBorder.py:162 ../LineBorder.py:171
-#: ../LineBorder.py:180 ../LineBorder.py:339 ../LineBorder.py:375
-#: ../LineBorder.py:411 ../gui.py:183 ../LineBorder.glade.h:51
+#: ../LineBorder.py:155 ../LineBorder.py:164 ../LineBorder.py:173
+#: ../LineBorder.py:182 ../LineBorder.py:354 ../LineBorder.py:390
+#: ../LineBorder.py:426 ../gui.py:203 ../LineBorder.glade.h:55
 msgid "Right"
 msgstr "Rechts"
 
-#: ../LineBorder.py:228
+#: ../LineBorder.py:244 ../LineBorder.py:269
 msgid "Layer With Border"
 msgstr "Layer met rand"
 
 #. extend the bottom border
-#: ../LineBorder.py:236 ../LineBorder.py:349 ../LineBorder.py:385
-#: ../LineBorder.py:421 ../LineBorder.glade.h:12
+#: ../LineBorder.py:252 ../LineBorder.py:364 ../LineBorder.py:400
+#: ../LineBorder.py:436 ../LineBorder.glade.h:19
 msgid "Bottom"
 msgstr "Onderzijde"
 
-#: ../LineBorder.py:240 ../LineBorder.py:352 ../LineBorder.py:388
-#: ../LineBorder.py:424 ../LineBorder.glade.h:75
+#: ../LineBorder.py:256 ../LineBorder.py:367 ../LineBorder.py:403
+#: ../LineBorder.py:439 ../LineBorder.glade.h:80
 msgid "Upper"
 msgstr "Bovenzijde"
 
-#: ../LineBorder.py:465 ../LineBorder.glade.h:77
+#: ../LineBorder.py:480 ../LineBorder.glade.h:82
 msgid "Upper-Left"
 msgstr "Links boven"
 
-#: ../LineBorder.py:468 ../LineBorder.glade.h:76
+#: ../LineBorder.py:483 ../LineBorder.glade.h:81
 msgid "Upper-Center"
 msgstr "Midden boven"
 
-#: ../LineBorder.py:471 ../LineBorder.glade.h:78
+#: ../LineBorder.py:486 ../LineBorder.glade.h:83
 msgid "Upper-Right"
 msgstr "Rechts boven"
 
-#: ../LineBorder.py:474 ../LineBorder.glade.h:44
+#: ../LineBorder.py:489 ../LineBorder.glade.h:49
 msgid "Middle-Left"
 msgstr "Midden links"
 
-#: ../LineBorder.py:480 ../LineBorder.glade.h:45
+#: ../LineBorder.py:495 ../LineBorder.glade.h:50
 msgid "Middle-Right"
 msgstr "Midden rechts"
 
-#: ../LineBorder.py:483 ../LineBorder.glade.h:14
+#: ../LineBorder.py:498 ../LineBorder.glade.h:21
 msgid "Bottom-Left"
 msgstr "Linker onderkant"
 
-#: ../LineBorder.py:486 ../LineBorder.glade.h:13
+#: ../LineBorder.py:501 ../LineBorder.glade.h:20
 msgid "Bottom-Center"
 msgstr "Gecentreerd onderkant"
 
-#: ../LineBorder.py:489 ../LineBorder.glade.h:15
+#: ../LineBorder.py:504 ../LineBorder.glade.h:22
 msgid "Bottom-Right"
 msgstr "Rechter onderkant"
 
@@ -126,53 +126,53 @@ msgstr ""
 "Soory, geen dialoog file aanwezig.\n"
 "Controleer uw installatie van de plugin!"
 
-#: ../gui.py:216
+#: ../gui.py:236
 msgid "Open image"
 msgstr "Open afbeelding"
 
-#: ../gui.py:225
+#: ../gui.py:245
 msgid "Images"
 msgstr "Afbeeldingen"
 
-#: ../gui.py:382
+#: ../gui.py:434
 msgid "Cannot find the image file:"
 msgstr "Kan de afbeelding niet vinden:"
 
-#: ../gui.py:383
+#: ../gui.py:435
 msgid "File does not exists!"
 msgstr "Bestand bestaat niet!"
 
-#: ../gui.py:383
+#: ../gui.py:435
 msgid "The watermark image file:"
 msgstr "Het watermerk bestand:"
 
-#: ../gui.py:383
+#: ../gui.py:435
 msgid "does not exists or is not readable!\n"
 msgstr "bestaat niet of is niet te openen!\n"
 
-#: ../gui.py:645 ../gui.py:678 ../gui.py:776 ../gui.py:796 ../gui.py:890
+#: ../gui.py:743 ../gui.py:776 ../gui.py:874 ../gui.py:894 ../gui.py:989
 #, python-format
 msgid "Missing section in config file. %s"
 msgstr "Sectie in configuratie bestand mist. %s"
 
-#: ../gui.py:895
+#: ../gui.py:994
 #, python-format
 msgid "Cannot parse configuration file. %s"
 msgstr "Kan het configuratie bestand niet lezen. %s"
 
-#: ../gui.py:896
+#: ../gui.py:995
 msgid "Configuration file error"
 msgstr "Fout in configuratie bestand"
 
-#: ../gui.py:896
+#: ../gui.py:995
 msgid "Cannot parse configuration file. "
 msgstr "Kan het configuratie bestand niet lezen."
 
-#: ../gui.py:899
+#: ../gui.py:998
 msgid "Configuration file loading error"
 msgstr "Configuratie file kan niet gelezen worden."
 
-#: ../gui.py:899
+#: ../gui.py:998
 msgid "Problem opening configuration file."
 msgstr "Configuratie file kan niet geopend worden."
 
@@ -186,66 +186,97 @@ msgid "(c) 2010 Marian Kyral"
 msgstr "(c) 2010 Marian Kyral"
 
 #: ../LineBorder.glade.h:4
+#, fuzzy
+msgid "<b>Border</b>"
+msgstr "Rand"
+
+#: ../LineBorder.glade.h:5
 msgid "<b>Center / Middle text</b>"
 msgstr "<b>Tekst gecentreerd</b>"
 
-#: ../LineBorder.glade.h:5
+#: ../LineBorder.glade.h:6
+msgid "<b>Colors</b>"
+msgstr ""
+
+#: ../LineBorder.glade.h:7
+msgid "<b>General</b>"
+msgstr ""
+
+#: ../LineBorder.glade.h:8
+msgid "<b>Image</b>"
+msgstr ""
+
+#: ../LineBorder.glade.h:9
+#, fuzzy
+msgid "<b>Inner line</b>"
+msgstr "Breedte binnenlijn:"
+
+#: ../LineBorder.glade.h:10
 msgid "<b>Left / Upper text</b>"
 msgstr "<b>Tekst linksboven</b>"
 
-#: ../LineBorder.glade.h:6
+#: ../LineBorder.glade.h:11
+#, fuzzy
+msgid "<b>Outer line</b>"
+msgstr "Breedte buitenlijn:"
+
+#: ../LineBorder.glade.h:12
 msgid "<b>Right / Bottom text</b>"
 msgstr "<b>Tekst rechtsonder</b>"
 
-#: ../LineBorder.glade.h:7
+#: ../LineBorder.glade.h:13
+msgid "<b>Text</b>"
+msgstr ""
+
+#: ../LineBorder.glade.h:14
 msgid "About"
 msgstr "Over"
 
-#: ../LineBorder.glade.h:8
+#: ../LineBorder.glade.h:15
 msgid "Block"
 msgstr "Blok"
 
-#: ../LineBorder.glade.h:9
+#: ../LineBorder.glade.h:16
 msgid "Border"
 msgstr "Rand"
 
-#: ../LineBorder.glade.h:10
+#: ../LineBorder.glade.h:17
 msgid "Border color:"
 msgstr "Rand kleur:"
 
-#: ../LineBorder.glade.h:17
+#: ../LineBorder.glade.h:24
 msgid "Color:"
 msgstr "Kleur:"
 
-#: ../LineBorder.glade.h:18
+#: ../LineBorder.glade.h:25
 msgid "Distance to border:"
 msgstr "Afstand tot rand:"
 
-#: ../LineBorder.glade.h:19
+#: ../LineBorder.glade.h:26
 msgid "Distance to image:"
 msgstr "Afstand tot afbeelding:"
 
-#: ../LineBorder.glade.h:20
+#: ../LineBorder.glade.h:27
 msgid "Distance:"
 msgstr "Afstand:"
 
-#: ../LineBorder.glade.h:21
+#: ../LineBorder.glade.h:28
 msgid "Extend text border:"
 msgstr "Vergroot tekst rand:"
 
-#: ../LineBorder.glade.h:22
+#: ../LineBorder.glade.h:29
 msgid "Feather line:"
 msgstr "Verzacht de lijn:"
 
-#: ../LineBorder.glade.h:23
+#: ../LineBorder.glade.h:30
 msgid "Flatten image:"
 msgstr "Voeg alle lagen samen:"
 
-#: ../LineBorder.glade.h:24
+#: ../LineBorder.glade.h:31
 msgid "Font:"
 msgstr "Lettertype:"
 
-#: ../LineBorder.glade.h:25
+#: ../LineBorder.glade.h:32
 msgid ""
 "Generate a line border around an image\n"
 "with optional text on border and\n"
@@ -269,71 +300,70 @@ msgstr ""
 "Thanks to Elmar Sullock Enzlin\n"
 "for hint about glade dialogs.\n"
 
-#: ../LineBorder.glade.h:36
-msgid "Image"
-msgstr "Afbeelding"
-
-#: ../LineBorder.glade.h:38
-msgid "Inner line size:"
-msgstr "Breedte binnenlijn:"
-
-#: ../LineBorder.glade.h:39
+#: ../LineBorder.glade.h:44
 msgid "Justify:"
 msgstr "Correctie:"
 
-#: ../LineBorder.glade.h:41
+#: ../LineBorder.glade.h:46
 msgid "Line Border 2 on registry.gimp.org"
 msgstr "Line Border 2 op registry.gimp.org"
 
-#: ../LineBorder.glade.h:42
+#: ../LineBorder.glade.h:47
 msgid "Line border 2"
 msgstr "Line border 2"
 
-#: ../LineBorder.glade.h:43
+#: ../LineBorder.glade.h:48
 msgid "Line color:"
 msgstr "Lijn kleur:"
 
-#: ../LineBorder.glade.h:46
+#: ../LineBorder.glade.h:51
 msgid "None"
 msgstr "Geen"
 
-#: ../LineBorder.glade.h:47
+#: ../LineBorder.glade.h:52
 msgid "Opacity: "
 msgstr "Ondoorzichtigheid:"
 
-#: ../LineBorder.glade.h:49
-msgid "Outer line size:"
-msgstr "Breedte buitenlijn:"
-
-#: ../LineBorder.glade.h:50
+#: ../LineBorder.glade.h:54
 msgid "Position:"
 msgstr "Positie:"
 
-#: ../LineBorder.glade.h:52
+#: ../LineBorder.glade.h:56
 msgid "Rotate text to left if is placed to side"
 msgstr "Roteer tekst linksom indien aan de zijkant geplaatst."
 
-#: ../LineBorder.glade.h:53
+#: ../LineBorder.glade.h:57
 msgid "Rotate text:"
 msgstr "Roteer tekst:"
 
-#: ../LineBorder.glade.h:54
+#: ../LineBorder.glade.h:58
 msgid "Rotation:"
 msgstr "Rotatie:"
 
-#: ../LineBorder.glade.h:55
-msgid "Round inner line corners:"
+#: ../LineBorder.glade.h:59
+#, fuzzy
+msgid "Round corners:"
 msgstr "Maak de hoeken van de binnenlijn rond:"
 
-#: ../LineBorder.glade.h:56
-msgid "Round outer line corners:"
+#: ../LineBorder.glade.h:60
+#, fuzzy
+msgid "Round inner corners:"
+msgstr "Maak de hoeken van de binnenlijn rond:"
+
+#: ../LineBorder.glade.h:61
+#, fuzzy
+msgid "Round outer corners:"
 msgstr "Maak de hoeken van de buitenlijn rond:"
 
-#: ../LineBorder.glade.h:57
+#: ../LineBorder.glade.h:62
+msgid "Size:"
+msgstr ""
+
+#: ../LineBorder.glade.h:63
 msgid "Text"
 msgstr "Tekst"
 
-#: ../LineBorder.glade.h:58
+#: ../LineBorder.glade.h:64
 msgid ""
 "This program is free software; you can redistribute it and/or\n"
 "modify it under the terms of the GNU General Public License\n"
@@ -365,33 +395,38 @@ msgstr ""
 "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, "
 "USA.\n"
 
-#: ../LineBorder.glade.h:72
-msgid "Total border size (height):"
+#: ../LineBorder.glade.h:78
+#, fuzzy
+msgid "Total size (height):"
 msgstr "Totale breedte van de rand (hoogte):"
 
-#: ../LineBorder.glade.h:73
-msgid "Total border size (width):"
+#: ../LineBorder.glade.h:79
+#, fuzzy
+msgid "Total size (width):"
 msgstr "Totale breedte van de rand (breedte):"
 
-#: ../LineBorder.glade.h:74
-msgid "Units"
-msgstr "Eenheden"
-
-#: ../LineBorder.glade.h:79
-msgid "Use actual palette colors:"
+#: ../LineBorder.glade.h:84
+#, fuzzy
+msgid "Use actual palette colors"
 msgstr "Gebruik aktuele palet kleuren:"
 
-#: ../LineBorder.glade.h:80
+#: ../LineBorder.glade.h:85
 msgid "Watermark"
 msgstr "Watermerk"
 
-#: ../LineBorder.glade.h:81
+#: ../LineBorder.glade.h:86
 msgid "Where is text placed"
 msgstr "Waar is de tekst geplaatst"
 
-#: ../LineBorder.glade.h:82
+#: ../LineBorder.glade.h:87
 msgid "Work on copy:"
 msgstr "Werk met een copie:"
+
+#~ msgid "Image"
+#~ msgstr "Afbeelding"
+
+#~ msgid "Units"
+#~ msgstr "Eenheden"
 
 #~ msgid "Borders"
 #~ msgstr "Randen"
