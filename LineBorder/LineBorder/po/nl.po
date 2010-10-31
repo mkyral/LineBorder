@@ -1,17 +1,18 @@
-# Dutch translations for LineBorder package.
-# Copyright (C) 2010 THE LineBorder'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the LineBorder package.
-# 
-#  <mkyral@email.cz>, 2010.
+# Dutch translations for LineBorder 2 package.
+# Copyright (C) 2010 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+#
+# <mkyral@email.cz>, 2010.
 # Marian Kyral <mkyral@email.cz>, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-31 08:25+0100\n"
-"PO-Revision-Date: 2010-10-30 10:41+0200\n"
-"Last-Translator: Elmar Sullock Enzlin <moroquendo@gmail.com>\n"
-"Language-Team: Dutch <kde-i18n-doc@kde.org>\n"
+"Project-Id-Version: LineBorder 2 release 2.3\n"
+"Report-Msgid-Bugs-To: Elmar Sullock Enzlin <moroquendo@gmail.com>\n"
+"POT-Creation-Date: 2010-10-30 10:47+0200\n"
+"PO-Revision-Date: 2010-10-31 17:16+0100\n"
+"Last-Translator: Marian Kyral <mkyral@email.cz>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,12 +25,12 @@ msgid ""
 "Generate a line border around an image and optionaly place text on borders "
 "and inside the image."
 msgstr ""
-"Maakt een rand rondom een afbeelding en plaatst tekst in de rand of in de "
-"afbeelding."
+"Maakt een rand rondom een afbeelding en plaatst "
+"tekst in de rand of in de afbeelding."
 
 #: ../LineBorder.py:77 ../LineBorder.glade.h:88
 msgid "pixels"
-msgstr "body"
+msgstr "pixels"
 
 #: ../LineBorder.py:141 ../LineBorder.glade.h:43
 msgid "Inner"
@@ -96,7 +97,7 @@ msgstr "Midden links"
 
 #: ../LineBorder.py:495 ../LineBorder.glade.h:50
 msgid "Middle-Right"
-msgstr "Midden rechts"
+msgstr "Midden recht"
 
 #: ../LineBorder.py:498 ../LineBorder.glade.h:21
 msgid "Bottom-Left"
@@ -123,7 +124,7 @@ msgid ""
 "Sorry, the dialog file LineBorder.glade was not found.\n"
 "Check your installation please!"
 msgstr ""
-"Soory, geen dialoog file aanwezig.\n"
+"Sorry, geen dialoog file aanwezig.\n"
 "Controleer uw installatie van de plugin!"
 
 #: ../gui.py:236
@@ -153,7 +154,7 @@ msgstr "bestaat niet of is niet te openen!\n"
 #: ../gui.py:743 ../gui.py:776 ../gui.py:874 ../gui.py:894 ../gui.py:989
 #, python-format
 msgid "Missing section in config file. %s"
-msgstr "Sectie in configuratie bestand mist. %s"
+msgstr "Sectie in configuratie bestand ontbreekt. %s"
 
 #: ../gui.py:994
 #, python-format
@@ -183,12 +184,11 @@ msgstr "%"
 
 #: ../LineBorder.glade.h:3
 msgid "(c) 2010 Marian Kyral"
-msgstr "(c) 2010 Marian Kyral"
+msgstr "c) 2010 Marian Kyral"
 
 #: ../LineBorder.glade.h:4
-#, fuzzy
 msgid "<b>Border</b>"
-msgstr "Rand"
+msgstr "<b>Rand</b>"
 
 #: ../LineBorder.glade.h:5
 msgid "<b>Center / Middle text</b>"
@@ -196,29 +196,27 @@ msgstr "<b>Tekst gecentreerd</b>"
 
 #: ../LineBorder.glade.h:6
 msgid "<b>Colors</b>"
-msgstr ""
+msgstr "<b>Kleur</b>"
 
 #: ../LineBorder.glade.h:7
 msgid "<b>General</b>"
-msgstr ""
+msgstr "<b>Algemeen</b>"
 
 #: ../LineBorder.glade.h:8
 msgid "<b>Image</b>"
-msgstr ""
+msgstr "<b>Afbeelding</b>"
 
 #: ../LineBorder.glade.h:9
-#, fuzzy
 msgid "<b>Inner line</b>"
-msgstr "Breedte binnenlijn:"
+msgstr "<b>Binnenste lijn</b>"
 
 #: ../LineBorder.glade.h:10
 msgid "<b>Left / Upper text</b>"
 msgstr "<b>Tekst linksboven</b>"
 
 #: ../LineBorder.glade.h:11
-#, fuzzy
 msgid "<b>Outer line</b>"
-msgstr "Breedte buitenlijn:"
+msgstr "<b>Buitenste lijn</b>"
 
 #: ../LineBorder.glade.h:12
 msgid "<b>Right / Bottom text</b>"
@@ -226,7 +224,7 @@ msgstr "<b>Tekst rechtsonder</b>"
 
 #: ../LineBorder.glade.h:13
 msgid "<b>Text</b>"
-msgstr ""
+msgstr "<b>Tekst</b>"
 
 #: ../LineBorder.glade.h:14
 msgid "About"
@@ -242,7 +240,7 @@ msgstr "Rand"
 
 #: ../LineBorder.glade.h:17
 msgid "Border color:"
-msgstr "Rand kleur:"
+msgstr "Randkleur:"
 
 #: ../LineBorder.glade.h:24
 msgid "Color:"
@@ -302,11 +300,11 @@ msgstr ""
 
 #: ../LineBorder.glade.h:44
 msgid "Justify:"
-msgstr "Correctie:"
+msgstr "Plaatsing:"
 
 #: ../LineBorder.glade.h:46
 msgid "Line Border 2 on registry.gimp.org"
-msgstr "Line Border 2 op registry.gimp.org"
+msgstr "Line Border 2 on registry.gimp.org"
 
 #: ../LineBorder.glade.h:47
 msgid "Line border 2"
@@ -322,7 +320,7 @@ msgstr "Geen"
 
 #: ../LineBorder.glade.h:52
 msgid "Opacity: "
-msgstr "Ondoorzichtigheid:"
+msgstr "Dekking"
 
 #: ../LineBorder.glade.h:54
 msgid "Position:"
@@ -341,23 +339,20 @@ msgid "Rotation:"
 msgstr "Rotatie:"
 
 #: ../LineBorder.glade.h:59
-#, fuzzy
 msgid "Round corners:"
-msgstr "Maak de hoeken van de binnenlijn rond:"
+msgstr "Ronde hoeken:"
 
 #: ../LineBorder.glade.h:60
-#, fuzzy
 msgid "Round inner corners:"
-msgstr "Maak de hoeken van de binnenlijn rond:"
+msgstr "Ronde hoeken binnenste lijn:"
 
 #: ../LineBorder.glade.h:61
-#, fuzzy
 msgid "Round outer corners:"
-msgstr "Maak de hoeken van de buitenlijn rond:"
+msgstr "Ronde hoeken buitenste lijn:"
 
 #: ../LineBorder.glade.h:62
 msgid "Size:"
-msgstr ""
+msgstr "Grootte:"
 
 #: ../LineBorder.glade.h:63
 msgid "Text"
@@ -396,19 +391,16 @@ msgstr ""
 "USA.\n"
 
 #: ../LineBorder.glade.h:78
-#, fuzzy
 msgid "Total size (height):"
-msgstr "Totale breedte van de rand (hoogte):"
+msgstr "Totale grootte (hoogte):"
 
 #: ../LineBorder.glade.h:79
-#, fuzzy
 msgid "Total size (width):"
-msgstr "Totale breedte van de rand (breedte):"
+msgstr "Totale grootte (breedte):"
 
 #: ../LineBorder.glade.h:84
-#, fuzzy
 msgid "Use actual palette colors"
-msgstr "Gebruik aktuele palet kleuren:"
+msgstr "Gebruik aktueel kleurenpalet:"
 
 #: ../LineBorder.glade.h:85
 msgid "Watermark"
@@ -422,11 +414,4 @@ msgstr "Waar is de tekst geplaatst"
 msgid "Work on copy:"
 msgstr "Werk met een copie:"
 
-#~ msgid "Image"
-#~ msgstr "Afbeelding"
 
-#~ msgid "Units"
-#~ msgstr "Eenheden"
-
-#~ msgid "Borders"
-#~ msgstr "Randen"
