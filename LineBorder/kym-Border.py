@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 #
-# Copyright, V2.2
+# Copyright, V2.3
 #
 # Marian Kyral (mkyral@email.cz)
 # (C) 2006, 2008, 2010, Frydek-Mistek, Czech Republic
@@ -25,6 +25,14 @@
 
 #
 # Changelog
+#
+# 31.10.2010 - v2.3
+# * CHANGE: gui improvements
+# * ADD: Inner/Outer line flag
+# * ADD: border rounding
+# * ADD: localization support (cs, nl)
+# * CHANGE: correct issues with extreme values
+#           (e.g.: border width = 0 - a panorama style)
 #
 # 28.10.2010 - v2.2
 # * ADD: allow to put sign/watermark inside the image

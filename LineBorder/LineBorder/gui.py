@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 #
-# Copyright, V2.2
+# Copyright, V2.3
 #
 # Marian Kyral (mkyral@email.cz)
 # (C) 2006, 2008, 2010, Frydek-Mistek, Czech Republic
@@ -25,6 +25,12 @@
 
 #
 # Changelog
+#
+# 31.10.2010 - v2.3
+# * CHANGE: gui improvements
+# * ADD: Inner/Outer line flag
+# * ADD: border rounding
+# * ADD: localization support (cs, nl)
 #
 # 28.10.2010 - v2.2
 # * ADD: allow to put sign/watermark inside the image
@@ -57,6 +63,13 @@ gtk.glade.bindtextdomain(APP,PO_DIR)
 gtk.glade.textdomain(APP)
 
 UI_FILENAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'LineBorder.glade')
+
+# Combobox values - do not store translated strings in configuration file
+UNITS = ['pixels', '%']
+FEATHER = ['None', 'Inner', 'Outer', 'Both']
+JUSTIFY = ['Center', 'Left', 'Right', 'Block']
+TEXT_POSITION = ['Bottom', 'Upper', 'Left', 'Right']
+WM_POSITION = ['Upper-Left', 'Upper-Center', 'Upper-Right', 'Middle-Left', 'Center', 'Middle-Right', 'Bottom-Left', 'Bottom-Center', 'Bottom-Right']
 
 class LineBorderApp():
   def __init__(self, Image = None, Drawable = None):
@@ -186,6 +199,14 @@ class LineBorderApp():
       md.run()
       md.destroy()
 
+  def combobox_get_id_from_desc(self, inSeq, inDesc):
+      i = 0
+      while i < len(inSeq):
+        if inSeq[i] == inDesc :
+          return i
+        i = i + 1
+      return 0
+
   def on_checkbutton_actual_palette_toggled (self, widget):
       if self.actual_pallete_colors.get_active() == True:
         self.line_color.set_sensitive(False)
@@ -199,8 +220,9 @@ class LineBorderApp():
         self.label_border_color.set_sensitive(True)
 
   def on_combobox_text_position_changed(self, widget):
-      active = self.text_position.get_active_text()
-      if active == _("Left") or active == _("Right") :
+      active = self.text_position.get_active()
+      if active == self.combobox_get_id_from_desc(TEXT_POSITION, "Left") or \
+         active == self.combobox_get_id_from_desc(TEXT_POSITION, "Right") :
         self.rotate_text.set_sensitive(True)
         self.label_rotate_text.set_sensitive(True)
       else:
@@ -343,65 +365,65 @@ class LineBorderApp():
 
       # Border tab
       width = self.border_width.get_value()
-      width_units = self.border_width_units.get_active_text()
+      width_units = UNITS[self.border_width_units.get_active()]
       height = self.border_height.get_value()
-      height_units = self.border_height_units.get_active_text()
+      height_units = UNITS[self.border_height_units.get_active()]
       ext_text = self.border_ext_text.get_value()
-      ext_text_units = self.border_ext_text_units.get_active_text()
+      ext_text_units = UNITS[self.border_ext_text_units.get_active()]
       round_inner_border = self.border_inner_border_round.get_value()
-      round_inner_border_units = self.border_inner_border_round_units.get_active_text()
+      round_inner_border_units = UNITS[self.border_inner_border_round_units.get_active()]
       round_outer_border = self.border_outer_border_round.get_value()
-      round_outer_border_units = self.border_outer_border_round_units.get_active_text()
+      round_outer_border_units = UNITS[self.border_outer_border_round_units.get_active()]
 
       inner_line = self.border_inner_line.get_active()
       inner_size = self.border_inner_size.get_value()
-      inner_units = self.border_inner_size_units.get_active_text()
+      inner_units = UNITS[self.border_inner_size_units.get_active()]
       inner_round = self.border_inner_round.get_value()
-      inner_round_units = self.border_inner_round_units.get_active_text()
+      inner_round_units = UNITS[self.border_inner_round_units.get_active()]
       dist_to_image = self.border_dist_to_image.get_value()
-      dist_to_image_units = self.border_dist_to_image_units.get_active_text()
+      dist_to_image_units = UNITS[self.border_dist_to_image_units.get_active()]
 
       outer_line = self.border_outer_line.get_active()
       outer_size = self.border_outer_size.get_value()
-      outer_units = self.border_outer_size_units.get_active_text()
+      outer_units = UNITS[self.border_outer_size_units.get_active()]
       outer_round = self.border_outer_round.get_value()
-      outer_round_units = self.border_outer_round_units.get_active_text()
+      outer_round_units = UNITS[self.border_outer_round_units.get_active()]
       dist_to_border = self.border_dist_to_border.get_value()
-      dist_to_border_units = self.border_dist_to_border_units.get_active_text()
+      dist_to_border_units = UNITS[self.border_dist_to_border_units.get_active()]
 
       actual_pallete = self.actual_pallete_colors.get_active()
       line_color = self.extract_color(self.line_color.get_color())
       border_color = self.extract_color(self.border_color.get_color())
-      feather_line = self.feather_line.get_active_text()
+      feather_line = FEATHER[self.feather_line.get_active()]
       flatten_image = self.flatten_image.get_active()
       work_on_copy = self.work_on_copy.get_active()
 
       # Text tab
       left_text_font = self.extract_font_name(self.left_text_font.get_font_name())
       left_text_font_size = self.extract_font_size(self.left_text_font.get_font_name())
-      left_text_justify = self.left_text_justify.get_active_text()
+      left_text_justify = JUSTIFY[self.left_text_justify.get_active()]
       left_text = self.extract_text(self.left_text)
       center_text_font = self.extract_font_name(self.center_text_font.get_font_name())
       center_text_font_size = self.extract_font_size(self.center_text_font.get_font_name())
-      center_text_justify = self.center_text_justify.get_active_text()
+      center_text_justify = JUSTIFY[self.center_text_justify.get_active()]
       center_text = self.extract_text(self.center_text)
       right_text_font = self.extract_font_name(self.right_text_font.get_font_name())
       right_text_font_size = self.extract_font_size(self.right_text_font.get_font_name())
-      right_text_justify = self.right_text_justify.get_active_text()
+      right_text_justify = JUSTIFY[self.right_text_justify.get_active()]
       right_text = self.extract_text(self.right_text)
-      text_position = self.text_position.get_active_text()
+      text_position = TEXT_POSITION[self.text_position.get_active()]
       rotate_text = self.rotate_text.get_active()
 
       # Watermark tab
       wm_type = self.get_wm_type()
       wm_opacity = self.wm_opacity.get_value()
       wm_rotation = self.wm_rotation.get_value()
-      wm_position = self.wm_position.get_active_text()
+      wm_position = WM_POSITION[self.wm_position.get_active()]
       wm_dist_to_border = self.wm_dist_to_border.get_value()
-      wm_dist_to_border_units = self.wm_dist_to_border_units.get_active_text()
+      wm_dist_to_border_units = UNITS[self.wm_dist_to_border_units.get_active()]
       wm_font_name = self.extract_font_name(self.wm_font.get_font_name())
       wm_font_size = self.extract_font_size(self.wm_font.get_font_name())
-      wm_justify = self.wm_justify.get_active_text()
+      wm_justify = JUSTIFY[self.wm_justify.get_active()]
       wm_color =  self.extract_color(self.wm_color.get_color())
       wm_text = self.extract_text(self.wm_text)
       wm_image_path = self.wm_image_path.get_text()
@@ -572,18 +594,7 @@ class LineBorderApp():
 
       return True
 
-  def set_combobox (self, inCBox, inText) :
-      #print "set_combobox: " + text
-      tm = inCBox.get_model()
-      tm_len = len(tm)
-      i = 0
-      while i <= tm_len :
-        if tm.get_value(tm.get_iter(i),0) == inText :
-          inCBox.set_active_iter(tm.get_iter(i))
-          break
-        i += 1
-
-  # extract text from the TextView
+  # Add text to the TextView
   def set_text (self, inTextView, inText):
       buff = inTextView.get_buffer()
       buff.set_text(inText)
@@ -610,7 +621,7 @@ class LineBorderApp():
               width = cfg.getfloat(sec_border, 'width')
               width_units = cfg.get(sec_border, 'width_units')
               self.border_width.set_value(width)
-              self.set_combobox(self.border_width_units, width_units)
+              self.border_width_units.set_active(self.combobox_get_id_from_desc(UNITS, width_units))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
@@ -620,7 +631,7 @@ class LineBorderApp():
               height = cfg.getfloat(sec_border, 'height')
               height_units = cfg.get(sec_border, 'height_units')
               self.border_height.set_value(height)
-              self.set_combobox(self.border_height_units, height_units)
+              self.border_height_units.set_active(self.combobox_get_id_from_desc(UNITS, height_units))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
@@ -630,7 +641,7 @@ class LineBorderApp():
               ext_text = cfg.getfloat(sec_border, 'ext_text')
               ext_text_units = cfg.get(sec_border, 'ext_text_units')
               self.border_ext_text.set_value(ext_text)
-              self.set_combobox(self.border_ext_text_units, ext_text_units)
+              self.border_ext_text_units.set_active(self.combobox_get_id_from_desc(UNITS, ext_text_units))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
@@ -640,7 +651,7 @@ class LineBorderApp():
               round_inner_border = cfg.getfloat(sec_border, 'round_inner_border')
               round_inner_border_units = cfg.get(sec_border, 'round_inner_border_units')
               self.border_inner_border_round.set_value(round_inner_border)
-              self.set_combobox(self.border_inner_border_round_units, round_inner_border_units)
+              self.border_inner_border_round_units.set_active(self.combobox_get_id_from_desc(UNITS, round_inner_border_units))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
@@ -650,7 +661,7 @@ class LineBorderApp():
               round_outer_border = cfg.getfloat(sec_border, 'round_outer_border')
               round_outer_border_units = cfg.get(sec_border, 'round_outer_border_units')
               self.border_outer_border_round.set_value(round_outer_border)
-              self.set_combobox(self.border_outer_border_round_units, round_outer_border_units)
+              self.border_outer_border_round_units.set_active(self.combobox_get_id_from_desc(UNITS, round_outer_border_units))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
@@ -668,7 +679,7 @@ class LineBorderApp():
               inner_size = cfg.getfloat(sec_border, 'inner_size')
               inner_units = cfg.get(sec_border, 'inner_units')
               self.border_inner_size.set_value(inner_size)
-              self.set_combobox(self.border_inner_size_units, inner_units)
+              self.border_inner_size_units.set_active(self.combobox_get_id_from_desc(UNITS, inner_units))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
@@ -678,7 +689,7 @@ class LineBorderApp():
               inner_round = cfg.getfloat(sec_border, 'inner_round')
               inner_round_units = cfg.get(sec_border, 'inner_round_units')
               self.border_inner_round.set_value(inner_round)
-              self.set_combobox(self.border_inner_round_units, inner_round_units)
+              self.border_inner_round_units.set_active(self.combobox_get_id_from_desc(UNITS, inner_round_units))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
@@ -688,7 +699,7 @@ class LineBorderApp():
               dist_to_image = cfg.getfloat(sec_border, 'dist_to_image')
               dist_to_image_units = cfg.get(sec_border, 'dist_to_image_units')
               self.border_dist_to_image.set_value(dist_to_image)
-              self.set_combobox(self.border_dist_to_image_units, dist_to_image_units)
+              self.border_dist_to_image_units.set_active(self.combobox_get_id_from_desc(UNITS, dist_to_image_units))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
@@ -706,7 +717,7 @@ class LineBorderApp():
               outer_size = cfg.getfloat(sec_border, 'outer_size')
               outer_units = cfg.get(sec_border, 'outer_units')
               self.border_outer_size.set_value(outer_size)
-              self.set_combobox(self.border_outer_size_units, outer_units)
+              self.border_outer_size_units.set_active(self.combobox_get_id_from_desc(UNITS, outer_units))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
@@ -716,7 +727,7 @@ class LineBorderApp():
               outer_round = cfg.getfloat(sec_border, 'outer_round')
               outer_round_units = cfg.get(sec_border, 'outer_round_units')
               self.border_outer_round.set_value(outer_round)
-              self.set_combobox(self.border_outer_round_units, outer_round_units)
+              self.border_outer_round_units.set_active(self.combobox_get_id_from_desc(UNITS, outer_round_units))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
@@ -726,7 +737,7 @@ class LineBorderApp():
               dist_to_border = cfg.getfloat(sec_border, 'dist_to_border')
               dist_to_border_units = cfg.get(sec_border, 'dist_to_border_units')
               self.border_dist_to_border.set_value(dist_to_border)
-              self.set_combobox(self.border_dist_to_border_units, dist_to_border_units)
+              self.border_dist_to_border_units.set_active(self.combobox_get_id_from_desc(UNITS, dist_to_border_units))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
@@ -734,7 +745,7 @@ class LineBorderApp():
 
             try:
               feather_line = cfg.get(sec_border, 'feather_line')
-              self.set_combobox(self.feather_line, feather_line)
+              self.feather_line.set_active(self.combobox_get_id_from_desc(FEATHER, feather_line))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
@@ -789,7 +800,7 @@ class LineBorderApp():
 
             try:
               left_text_justify = cfg.get(sec_text, 'left_text_justify')
-              self.set_combobox(self.left_text_justify, left_text_justify)
+              self.left_text_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, left_text_justify))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
@@ -815,7 +826,7 @@ class LineBorderApp():
 
             try:
               center_text_justify = cfg.get(sec_text, 'center_text_justify')
-              self.set_combobox(self.center_text_justify, center_text_justify)
+              self.center_text_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, center_text_justify))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
@@ -841,7 +852,7 @@ class LineBorderApp():
 
             try:
               right_text_justify = cfg.get(sec_text, 'right_text_justify')
-              self.set_combobox(self.right_text_justify, right_text_justify)
+              self.right_text_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, right_text_justify))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
@@ -857,7 +868,7 @@ class LineBorderApp():
 
             try:
               text_position = cfg.get(sec_text, 'text_position')
-              self.set_combobox(self.text_position, text_position)
+              self.text_position.set_active(self.combobox_get_id_from_desc(TEXT_POSITION, text_position))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
@@ -926,7 +937,7 @@ class LineBorderApp():
 
             try:
               wm_position = cfg.get(sec_wm, 'wm_position')
-              self.set_combobox(self.wm_position, wm_position)
+              self.wm_position.set_active(self.combobox_get_id_from_desc(WM_POSITION, wm_position))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
@@ -936,7 +947,7 @@ class LineBorderApp():
               wm_dist_to_border = cfg.getfloat(sec_wm, 'wm_dist_to_border')
               wm_dist_to_border_units = cfg.get(sec_wm, 'wm_dist_to_border_units')
               self.wm_dist_to_border.set_value(wm_dist_to_border)
-              self.set_combobox(self.wm_dist_to_border_units, wm_dist_to_border_units)
+              self.wm_dist_to_border_units.set_active(self.combobox_get_id_from_desc(UNITS, wm_dist_to_border_units))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
@@ -953,7 +964,7 @@ class LineBorderApp():
 
             try:
               wm_justify = cfg.get(sec_wm, 'wm_justify')
-              self.set_combobox(self.wm_justify, wm_justify)
+              self.wm_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, wm_justify))
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:

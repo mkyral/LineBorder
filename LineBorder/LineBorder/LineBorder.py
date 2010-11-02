@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 #
-# Copyright, V2.2
+# Copyright, V2.3
 #
 # Marian Kyral (mkyral@email.cz)
 # (C) 2006, 2008, 2010, Frydek-Mistek, Czech Republic
@@ -25,6 +25,10 @@
 
 #
 # Changelog
+#
+# 31.10.2010 - v2.3
+# * ADD: Inner/Outer line flag
+# * ADD: border rounding
 #
 # 28.10.2010 - v2.2
 # * ADD: allow to put sign/watermark inside the image
@@ -74,7 +78,7 @@ def bigger(a, b):
       return b
 
 def recalc_units (InUnit, InValue, InBase):
-    if InUnit == _('pixels') :
+    if InUnit == 'pixels' :
       return InValue
     else : # calculate percents
       if InValue == 0 :
@@ -138,48 +142,48 @@ def LineBorder (InImage, InLayer,
   ext_left = 0
   ext_right = 0
 
-  if InFeather == _("Inner") or InFeather == _("Both") :
+  if InFeather == "Inner" or InFeather == "Both" :
      FeatherInner = True
   else :
      FeatherInner = False
 
-  if InFeather == _("Outer") or InFeather == _("Both") :
+  if InFeather == "Outer" or InFeather == "Both" :
      FeatherOuter = True
   else :
      FeatherOuter = False
 
-  if InLeftTextJustify == _("Center") :
+  if InLeftTextJustify == "Center" :
     LeftTextJustify = TEXT_JUSTIFY_CENTER
-  elif InLeftTextJustify == _("Left") :
+  elif InLeftTextJustify == "Left" :
     LeftTextJustify = TEXT_JUSTIFY_LEFT
-  elif InLeftTextJustify == _("Right") :
+  elif InLeftTextJustify == "Right" :
     LeftTextJustify = TEXT_JUSTIFY_RIGHT
   else :
     LeftTextJustify = TEXT_JUSTIFY_FILL
 
-  if InCenterTextJustify == _("Center") :
+  if InCenterTextJustify == "Center" :
     CenterTextJustify = TEXT_JUSTIFY_CENTER
-  elif InCenterTextJustify == _("Left") :
+  elif InCenterTextJustify == "Left" :
     CenterTextJustify = TEXT_JUSTIFY_LEFT
-  elif InCenterTextJustify == _("Right") :
+  elif InCenterTextJustify == "Right" :
     CenterTextJustify = TEXT_JUSTIFY_RIGHT
   else :
     CenterTextJustify = TEXT_JUSTIFY_FILL
 
-  if InRightTextJustify == _("Center") :
+  if InRightTextJustify == "Center" :
     RightTextJustify = TEXT_JUSTIFY_CENTER
-  elif InRightTextJustify == _("Left") :
+  elif InRightTextJustify == "Left" :
     RightTextJustify = TEXT_JUSTIFY_LEFT
-  elif InRightTextJustify == _("Right") :
+  elif InRightTextJustify == "Right" :
     RightTextJustify = TEXT_JUSTIFY_RIGHT
   else :
     RightTextJustify = TEXT_JUSTIFY_FILL
 
-  if InWmJustify == _("Center") :
+  if InWmJustify == "Center" :
     WmJustify = TEXT_JUSTIFY_CENTER
-  elif InWmJustify == _("Left") :
+  elif InWmJustify == "Left" :
     WmJustify = TEXT_JUSTIFY_LEFT
-  elif InWmJustify == _("Right") :
+  elif InWmJustify == "Right" :
     WmJustify = TEXT_JUSTIFY_RIGHT
   else :
     WmJustify = TEXT_JUSTIFY_FILL
@@ -249,15 +253,15 @@ def LineBorder (InImage, InLayer,
   pdb.gimp_image_resize(TheImage, image_width, image_height, total_border_width, total_border_height)
 
   if extent_border > 0  : # extend the bottom border
-    if InTextPosition == _("Bottom"):
+    if InTextPosition == "Bottom":
       ext_bottom = extent_border
       image_height = image_height + ext_bottom
       pdb.gimp_image_resize(TheImage, image_width, image_height, 0, 0)
-    elif InTextPosition == _("Upper"):
+    elif InTextPosition == "Upper":
       ext_upper = extent_border
       image_height = image_height + ext_upper
       pdb.gimp_image_resize(TheImage, image_width, image_height, 0, ext_upper)
-    elif InTextPosition == _("Left"):
+    elif InTextPosition == "Left":
       ext_left = extent_border
       image_width = image_width + ext_left
       pdb.gimp_image_resize(TheImage, image_width, image_height, ext_left, 0)
@@ -351,7 +355,7 @@ def LineBorder (InImage, InLayer,
     pdb.gimp_image_add_layer(TheImage, LeftTextLayer, -1)
     pdb.gimp_text_layer_set_justification(LeftTextLayer, LeftTextJustify)
     # rotate text
-    if ( InTextPosition == _("Left") or InTextPosition == _("Right")) and InRotateText :
+    if ( InTextPosition == "Left" or InTextPosition == "Right") and InRotateText :
       LeftTextLayer = pdb.gimp_drawable_transform_rotate(LeftTextLayer, -1.570795, True, 0, 0, TRANSFORM_FORWARD, INTERPOLATION_CUBIC, False, 3, TRANSFORM_RESIZE_ADJUST )
     else :
       pdb.gimp_text_layer_set_antialias(LeftTextLayer, True)
@@ -361,13 +365,13 @@ def LineBorder (InImage, InLayer,
     LeftTextHeight = pdb.gimp_drawable_height(LeftTextLayer)
     # move text to correct position
     pdb.gimp_layer_resize(LeftTextLayer, LeftTextWidth, LeftTextHeight, 0, 0)
-    if InTextPosition == _("Bottom"):
+    if InTextPosition == "Bottom":
       x = bigger(total_border_width, 5)
       y = ((image_height -outer_border_size - ((total_border_height + ext_bottom - outer_border_size - inner_border_size ) / 2)) - (LeftTextHeight / 2))
-    elif InTextPosition == _("Upper"):
+    elif InTextPosition == "Upper":
       x = bigger(total_border_width, 5)
       y = outer_border_size + (((total_border_height + ext_upper - outer_border_size - inner_border_size) / 2) - (LeftTextHeight / 2))
-    elif InTextPosition == _("Left"):
+    elif InTextPosition == "Left":
       x = outer_border_size + ((((total_border_width + extent_border) - (outer_border_size + inner_border_size)) / 2) - (LeftTextWidth / 2))
       y = bigger(total_border_height, 5)
     else : # InTextPosition == "Right"
@@ -387,7 +391,7 @@ def LineBorder (InImage, InLayer,
     pdb.gimp_image_add_layer(TheImage, CenterTextLayer, -1)
     pdb.gimp_text_layer_set_justification(CenterTextLayer, CenterTextJustify)
     # rotate text
-    if ( InTextPosition == _("Left") or InTextPosition == _("Right")) and InRotateText :
+    if ( InTextPosition == "Left" or InTextPosition == "Right") and InRotateText :
       CenterTextLayer = pdb.gimp_drawable_transform_rotate(CenterTextLayer, -1.570795, True, 0, 0, TRANSFORM_FORWARD, INTERPOLATION_CUBIC, False, 3, TRANSFORM_RESIZE_ADJUST )
     else :
       pdb.gimp_text_layer_set_antialias(CenterTextLayer, True)
@@ -397,13 +401,13 @@ def LineBorder (InImage, InLayer,
     CenterTextHeight = pdb.gimp_drawable_height(CenterTextLayer)
     # move text to correct position
     pdb.gimp_layer_resize(CenterTextLayer, CenterTextWidth, CenterTextHeight, 0, 0)
-    if InTextPosition == _("Bottom"):
+    if InTextPosition == "Bottom":
       x = ((total_border_width + (TheWidth / 2)) - (CenterTextWidth / 2))
       y = ((image_height -outer_border_size - ((total_border_height + ext_bottom - outer_border_size - inner_border_size ) / 2)) - (CenterTextHeight / 2))
-    elif InTextPosition == _("Upper"):
+    elif InTextPosition == "Upper":
       x = ((total_border_width + (TheWidth / 2)) - (CenterTextWidth / 2))
       y = outer_border_size + (((total_border_height + ext_upper - outer_border_size - inner_border_size) / 2) - (CenterTextHeight / 2))
-    elif InTextPosition == _("Left"):
+    elif InTextPosition == "Left":
       x = outer_border_size + ((((total_border_width + extent_border) - (outer_border_size + inner_border_size)) / 2) - (CenterTextWidth / 2))
       y = ((total_border_height + (TheHeight / 2)) - (CenterTextHeight / 2))
     else : # InTextPosition == "Right"
@@ -423,7 +427,7 @@ def LineBorder (InImage, InLayer,
     pdb.gimp_image_add_layer(TheImage, RightTextLayer, -1)
     pdb.gimp_text_layer_set_justification(RightTextLayer, RightTextJustify)
     # rotate text
-    if ( InTextPosition == _("Left") or InTextPosition == _("Right")) and InRotateText :
+    if ( InTextPosition == "Left" or InTextPosition == "Right") and InRotateText :
       RightTextLayer = pdb.gimp_drawable_transform_rotate(RightTextLayer, -1.570795, True, 0, 0, TRANSFORM_FORWARD, INTERPOLATION_CUBIC, False, 3, TRANSFORM_RESIZE_ADJUST )
     else :
       pdb.gimp_text_layer_set_antialias(RightTextLayer, True)
@@ -433,13 +437,13 @@ def LineBorder (InImage, InLayer,
     RightTextHeight = pdb.gimp_drawable_height(RightTextLayer)
     # move text to correct position
     pdb.gimp_layer_resize(RightTextLayer, RightTextWidth, RightTextHeight, 0, 0)
-    if InTextPosition == _("Bottom"):
+    if InTextPosition == "Bottom":
       x = (image_width - bigger(total_border_width, 5) - RightTextWidth )
       y = ((image_height -outer_border_size - ((total_border_height + ext_bottom - outer_border_size - inner_border_size ) / 2)) - (RightTextHeight / 2))
-    elif InTextPosition == _("Upper"):
+    elif InTextPosition == "Upper":
       x = (image_width - bigger(total_border_width, 5) - RightTextWidth )
       y = outer_border_size + (((total_border_height + ext_upper - outer_border_size - inner_border_size) / 2) - (RightTextHeight / 2))
-    elif InTextPosition == _("Left"):
+    elif InTextPosition == "Left":
       x = outer_border_size + ((((total_border_width + extent_border) - (outer_border_size + inner_border_size)) / 2) - (RightTextWidth / 2))
       y = image_height - bigger(total_border_height, 5) - RightTextHeight
     else : # InTextPosition == "Right"
@@ -477,31 +481,31 @@ def LineBorder (InImage, InLayer,
 
     # move text to correct position
     pdb.gimp_layer_resize(WmLayer, WmLayerWidth, WmLayerHeight, 0, 0)
-    if   InWmPosition == _("Upper-Left"):
+    if   InWmPosition == "Upper-Left":
       x = total_border_width + wm_dist_to_border
       y = total_border_height + wm_dist_to_border
-    elif InWmPosition == _("Upper-Center"):
+    elif InWmPosition == "Upper-Center":
       x = total_border_width + (TheWidth / 2) - (WmLayerWidth / 2)
       y = total_border_height + wm_dist_to_border
-    elif InWmPosition == _("Upper-Right"):
+    elif InWmPosition == "Upper-Right":
       x = total_border_width + TheWidth - WmLayerWidth - wm_dist_to_border
       y = total_border_height + wm_dist_to_border
-    if   InWmPosition == _("Middle-Left"):
+    if   InWmPosition == "Middle-Left":
       x = total_border_width + wm_dist_to_border
       y = total_border_height + (TheHeight / 2) - (WmLayerHeight / 2)
-    elif InWmPosition == _("Center"):
+    elif InWmPosition == "Center":
       x = total_border_width + (TheWidth / 2) - (WmLayerWidth / 2)
       y = total_border_height + (TheHeight / 2) - (WmLayerHeight / 2)
-    elif InWmPosition == _("Middle-Right"):
+    elif InWmPosition == "Middle-Right":
       x = total_border_width + TheWidth - WmLayerWidth - wm_dist_to_border
       y = total_border_height + (TheHeight / 2) - (WmLayerHeight / 2)
-    if   InWmPosition == _("Bottom-Left"):
+    if   InWmPosition == "Bottom-Left":
       x = total_border_width + wm_dist_to_border
       y = total_border_height + TheHeight - WmLayerHeight - wm_dist_to_border
-    elif InWmPosition == _("Bottom-Center"):
+    elif InWmPosition == "Bottom-Center":
       x = total_border_width + (TheWidth / 2) - (WmLayerWidth / 2)
       y = total_border_height + TheHeight - WmLayerHeight - wm_dist_to_border
-    elif InWmPosition == _("Bottom-Right"):
+    elif InWmPosition == "Bottom-Right":
       x = total_border_width + TheWidth - WmLayerWidth - wm_dist_to_border
       y = total_border_height + TheHeight - WmLayerHeight - wm_dist_to_border
 
