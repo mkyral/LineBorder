@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-31 08:25+0100\n"
+"POT-Creation-Date: 2010-11-03 21:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,156 +17,77 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../../kym-Border.py:81 ../../kym-Border.py:82
+#: ../../kym-Border.py:89 ../../kym-Border.py:90
 msgid ""
 "Generate a line border around an image and optionaly place text on borders "
 "and inside the image."
 msgstr ""
 
-#: ../LineBorder.py:77 ../LineBorder.glade.h:88
-msgid "pixels"
-msgstr ""
-
-#: ../LineBorder.py:141 ../LineBorder.glade.h:43
-msgid "Inner"
-msgstr ""
-
-#: ../LineBorder.py:141 ../LineBorder.py:146 ../LineBorder.glade.h:18
-msgid "Both"
-msgstr ""
-
-#: ../LineBorder.py:146 ../LineBorder.glade.h:53
-msgid "Outer"
-msgstr ""
-
-#: ../LineBorder.py:151 ../LineBorder.py:160 ../LineBorder.py:169
-#: ../LineBorder.py:178 ../LineBorder.py:492 ../LineBorder.glade.h:23
-msgid "Center"
-msgstr ""
-
-#. rotate text
-#: ../LineBorder.py:153 ../LineBorder.py:162 ../LineBorder.py:171
-#: ../LineBorder.py:180 ../LineBorder.py:260 ../LineBorder.py:354
-#: ../LineBorder.py:370 ../LineBorder.py:390 ../LineBorder.py:406
-#: ../LineBorder.py:426 ../LineBorder.py:442 ../gui.py:203
-#: ../LineBorder.glade.h:45
-msgid "Left"
-msgstr ""
-
-#: ../LineBorder.py:155 ../LineBorder.py:164 ../LineBorder.py:173
-#: ../LineBorder.py:182 ../LineBorder.py:354 ../LineBorder.py:390
-#: ../LineBorder.py:426 ../gui.py:203 ../LineBorder.glade.h:55
-msgid "Right"
-msgstr ""
-
-#: ../LineBorder.py:244 ../LineBorder.py:269
+#: ../LineBorder.py:248 ../LineBorder.py:273
 msgid "Layer With Border"
 msgstr ""
 
-#. extend the bottom border
-#: ../LineBorder.py:252 ../LineBorder.py:364 ../LineBorder.py:400
-#: ../LineBorder.py:436 ../LineBorder.glade.h:19
-msgid "Bottom"
-msgstr ""
-
-#: ../LineBorder.py:256 ../LineBorder.py:367 ../LineBorder.py:403
-#: ../LineBorder.py:439 ../LineBorder.glade.h:80
-msgid "Upper"
-msgstr ""
-
-#: ../LineBorder.py:480 ../LineBorder.glade.h:82
-msgid "Upper-Left"
-msgstr ""
-
-#: ../LineBorder.py:483 ../LineBorder.glade.h:81
-msgid "Upper-Center"
-msgstr ""
-
-#: ../LineBorder.py:486 ../LineBorder.glade.h:83
-msgid "Upper-Right"
-msgstr ""
-
-#: ../LineBorder.py:489 ../LineBorder.glade.h:49
-msgid "Middle-Left"
-msgstr ""
-
-#: ../LineBorder.py:495 ../LineBorder.glade.h:50
-msgid "Middle-Right"
-msgstr ""
-
-#: ../LineBorder.py:498 ../LineBorder.glade.h:21
-msgid "Bottom-Left"
-msgstr ""
-
-#: ../LineBorder.py:501 ../LineBorder.glade.h:20
-msgid "Bottom-Center"
-msgstr ""
-
-#: ../LineBorder.py:504 ../LineBorder.glade.h:22
-msgid "Bottom-Right"
-msgstr ""
-
-#: ../gui.py:64
+#: ../gui.py:77
 msgid "Cannot find the glade file: "
 msgstr ""
 
-#: ../gui.py:65
+#: ../gui.py:78
 msgid "No dialog file found!"
 msgstr ""
 
-#: ../gui.py:65
+#: ../gui.py:78
 msgid ""
 "Sorry, the dialog file LineBorder.glade was not found.\n"
 "Check your installation please!"
 msgstr ""
 
-#: ../gui.py:236
+#: ../gui.py:258
 msgid "Open image"
 msgstr ""
 
-#: ../gui.py:245
+#: ../gui.py:267
 msgid "Images"
 msgstr ""
 
-#: ../gui.py:434
+#: ../gui.py:456
 msgid "Cannot find the image file:"
 msgstr ""
 
-#: ../gui.py:435
+#: ../gui.py:457
 msgid "File does not exists!"
 msgstr ""
 
-#: ../gui.py:435
+#: ../gui.py:457
 msgid "The watermark image file:"
 msgstr ""
 
-#: ../gui.py:435
+#: ../gui.py:457
 msgid "does not exists or is not readable!\n"
 msgstr ""
 
-#: ../gui.py:743 ../gui.py:776 ../gui.py:874 ../gui.py:894 ../gui.py:989
+#: ../gui.py:754 ../gui.py:787 ../gui.py:885 ../gui.py:905 ../gui.py:1000
 #, python-format
 msgid "Missing section in config file. %s"
 msgstr ""
 
-#: ../gui.py:994
+#: ../gui.py:1005
 #, python-format
 msgid "Cannot parse configuration file. %s"
 msgstr ""
 
-#: ../gui.py:995
+#: ../gui.py:1006
 msgid "Configuration file error"
 msgstr ""
 
-#: ../gui.py:995
+#: ../gui.py:1006
 msgid "Cannot parse configuration file. "
 msgstr ""
 
-#: ../gui.py:998
+#: ../gui.py:1009
 msgid "Configuration file loading error"
 msgstr ""
 
-#: ../gui.py:998
+#: ../gui.py:1009
 msgid "Problem opening configuration file."
 msgstr ""
 
@@ -235,39 +156,69 @@ msgstr ""
 msgid "Border color:"
 msgstr ""
 
+#: ../LineBorder.glade.h:18
+msgid "Both"
+msgstr ""
+
+#: ../LineBorder.glade.h:19
+msgid "Bottom"
+msgstr ""
+
+#: ../LineBorder.glade.h:20
+msgid "Bottom-Center"
+msgstr ""
+
+#: ../LineBorder.glade.h:21
+msgid "Bottom-Left"
+msgstr ""
+
+#: ../LineBorder.glade.h:22
+msgid "Bottom-Right"
+msgstr ""
+
+#: ../LineBorder.glade.h:23
+msgid "Center"
+msgstr ""
+
 #: ../LineBorder.glade.h:24
 msgid "Color:"
 msgstr ""
 
 #: ../LineBorder.glade.h:25
-msgid "Distance to border:"
-msgstr ""
-
-#: ../LineBorder.glade.h:26
-msgid "Distance to image:"
+msgid ""
+"Czech:  Marian Kyral <mkyral@email.cz>\n"
+"Dutch: Elmar Sullock Enzlin <moroquendo@gmail.com>"
 msgstr ""
 
 #: ../LineBorder.glade.h:27
-msgid "Distance:"
+msgid "Distance to border:"
 msgstr ""
 
 #: ../LineBorder.glade.h:28
-msgid "Extend text border:"
+msgid "Distance to image:"
 msgstr ""
 
 #: ../LineBorder.glade.h:29
-msgid "Feather line:"
+msgid "Distance:"
 msgstr ""
 
 #: ../LineBorder.glade.h:30
-msgid "Flatten image:"
+msgid "Extend text border:"
 msgstr ""
 
 #: ../LineBorder.glade.h:31
-msgid "Font:"
+msgid "Feather line:"
 msgstr ""
 
 #: ../LineBorder.glade.h:32
+msgid "Flatten image:"
+msgstr ""
+
+#: ../LineBorder.glade.h:33
+msgid "Font:"
+msgstr ""
+
+#: ../LineBorder.glade.h:34
 msgid ""
 "Generate a line border around an image\n"
 "with optional text on border and\n"
@@ -281,67 +232,91 @@ msgid ""
 "for hint about glade dialogs.\n"
 msgstr ""
 
-#: ../LineBorder.glade.h:44
-msgid "Justify:"
+#: ../LineBorder.glade.h:45
+msgid "Inner"
 msgstr ""
 
 #: ../LineBorder.glade.h:46
-msgid "Line Border 2 on registry.gimp.org"
+msgid "Justify:"
 msgstr ""
 
 #: ../LineBorder.glade.h:47
-msgid "Line border 2"
+msgid "Left"
 msgstr ""
 
 #: ../LineBorder.glade.h:48
+msgid "Line Border 2 on registry.gimp.org"
+msgstr ""
+
+#: ../LineBorder.glade.h:49
+msgid "Line border 2"
+msgstr ""
+
+#: ../LineBorder.glade.h:50
 msgid "Line color:"
 msgstr ""
 
 #: ../LineBorder.glade.h:51
-msgid "None"
+msgid "Middle-Left"
 msgstr ""
 
 #: ../LineBorder.glade.h:52
-msgid "Opacity: "
+msgid "Middle-Right"
+msgstr ""
+
+#: ../LineBorder.glade.h:53
+msgid "None"
 msgstr ""
 
 #: ../LineBorder.glade.h:54
-msgid "Position:"
+msgid "Opacity: "
+msgstr ""
+
+#: ../LineBorder.glade.h:55
+msgid "Outer"
 msgstr ""
 
 #: ../LineBorder.glade.h:56
-msgid "Rotate text to left if is placed to side"
+msgid "Position:"
 msgstr ""
 
 #: ../LineBorder.glade.h:57
-msgid "Rotate text:"
+msgid "Right"
 msgstr ""
 
 #: ../LineBorder.glade.h:58
-msgid "Rotation:"
+msgid "Rotate text to left if is placed to side"
 msgstr ""
 
 #: ../LineBorder.glade.h:59
-msgid "Round corners:"
+msgid "Rotate text:"
 msgstr ""
 
 #: ../LineBorder.glade.h:60
-msgid "Round inner corners:"
+msgid "Rotation:"
 msgstr ""
 
 #: ../LineBorder.glade.h:61
-msgid "Round outer corners:"
+msgid "Round corners:"
 msgstr ""
 
 #: ../LineBorder.glade.h:62
-msgid "Size:"
+msgid "Round inner corners:"
 msgstr ""
 
 #: ../LineBorder.glade.h:63
-msgid "Text"
+msgid "Round outer corners:"
 msgstr ""
 
 #: ../LineBorder.glade.h:64
+msgid "Size:"
+msgstr ""
+
+#: ../LineBorder.glade.h:65
+msgid "Text"
+msgstr ""
+
+#: ../LineBorder.glade.h:66
 msgid ""
 "This program is free software; you can redistribute it and/or\n"
 "modify it under the terms of the GNU General Public License\n"
@@ -359,26 +334,46 @@ msgid ""
 "USA.\n"
 msgstr ""
 
-#: ../LineBorder.glade.h:78
+#: ../LineBorder.glade.h:80
 msgid "Total size (height):"
 msgstr ""
 
-#: ../LineBorder.glade.h:79
+#: ../LineBorder.glade.h:81
 msgid "Total size (width):"
 msgstr ""
 
+#: ../LineBorder.glade.h:82
+msgid "Upper"
+msgstr ""
+
+#: ../LineBorder.glade.h:83
+msgid "Upper-Center"
+msgstr ""
+
 #: ../LineBorder.glade.h:84
-msgid "Use actual palette colors"
+msgid "Upper-Left"
 msgstr ""
 
 #: ../LineBorder.glade.h:85
-msgid "Watermark"
+msgid "Upper-Right"
 msgstr ""
 
 #: ../LineBorder.glade.h:86
-msgid "Where is text placed"
+msgid "Use actual palette colors"
 msgstr ""
 
 #: ../LineBorder.glade.h:87
+msgid "Watermark"
+msgstr ""
+
+#: ../LineBorder.glade.h:88
+msgid "Where is text placed"
+msgstr ""
+
+#: ../LineBorder.glade.h:89
 msgid "Work on copy:"
+msgstr ""
+
+#: ../LineBorder.glade.h:90
+msgid "pixels"
 msgstr ""

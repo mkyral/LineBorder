@@ -1,0 +1,48 @@
+TRANSLATIONS
+
+To translate LineBorder 2 to your language you need to get the .po file,
+translate it, test it and sent it to me (mkyral@email.cz)
+
+1) Get the .po file
+-------------------
+
+There are basicaly three ways:
+
+  a) If you have linux, just put your locale code to the
+     LineBorder/po/LINGUAS file and run command ./msg.sh -u
+     in the po directory and new .po file will be created there.
+
+  b) Sent me an email and I'll generate the file for you.
+
+  c) Use existing .po file for different languge.
+
+2) Translation
+--------------
+
+  You can use any text editor, but better is to use a special editor,
+  like lokalize (KDE)
+       poedit (Linux, Windows, Mac OS X) - http://www.poedit.net/
+       a lot of others.
+
+3) Testing
+----------
+
+  On linux)
+      You can use the LineBorder/po/msg.sh program with
+      parameter "-c". This will compile the file and install it
+      to the LineBorder/locale/<locale_code>/ directory:   ./msg.sh -c
+
+  On windows)
+      a) You will need gettext tools for window.
+      b) Compile the .po file:
+           msgfmt.exe --output-file=LineBorder.mo <po_file>
+
+      c) Copy the .mo file to LineBorder\locale\<locale_code>\LC_MESSAGES\
+
+  Both) Start Gimp, and check if it is translated.
+
+4) Publish your translation
+---------------------------
+
+  Set the translation file to me and I'll include it in next releaase.
+

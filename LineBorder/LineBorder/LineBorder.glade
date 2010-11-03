@@ -1882,6 +1882,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 </property>
     <property name="authors">Developer:  Mari&#xE1;n Kyral (mkyral@email.cz)
 </property>
+    <property name="translator_credits" translatable="yes">Czech:  Marian Kyral &lt;mkyral@email.cz&gt;
+Dutch: Elmar Sullock Enzlin &lt;moroquendo@gmail.com&gt;</property>
     <signal name="destroy" handler="on_aboutdialog1_destroy"/>
     <signal name="close" handler="on_aboutdialog1_destroy"/>
     <signal name="response" handler="on_aboutdialog1_destroy"/>
