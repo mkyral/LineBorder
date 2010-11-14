@@ -69,11 +69,6 @@ PO_DIR = os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)),AP
 locale.setlocale(locale.LC_ALL, '')
 gettext.install(APP, PO_DIR, unicode=True)
 
-# create an output function that redirects to gimp's Error Console
-def gprint( text ):
-  pdb.gimp_message(text)
-  return
-
 def plugin_main(TheImage, TheDrawable):
     import LineBorder.gui  # import package that is meat of plugin
     app = LineBorder.gui.LineBorderApp(TheImage, TheDrawable)  # create instance of gtkBuilder app

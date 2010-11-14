@@ -47,10 +47,19 @@ import math
 from gimpfu import *
 
 import os, ConfigParser
-import gtk, gtk.glade
-import pygtk
-pygtk.require("2.0")
+try:
+  import gtk, gtk.glade
+except ImportError,  e :
+  self.on_error(_("Libraries not found!"), _("The Gtk or Glade library not found.\nCheck your installation please!\n"+str(e)))
+
+try:
+  import pygtk
+  pygtk.require("2.0")
+except ImportError,  e :
+  self.on_error(_("Libraries not found!"), _("The pygtk library not found.\nCheck your installation please!\n"+str(e)))
+
 from LineBorder import LineBorder
+from . import LineBorderProfile
 
 import locale, gettext
 
@@ -166,11 +175,13 @@ class LineBorderApp():
       self.label_wm_color = builder.get_object('label_wm_color')
       self.button_wm_file_open = builder.get_object('button_wm_file_open')
 
-      # Config file
-      self.config_dir = gimp.directory
-      self.config_file = os.path.join(self.config_dir, "LineBorder.cfg")
+      # Initialize profiles
+      self.profile_list = LineBorderProfile.LineBorderProfileList()
+      self.profile_list.configFile = os.path.join(gimp.directory, "LineBorder.cfg")
+      self.profile_list.loadProfiles()
+      self.default_profile = self.profile_list.profiles['DEFAULT']
 
-      if not self.load_config('DEFAULT') :
+      if not self.apply_profile(self.default_profile) :
         # Workaround :-/ (http://www.listware.net/201004/gtk-app-devel-list/88663-default-values-for-spin-buttons-in-glade.html)
         self.border_width.set_value(25)
         self.border_height.set_value(25)
@@ -363,647 +374,188 @@ class LineBorderApp():
       image = self.image
       drawable = self.drawable
 
-      # Border tab
-      width = self.border_width.get_value()
-      width_units = UNITS[self.border_width_units.get_active()]
-      height = self.border_height.get_value()
-      height_units = UNITS[self.border_height_units.get_active()]
-      ext_text = self.border_ext_text.get_value()
-      ext_text_units = UNITS[self.border_ext_text_units.get_active()]
-      round_inner_border = self.border_inner_border_round.get_value()
-      round_inner_border_units = UNITS[self.border_inner_border_round_units.get_active()]
-      round_outer_border = self.border_outer_border_round.get_value()
-      round_outer_border_units = UNITS[self.border_outer_border_round_units.get_active()]
+      self.parse_form_values(self.default_profile)
+      self.profile_list.saveProfiles()
 
-      inner_line = self.border_inner_line.get_active()
-      inner_size = self.border_inner_size.get_value()
-      inner_units = UNITS[self.border_inner_size_units.get_active()]
-      inner_round = self.border_inner_round.get_value()
-      inner_round_units = UNITS[self.border_inner_round_units.get_active()]
-      dist_to_image = self.border_dist_to_image.get_value()
-      dist_to_image_units = UNITS[self.border_dist_to_image_units.get_active()]
-
-      outer_line = self.border_outer_line.get_active()
-      outer_size = self.border_outer_size.get_value()
-      outer_units = UNITS[self.border_outer_size_units.get_active()]
-      outer_round = self.border_outer_round.get_value()
-      outer_round_units = UNITS[self.border_outer_round_units.get_active()]
-      dist_to_border = self.border_dist_to_border.get_value()
-      dist_to_border_units = UNITS[self.border_dist_to_border_units.get_active()]
-
-      actual_pallete = self.actual_pallete_colors.get_active()
-      line_color = self.extract_color(self.line_color.get_color())
-      border_color = self.extract_color(self.border_color.get_color())
-      feather_line = FEATHER[self.feather_line.get_active()]
-      flatten_image = self.flatten_image.get_active()
-      work_on_copy = self.work_on_copy.get_active()
-
-      # Text tab
-      left_text_font = self.extract_font_name(self.left_text_font.get_font_name())
-      left_text_font_size = self.extract_font_size(self.left_text_font.get_font_name())
-      left_text_justify = JUSTIFY[self.left_text_justify.get_active()]
-      left_text = self.extract_text(self.left_text)
-      center_text_font = self.extract_font_name(self.center_text_font.get_font_name())
-      center_text_font_size = self.extract_font_size(self.center_text_font.get_font_name())
-      center_text_justify = JUSTIFY[self.center_text_justify.get_active()]
-      center_text = self.extract_text(self.center_text)
-      right_text_font = self.extract_font_name(self.right_text_font.get_font_name())
-      right_text_font_size = self.extract_font_size(self.right_text_font.get_font_name())
-      right_text_justify = JUSTIFY[self.right_text_justify.get_active()]
-      right_text = self.extract_text(self.right_text)
-      text_position = TEXT_POSITION[self.text_position.get_active()]
-      rotate_text = self.rotate_text.get_active()
-
-      # Watermark tab
-      wm_type = self.get_wm_type()
-      wm_opacity = self.wm_opacity.get_value()
-      wm_rotation = self.wm_rotation.get_value()
-      wm_position = WM_POSITION[self.wm_position.get_active()]
-      wm_dist_to_border = self.wm_dist_to_border.get_value()
-      wm_dist_to_border_units = UNITS[self.wm_dist_to_border_units.get_active()]
-      wm_font_name = self.extract_font_name(self.wm_font.get_font_name())
-      wm_font_size = self.extract_font_size(self.wm_font.get_font_name())
-      wm_justify = JUSTIFY[self.wm_justify.get_active()]
-      wm_color =  self.extract_color(self.wm_color.get_color())
-      wm_text = self.extract_text(self.wm_text)
-      wm_image_path = self.wm_image_path.get_text()
-
-      self.save_config( 'DEFAULT', width, width_units,
-                        height, height_units,
-                        ext_text, ext_text_units,
-                        round_inner_border, round_inner_border_units,
-                        round_outer_border, round_outer_border_units,
-                        inner_line, inner_size, inner_units,
-                        dist_to_image, dist_to_image_units,
-                        outer_line, outer_size, outer_units,
-                        dist_to_border, dist_to_border_units,
-                        inner_round, inner_round_units,
-                        outer_round, outer_round_units,
-                        actual_pallete, line_color, border_color, feather_line,
-                        left_text_font, left_text_font_size, left_text_justify, left_text,
-                        center_text_font, center_text_font_size, center_text_justify, center_text,
-                        right_text_font, right_text_font_size, right_text_justify, right_text,
-                        text_position, rotate_text,
-                        flatten_image, work_on_copy,
-                        wm_type, wm_opacity, wm_rotation, wm_position,
-                        wm_dist_to_border, wm_dist_to_border_units,
-                        wm_font_name, wm_font_size,
-                        wm_justify, wm_color, wm_text, wm_image_path
-                      )
-
-      if wm_type == 'image' and wm_image_path :
-        if not os.path.exists(wm_image_path):
-          print _("Cannot find the image file:") + " " + wm_image_path
-          self.on_error(_("File does not exists!"), _("The watermark image file:") + "\n\n" + wm_image_path + "\n\n" + _("does not exists or is not readable!\n"))
+      if self.default_profile.wmType == 'image' and self.default_profile.wmImagePath :
+        if not os.path.exists(wm_image_path.decode('unicode_escape')):
+          print _("Cannot find the image file:") + " " + self.default_profile.wmImagePath
+          self.on_error(_("File does not exists!"), _("The watermark image file:") + "\n\n" + self.default_profile.wmImagePath + "\n\n" + _("does not exists or is not readable!\n"))
           return
 
+      d = self.default_profile
       LineBorder ( image, drawable,
-                   width, width_units,
-                   height, height_units,
-                   ext_text, ext_text_units,
-                   round_inner_border, round_inner_border_units,
-                   round_outer_border, round_outer_border_units,
-                   inner_line, inner_size, inner_units,
-                   dist_to_image, dist_to_image_units,
-                   outer_line, outer_size, outer_units,
-                   dist_to_border, dist_to_border_units,
-                   inner_round, inner_round_units,
-                   outer_round, outer_round_units,
-                   actual_pallete, line_color, border_color, feather_line,
-                   left_text_font, left_text_font_size, left_text_justify, left_text,
-                   center_text_font, center_text_font_size, center_text_justify, center_text,
-                   right_text_font, right_text_font_size, right_text_justify, right_text,
-                   text_position, rotate_text,
-                   flatten_image, work_on_copy,
-                   wm_type, wm_opacity, wm_rotation, wm_position,
-                   wm_dist_to_border, wm_dist_to_border_units,
-                   wm_font_name, wm_font_size,
-                   wm_justify, wm_color, wm_text, wm_image_path
+                   d.width, d.widthUnits,
+                   d.height, d.heightUnits,
+                   d.extText, d.extTextUnits,
+                   d.roundInnerBorder, d.roundInnerBorderUnits,
+                   d.roundOuterBorder, d.roundOuterBorderUnits,
+                   d.innerLine, d.innerSize, d.innerUnits,
+                   d.distToImage, d.distToImageUnits,
+                   d.outerLine, d.outerSize, d.outerUnits,
+                   d.distToBorder, d.distToBorderUnits,
+                   d.innerRound, d.innerRoundUnits,
+                   d.outerRound, d.outerRoundUnits,
+                   d.actualPallete, d.lineColor,d. borderColor, d.featherLine,
+                   d.leftTextFont, d.leftTextFontSize, d.leftTextJustify, d.leftText,
+                   d.centerTextFont, d.centerTextFontSize, d.centerTextJustify, d.centerText,
+                   d.rightTextFont, d.rightTextFontSize, d.rightTextJustify, d.rightText,
+                   d.textPosition, d.rotateText,
+                   d.flattenImage, d.workOnCopy,
+                   d.wmType, d.wmOpacity, d.wmRotation, d.wmPosition,
+                   d.wmDistToBorder, d.wmDistToBorderUnits,
+                   d.wmFontName, d.wmFontSize,
+                   d.wmJustify, d.wmColor, d.wmText, d.wmImagePath
                  )
       gtk.main_quit()
 
-  def profile_sections(self, profile):
-      sec_border = profile +':' + 'border'
-      sec_color = profile +':' + 'color'
-      sec_text = profile +':' + 'text'
-      sec_general = profile +':' + 'general'
-      sec_wm = profile +':' + 'watermark'
-      return sec_border, sec_color, sec_text, sec_general, sec_wm
-
-  # Save plugin options for nex time
-  def save_config(self, profile, width, width_units,
-                        height, height_units,
-                        ext_text, ext_text_units,
-                        round_inner_border, round_inner_border_units,
-                        round_outer_border, round_outer_border_units,
-                        inner_line, inner_size, inner_units,
-                        dist_to_image, dist_to_image_units,
-                        outer_line, outer_size, outer_units,
-                        dist_to_border, dist_to_border_units,
-                        inner_round, inner_round_units,
-                        outer_round, outer_round_units,
-                        actual_pallete, line_color, border_color, feather_line,
-                        left_text_font, left_text_font_size, left_text_justify, left_text,
-                        center_text_font, center_text_font_size, center_text_justify, center_text,
-                        right_text_font, right_text_font_size, right_text_justify, right_text,
-                        text_position, rotate_text,
-                        flatten_image, work_on_copy,
-                        wm_type, wm_opacity, wm_rotation, wm_position,
-                        wm_dist_to_border, wm_dist_to_border_units,
-                        wm_font_name, wm_font_size,
-                        wm_justify, wm_color, wm_text, wm_image_path
-                 ):
-
-      sec_border, sec_color, sec_text, sec_general, sec_wm = self.profile_sections(profile)
-
-      cfg = ConfigParser.RawConfigParser()
-      cfg.add_section(sec_border)
-      cfg.set (sec_border, 'width', width)
-      cfg.set (sec_border, 'width_units', width_units)
-      cfg.set (sec_border, 'height', height)
-      cfg.set (sec_border, 'height_units', height_units)
-      cfg.set (sec_border, 'ext_text', ext_text)
-      cfg.set (sec_border, 'ext_text_units', ext_text_units)
-      cfg.set (sec_border, 'round_inner_border', round_inner_border)
-      cfg.set (sec_border, 'round_inner_border_units', round_inner_border_units)
-      cfg.set (sec_border, 'round_outer_border', round_outer_border)
-      cfg.set (sec_border, 'round_outer_border_units', round_outer_border_units)
-      cfg.set (sec_border, 'inner_line', inner_line)
-      cfg.set (sec_border, 'inner_size', inner_size)
-      cfg.set (sec_border, 'inner_units', inner_units)
-      cfg.set (sec_border, 'dist_to_image', dist_to_image)
-      cfg.set (sec_border, 'dist_to_image_units', dist_to_image_units)
-      cfg.set (sec_border, 'inner_round', inner_round)
-      cfg.set (sec_border, 'inner_round_units', inner_round_units)
-      cfg.set (sec_border, 'outer_line', outer_line)
-      cfg.set (sec_border, 'outer_size', outer_size)
-      cfg.set (sec_border, 'outer_units', outer_units)
-      cfg.set (sec_border, 'outer_round', outer_round)
-      cfg.set (sec_border, 'outer_round_units', outer_round_units)
-      cfg.set (sec_border, 'dist_to_border', dist_to_border)
-      cfg.set (sec_border, 'dist_to_border_units', dist_to_border_units)
-      cfg.set (sec_border, 'feather_line', feather_line)
-
-      cfg.add_section(sec_color)
-      cfg.set (sec_color, 'actual_pallete', actual_pallete)
-      cfg.set (sec_color, 'line_color.r', line_color[0])
-      cfg.set (sec_color, 'line_color.g', line_color[1])
-      cfg.set (sec_color, 'line_color.b', line_color[2])
-      cfg.set (sec_color, 'border_color.r', border_color[0])
-      cfg.set (sec_color, 'border_color.g', border_color[1])
-      cfg.set (sec_color, 'border_color.b', border_color[2])
-
-      cfg.add_section(sec_text)
-      cfg.set (sec_text, 'left_text_font', left_text_font)
-      cfg.set (sec_text, 'left_text_font_size', left_text_font_size)
-      cfg.set (sec_text, 'left_text_justify', left_text_justify)
-      cfg.set (sec_text, 'left_text', left_text.replace('\n','.\n'))
-      cfg.set (sec_text, 'center_text_font', center_text_font)
-      cfg.set (sec_text, 'center_text_font_size', center_text_font_size)
-      cfg.set (sec_text, 'center_text_justify', center_text_justify)
-      cfg.set (sec_text, 'center_text', center_text.replace('\n','.\n'))
-      cfg.set (sec_text, 'right_text_font', right_text_font)
-      cfg.set (sec_text, 'right_text_font_size', right_text_font_size)
-      cfg.set (sec_text, 'right_text_justify', right_text_justify)
-      cfg.set (sec_text, 'right_text', right_text.replace('\n','.\n'))
-      cfg.set (sec_text, 'text_position', text_position)
-      cfg.set (sec_text, 'rotate_text', rotate_text)
-
-      cfg.add_section(sec_general)
-      cfg.set (sec_general, 'flatten_image', flatten_image)
-      cfg.set (sec_general, 'work_on_copy', work_on_copy)
-
-      cfg.add_section(sec_wm)
-      cfg.set (sec_wm, 'wm_type', wm_type)
-      cfg.set (sec_wm, 'wm_opacity', wm_opacity)
-      cfg.set (sec_wm, 'wm_rotation', wm_rotation)
-      cfg.set (sec_wm, 'wm_position', wm_position)
-      cfg.set (sec_wm, 'wm_dist_to_border', wm_dist_to_border)
-      cfg.set (sec_wm, 'wm_dist_to_border_units', wm_dist_to_border_units)
-      cfg.set (sec_wm, 'wm_font_name', wm_font_name)
-      cfg.set (sec_wm, 'wm_font_size', wm_font_size)
-      cfg.set (sec_wm, 'wm_justify', wm_justify)
-      cfg.set (sec_wm, 'wm_color.r', wm_color[0])
-      cfg.set (sec_wm, 'wm_color.g', wm_color[1])
-      cfg.set (sec_wm, 'wm_color.b', wm_color[2])
-      cfg.set (sec_wm, 'wm_text', wm_text.replace('\n','.\n'))
-      cfg.set (sec_wm, 'wm_image_path', wm_image_path)
-
-      with open(self.config_file, 'wb') as configfile:
-          cfg.write(configfile)
-
-      return True
 
   # Add text to the TextView
   def set_text (self, inTextView, inText):
       buff = inTextView.get_buffer()
       buff.set_text(inText)
 
-  def load_config(self, profile):
+  def apply_profile(self, profile):
+      # Section: Border
+      if 'all' in profile.sections or 'border' in profile.sections :
+        self.border_width.set_value(profile.width)
+        self.border_width_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.widthUnits))
+        self.border_height.set_value(profile.height)
+        self.border_height_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.heightUnits))
+        self.border_ext_text.set_value(profile.extText)
+        self.border_ext_text_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.extTextUnits))
+        self.border_inner_border_round.set_value(profile.roundInnerBorder)
+        self.border_inner_border_round_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.roundInnerBorderUnits))
+        self.border_outer_border_round.set_value(profile.roundOuterBorder)
+        self.border_outer_border_round_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.roundOuterBorderUnits))
+        self.border_inner_line.set_active(profile.innerLine)
+        self.border_inner_size.set_value(profile.innerSize)
+        self.border_inner_size_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.innerUnits))
+        self.border_inner_round.set_value(profile.innerRound)
+        self.border_inner_round_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.innerRoundUnits))
+        self.border_dist_to_image.set_value(profile.distToImage)
+        self.border_dist_to_image_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.distToImageUnits))
+        self.border_outer_line.set_active(profile.outerLine)
+        self.border_outer_size.set_value(profile.outerSize)
+        self.border_outer_size_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.outerUnits))
+        self.border_outer_round.set_value(profile.outerRound)
+        self.border_outer_round_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.outerRoundUnits))
+        self.border_dist_to_border.set_value(profile.distToBorder)
+        self.border_dist_to_border_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.distToBorderUnits))
+        self.feather_line.set_active(self.combobox_get_id_from_desc(FEATHER, profile.featherLine))
 
-      if not os.path.exists(self.config_file):
-        return False
-      else :
-        try:
+      if 'all' in profile.sections or 'color' in profile.sections :
+        self.actual_pallete_colors.set_active(profile.actualPallete)
+        self.line_color.set_color(profile.lineColor)
+        self.border_color.set_color(profile.borderColor)
 
-          #if not os.access(self.config_file, os.R_OK) :
-              #print "ERROR: cannot read from file " + self.config_file
-              #return False
+      if 'all' in profile.sections or 'text' in profile.sections :
+        # Left text
+        self.left_text_font.set_font_name(profile.leftTextFont + " " + str(profile.leftTextFontSize))
+        self.left_text_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, profile.leftTextJustify))
+        self.set_text(self.left_text, profile.leftText)
+        # Center text
+        self.center_text_font.set_font_name(profile.centerTextFont + " " + str(profile.centerTextFontSize))
+        self.center_text_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, profile.centerTextJustify))
+        self.set_text(self.center_text, profile.centerText)
+        # Right text
+        self.right_text_font.set_font_name(profile.rightTextFont + " " + str(profile.rightTextFontSize))
+        self.right_text_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, profile.rightTextJustify))
+        self.set_text(self.right_text, profile.rightText)
 
-          sec_border, sec_color, sec_text, sec_general, sec_wm = self.profile_sections(profile)
+        self.text_position.set_active(self.combobox_get_id_from_desc(TEXT_POSITION, profile.textPosition))
+        self.rotate_text.set_active(profile.rotateText)
 
-          cfg = ConfigParser.RawConfigParser()
-          cfg.read(self.config_file)
+      # Section: general
+      if 'all' in profile.sections or 'general' in profile.sections :
+        # Section: General
+        self.flatten_image.set_active(profile.flattenImage)
+        self.work_on_copy.set_active(profile.workOnCopy)
 
-          # Section: Border
-          try:
-            try:
-              width = cfg.getfloat(sec_border, 'width')
-              width_units = cfg.get(sec_border, 'width_units')
-              self.border_width.set_value(width)
-              self.border_width_units.set_active(self.combobox_get_id_from_desc(UNITS, width_units))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
+      # Section: Watermark
+      if 'all' in profile.sections or 'wm' in profile.sections :
+        if profile.wmType == 'text':
+          self.wm_type_text.set_active(True)
+          self.on_radiobutton_wm_text_toggled(self.dialog) # trigger call on_radiobutton_wm_text_toggled()
+        else:
+          self.wm_type_image.set_active(True)
 
-            try:
-              height = cfg.getfloat(sec_border, 'height')
-              height_units = cfg.get(sec_border, 'height_units')
-              self.border_height.set_value(height)
-              self.border_height_units.set_active(self.combobox_get_id_from_desc(UNITS, height_units))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
+      self.wm_opacity.set_value(profile.wmOpacity)
+      self.wm_rotation.set_value(profile.wmRotation)
+      self.wm_position.set_active(self.combobox_get_id_from_desc(WM_POSITION, profile.wmPosition))
+      self.wm_dist_to_border.set_value(profile.wmDistToBorder)
+      self.wm_dist_to_border_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.wmDistToBorderUnits))
+      self.wm_font.set_font_name(profile.wmFontName + " " + str(profile.wmFontSize))
+      self.wm_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, profile.wmJustify))
+      self.wm_color.set_color(profile.wmColor)
+      self.set_text(self.wm_text, profile.wmText)
+      self.wm_image_path.set_text(profile.wmImagePath)
 
-            try:
-              ext_text = cfg.getfloat(sec_border, 'ext_text')
-              ext_text_units = cfg.get(sec_border, 'ext_text_units')
-              self.border_ext_text.set_value(ext_text)
-              self.border_ext_text_units.set_active(self.combobox_get_id_from_desc(UNITS, ext_text_units))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
+      return True
 
-            try:
-              round_inner_border = cfg.getfloat(sec_border, 'round_inner_border')
-              round_inner_border_units = cfg.get(sec_border, 'round_inner_border_units')
-              self.border_inner_border_round.set_value(round_inner_border)
-              self.border_inner_border_round_units.set_active(self.combobox_get_id_from_desc(UNITS, round_inner_border_units))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
+  def parse_form_values(self, profile):
+      # Border tab
+      profile.width = self.border_width.get_value()
+      profile.widthUnits = UNITS[self.border_width_units.get_active()]
+      profile.height = self.border_height.get_value()
+      profile.heightUnits = UNITS[self.border_height_units.get_active()]
+      profile.extText = self.border_ext_text.get_value()
+      profile.extTextUnits = UNITS[self.border_ext_text_units.get_active()]
+      profile.roundInnerBorder = self.border_inner_border_round.get_value()
+      profile.roundInnerBorderUnits = UNITS[self.border_inner_border_round_units.get_active()]
+      profile.roundOuterBorder = self.border_outer_border_round.get_value()
+      profile.roundOuterBorderUnits = UNITS[self.border_outer_border_round_units.get_active()]
 
-            try:
-              round_outer_border = cfg.getfloat(sec_border, 'round_outer_border')
-              round_outer_border_units = cfg.get(sec_border, 'round_outer_border_units')
-              self.border_outer_border_round.set_value(round_outer_border)
-              self.border_outer_border_round_units.set_active(self.combobox_get_id_from_desc(UNITS, round_outer_border_units))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
+      profile.innerLine = self.border_inner_line.get_active()
+      profile.innerSize = self.border_inner_size.get_value()
+      profile.innerUnits = UNITS[self.border_inner_size_units.get_active()]
+      profile.innerRound = self.border_inner_round.get_value()
+      profile.innerRoundUnits = UNITS[self.border_inner_round_units.get_active()]
+      profile.distToImage = self.border_dist_to_image.get_value()
+      profile.distToImageUnits = UNITS[self.border_dist_to_image_units.get_active()]
 
-            try:
-              inner_line = cfg.getboolean(sec_border, 'inner_line')
-              self.border_inner_line.set_active(inner_line)
-            except ConfigParser.NoOptionError, err:
-              self.border_inner_line.set_active(True)
-            except ValueError, err:
-              pass
+      profile.outerLine = self.border_outer_line.get_active()
+      profile.outerSize = self.border_outer_size.get_value()
+      profile.outerUnits = UNITS[self.border_outer_size_units.get_active()]
+      profile.outerRound = self.border_outer_round.get_value()
+      profile.outerRoundUnits = UNITS[self.border_outer_round_units.get_active()]
+      profile.distToBorder = self.border_dist_to_border.get_value()
+      profile.distToBorderUnits = UNITS[self.border_dist_to_border_units.get_active()]
 
-            try:
-              inner_size = cfg.getfloat(sec_border, 'inner_size')
-              inner_units = cfg.get(sec_border, 'inner_units')
-              self.border_inner_size.set_value(inner_size)
-              self.border_inner_size_units.set_active(self.combobox_get_id_from_desc(UNITS, inner_units))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
+      profile.actualPallete = self.actual_pallete_colors.get_active()
+      profile.lineColor = self.extract_color(self.line_color.get_color())
+      profile.borderColor = self.extract_color(self.border_color.get_color())
+      profile.featherLine = FEATHER[self.feather_line.get_active()]
+      profile.flattenImage = self.flatten_image.get_active()
+      profile.workOnCopy = self.work_on_copy.get_active()
 
-            try:
-              inner_round = cfg.getfloat(sec_border, 'inner_round')
-              inner_round_units = cfg.get(sec_border, 'inner_round_units')
-              self.border_inner_round.set_value(inner_round)
-              self.border_inner_round_units.set_active(self.combobox_get_id_from_desc(UNITS, inner_round_units))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
+      # Text tab
+      profile.leftTextFont = self.extract_font_name(self.left_text_font.get_font_name())
+      profile.leftTextFontSize = self.extract_font_size(self.left_text_font.get_font_name())
+      profile.leftTextJustify = JUSTIFY[self.left_text_justify.get_active()]
+      profile.leftText = self.extract_text(self.left_text)
+      profile.centerTextFont = self.extract_font_name(self.center_text_font.get_font_name())
+      profile.centerTextFontSize = self.extract_font_size(self.center_text_font.get_font_name())
+      profile.centerTextJustify = JUSTIFY[self.center_text_justify.get_active()]
+      profile.centerText = self.extract_text(self.center_text)
+      profile.rightTextFont = self.extract_font_name(self.right_text_font.get_font_name())
+      profile.rightTextFontSize = self.extract_font_size(self.right_text_font.get_font_name())
+      profile.rightTextJustify = JUSTIFY[self.right_text_justify.get_active()]
+      profile.rightText = self.extract_text(self.right_text)
+      profile.textPosition = TEXT_POSITION[self.text_position.get_active()]
+      profile.rotateText = self.rotate_text.get_active()
 
-            try:
-              dist_to_image = cfg.getfloat(sec_border, 'dist_to_image')
-              dist_to_image_units = cfg.get(sec_border, 'dist_to_image_units')
-              self.border_dist_to_image.set_value(dist_to_image)
-              self.border_dist_to_image_units.set_active(self.combobox_get_id_from_desc(UNITS, dist_to_image_units))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
+      # Watermark tab
+      profile.wmType = self.get_wm_type()
+      profile.wmOpacity = self.wm_opacity.get_value()
+      profile.wmRotation = self.wm_rotation.get_value()
+      profile.wmPosition = WM_POSITION[self.wm_position.get_active()]
+      profile.wmDistToBorder = self.wm_dist_to_border.get_value()
+      profile.wmDistToBorderUnits = UNITS[self.wm_dist_to_border_units.get_active()]
+      profile.wmFontName = self.extract_font_name(self.wm_font.get_font_name())
+      profile.wmFontSize = self.extract_font_size(self.wm_font.get_font_name())
+      profile.wmJustify = JUSTIFY[self.wm_justify.get_active()]
+      profile.wmColor =  self.extract_color(self.wm_color.get_color())
+      profile.wmText = self.extract_text(self.wm_text)
+      profile.wmImage_path = self.wm_image_path.get_text()
 
-            try:
-              outer_line = cfg.getboolean(sec_border, 'outer_line')
-              self.border_outer_line.set_active(outer_line)
-            except ConfigParser.NoOptionError, err:
-              self.border_outer_line.set_active(True)
-            except ValueError, err:
-              pass
-
-            try:
-              outer_size = cfg.getfloat(sec_border, 'outer_size')
-              outer_units = cfg.get(sec_border, 'outer_units')
-              self.border_outer_size.set_value(outer_size)
-              self.border_outer_size_units.set_active(self.combobox_get_id_from_desc(UNITS, outer_units))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              outer_round = cfg.getfloat(sec_border, 'outer_round')
-              outer_round_units = cfg.get(sec_border, 'outer_round_units')
-              self.border_outer_round.set_value(outer_round)
-              self.border_outer_round_units.set_active(self.combobox_get_id_from_desc(UNITS, outer_round_units))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              dist_to_border = cfg.getfloat(sec_border, 'dist_to_border')
-              dist_to_border_units = cfg.get(sec_border, 'dist_to_border_units')
-              self.border_dist_to_border.set_value(dist_to_border)
-              self.border_dist_to_border_units.set_active(self.combobox_get_id_from_desc(UNITS, dist_to_border_units))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              feather_line = cfg.get(sec_border, 'feather_line')
-              self.feather_line.set_active(self.combobox_get_id_from_desc(FEATHER, feather_line))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-          except ConfigParser.NoSectionError, err:
-            print _("Missing section in config file. %s") %err
-
-          try:
-            try:
-              actual_pallete = cfg.getboolean(sec_color, 'actual_pallete')
-              self.actual_pallete_colors.set_active(actual_pallete)
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              line_color_r = cfg.getint(sec_color, 'line_color.r')
-              line_color_g = cfg.getint(sec_color, 'line_color.g')
-              line_color_b = cfg.getint(sec_color, 'line_color.b')
-              # 257 - the Magic constant...
-              self.line_color.set_color(gtk.gdk.Color(line_color_r * 257, line_color_g * 257, line_color_b * 257))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              border_color_r = cfg.getint(sec_color, 'border_color.r')
-              border_color_g = cfg.getint(sec_color, 'border_color.g')
-              border_color_b = cfg.getint(sec_color, 'border_color.b')
-              self.border_color.set_color(gtk.gdk.Color(border_color_r * 257, border_color_g * 257, border_color_b * 257))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-          except ConfigParser.NoSectionError, err:
-            print _("Missing section in config file. %s") %err
-
-          # Section: Text
-          try:
-            # Left text
-            try:
-              left_text_font = cfg.get(sec_text, 'left_text_font')
-              left_text_font_size = cfg.getfloat(sec_text, 'left_text_font_size')
-              self.left_text_font.set_font_name(left_text_font + " " + str(left_text_font_size))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              left_text_justify = cfg.get(sec_text, 'left_text_justify')
-              self.left_text_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, left_text_justify))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              left_text = cfg.get(sec_text, 'left_text')
-              self.set_text(self.left_text, left_text.replace('.\n','\n'))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            # Center text
-            try:
-              center_text_font = cfg.get(sec_text, 'center_text_font')
-              center_text_font_size = cfg.getfloat(sec_text, 'center_text_font_size')
-              self.center_text_font.set_font_name(center_text_font + " " + str(center_text_font_size))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              center_text_justify = cfg.get(sec_text, 'center_text_justify')
-              self.center_text_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, center_text_justify))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              center_text = cfg.get(sec_text, 'center_text')
-              self.set_text(self.center_text, center_text.replace('.\n','\n'))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            # Right text
-            try:
-              right_text_font = cfg.get(sec_text, 'right_text_font')
-              right_text_font_size = cfg.getfloat(sec_text, 'right_text_font_size')
-              self.right_text_font.set_font_name(right_text_font + " " + str(right_text_font_size))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              right_text_justify = cfg.get(sec_text, 'right_text_justify')
-              self.right_text_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, right_text_justify))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              right_text = cfg.get(sec_text, 'right_text')
-              self.set_text(self.right_text, right_text.replace('.\n','\n'))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              text_position = cfg.get(sec_text, 'text_position')
-              self.text_position.set_active(self.combobox_get_id_from_desc(TEXT_POSITION, text_position))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              rotate_text = cfg.getboolean(sec_text, 'rotate_text')
-              self.rotate_text.set_active(rotate_text)
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-          except ConfigParser.NoSectionError, err:
-            print _("Missing section in config file. %s") %err
-
-          # Section: General
-          try:
-            try:
-              flatten_image = cfg.getboolean(sec_general, 'flatten_image')
-              self.flatten_image.set_active(flatten_image)
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              work_on_copy = cfg.getboolean(sec_general, 'work_on_copy')
-              self.work_on_copy.set_active(work_on_copy)
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-          except ConfigParser.NoSectionError, err:
-            print _("Missing section in config file. %s") %err
-
-          # Section:Watermark
-          try:
-            try:
-              wm_type = cfg.get(sec_wm, 'wm_type')
-              if wm_type == 'text':
-                self.wm_type_text.set_active(True)
-                self.on_radiobutton_wm_text_toggled(self.dialog) # trigger call on_radiobutton_wm_text_toggled()
-              else:
-                self.wm_type_image.set_active(True)
-            except ConfigParser.NoOptionError, err:
-                self.wm_type_text.set_active(True)
-                self.on_radiobutton_wm_text_toggled(self.dialog) # trigger call on_radiobutton_wm_text_toggled()
-            except ValueError, err:
-              pass
-
-            try:
-              wm_opacity = cfg.getfloat(sec_wm, 'wm_opacity')
-              self.wm_opacity.set_value(wm_opacity)
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              wm_rotation = cfg.getfloat(sec_wm, 'wm_rotation')
-              self.wm_rotation.set_value(wm_rotation)
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              wm_position = cfg.get(sec_wm, 'wm_position')
-              self.wm_position.set_active(self.combobox_get_id_from_desc(WM_POSITION, wm_position))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              wm_dist_to_border = cfg.getfloat(sec_wm, 'wm_dist_to_border')
-              wm_dist_to_border_units = cfg.get(sec_wm, 'wm_dist_to_border_units')
-              self.wm_dist_to_border.set_value(wm_dist_to_border)
-              self.wm_dist_to_border_units.set_active(self.combobox_get_id_from_desc(UNITS, wm_dist_to_border_units))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              wm_font_name = cfg.get(sec_wm, 'wm_font_name')
-              wm_font_size = cfg.getfloat(sec_wm, 'wm_font_size')
-              self.wm_font.set_font_name(wm_font_name + " " + str(wm_font_size))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              wm_justify = cfg.get(sec_wm, 'wm_justify')
-              self.wm_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, wm_justify))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              wm_color_r = cfg.getint(sec_wm, 'wm_color.r')
-              wm_color_g = cfg.getint(sec_wm, 'wm_color.g')
-              wm_color_b = cfg.getint(sec_wm, 'wm_color.b')
-              self.wm_color.set_color(gtk.gdk.Color(wm_color_r * 257, wm_color_g * 257, wm_color_b * 257))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              wm_text = cfg.get(sec_wm, 'wm_text')
-              self.set_text(self.wm_text, wm_text.replace('.\n','\n'))
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-            try:
-              wm_image_path = cfg.get(sec_wm, 'wm_image_path')
-              self.wm_image_path.set_text(wm_image_path)
-            except ConfigParser.NoOptionError, err:
-              pass
-            except ValueError, err:
-              pass
-
-          except ConfigParser.NoSectionError, err:
-            print _("Missing section in config file. %s") %err
-
-          return True
-
-        except ConfigParser.Error, err:
-          print _("Cannot parse configuration file. %s") %err
-          self.on_error(_("Configuration file error"), _("Cannot parse configuration file. ") + str(err))
-        except IOError, err:
-          print "Problem opening configuration file. %s" %err
-          self.on_error(_("Configuration file loading error"), _("Problem opening configuration file.") + str(err))

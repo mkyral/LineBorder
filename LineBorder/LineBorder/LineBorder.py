@@ -470,7 +470,7 @@ def LineBorder (InImage, InLayer,
         pdb.gimp_text_layer_set_antialias(WmLayer, True)
     elif ( InWmType == "image" and InWmImagePath ) :
       # Load an image as a new layer
-      WmLayer = pdb.gimp_file_load_layer(TheImage, InWmImagePath)
+      WmLayer = pdb.gimp_file_load_layer(TheImage, InWmImagePath.decode('unicode_escape'))
       pdb.gimp_image_add_layer(TheImage, WmLayer, -1)
       if InWmRotation != 0 :
         WmLayer = pdb.gimp_drawable_transform_rotate(WmLayer, degree2radians(InWmRotation), True, 0, 0, TRANSFORM_FORWARD, INTERPOLATION_CUBIC, False, 3, TRANSFORM_RESIZE_ADJUST )
