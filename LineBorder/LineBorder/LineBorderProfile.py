@@ -153,15 +153,30 @@ class LineBorderProfile :
 
 class LineBorderProfileList :
   def __init__ (self) :
-      a = LineBorderProfile("DEFAULT", "DEFAULT")
-      self.profiles = { a.profileId : a }
-      self.activeProfile = a.profileId
+      p = LineBorderProfile("DEFAULT", "DEFAULT")
+      self.profiles = { p.profileId : p }
+      #self.activeProfile = a.profileId
       self.configFile = ""
+      self.userProfilePrefix = 'USER'
+      self.maxUserProfileId = 0
 
   def addProfile (self, profileId, name) :
       if not name in self.profiles :
-        a = LineBorderProfile(profileId, name)
-        self.profiles[a.profileId] = a
+        p = LineBorderProfile(profileId, name)
+        self.profiles[profileId] = p
+
+        # Max user profile ID
+        if profileId.startswith(self.userProfilePrefix) :
+          userProfileNumber = profileId.replace(self.userProfilePrefix,'')
+          if userProfileNumber.isdigit() :
+            userProfileNumber = int(userProfileNumber)
+            if userProfileNumber > self.maxUserProfileId :
+              self.maxUserProfileId = userProfileNumber
+
+  def deleteProfile (self, profileId) :
+      p = self.profiles[profileId]
+      del p
+      del self.profiles[profileId]
 
   def listProfiles (self) :
       for k, v in self.profiles.iteritems() :
@@ -185,7 +200,7 @@ class LineBorderProfileList :
           profileDelim = "|"
 
       cfg.set ("Profiles", 'List', profileList)
-      cfg.set ("Profiles", 'Active', self.activeProfile)
+      cfg.set ("Profiles", 'userProfilePrefix', self.userProfilePrefix)
 
       # save profiles
       for k, v in self.profiles.iteritems() :
@@ -218,6 +233,12 @@ class LineBorderProfileList :
             except ConfigParser.NoOptionError, err:
               pass
             except ValueError, err:
+              pass
+
+            # Load Profiles
+            try:
+              self.userProfilePrefix = cfg.get("Profiles", 'userProfilePrefix')
+            except ConfigParser.NoOptionError, err:
               pass
 
           except ConfigParser.NoSectionError, err:
@@ -487,7 +508,7 @@ class LineBorderProfileList :
             line_color_g = cfg.getint(sec_color, 'line_color.g')
             line_color_b = cfg.getint(sec_color, 'line_color.b')
             # 257 - the Magic constant...
-            profile.lineColor = (gtk.gdk.Color(line_color_r * 257, line_color_g * 257, line_color_b * 257))
+            profile.lineColor = (line_color_r, line_color_g, line_color_b)
           except ConfigParser.NoOptionError, err:
             pass
           except ValueError, err:
@@ -497,7 +518,7 @@ class LineBorderProfileList :
             border_color_r = cfg.getint(sec_color, 'border_color.r')
             border_color_g = cfg.getint(sec_color, 'border_color.g')
             border_color_b = cfg.getint(sec_color, 'border_color.b')
-            profile.borderColor = (gtk.gdk.Color(border_color_r * 257, border_color_g * 257, border_color_b * 257))
+            profile.borderColor = (border_color_r, border_color_g, border_color_b)
           except ConfigParser.NoOptionError, err:
             pass
           except ValueError, err:
@@ -671,7 +692,7 @@ class LineBorderProfileList :
             wm_color_r = cfg.getint(sec_wm, 'wm_color.r')
             wm_color_g = cfg.getint(sec_wm, 'wm_color.g')
             wm_color_b = cfg.getint(sec_wm, 'wm_color.b')
-            profile.wmColor = (gtk.gdk.Color(wm_color_r * 257, wm_color_g * 257, wm_color_b * 257))
+            profile.wmColor = (wm_color_r, wm_color_g, wm_color_b)
           except ConfigParser.NoOptionError, err:
             pass
           except ValueError, err:

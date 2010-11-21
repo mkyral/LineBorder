@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 #
-# Copyright, V2.3
+# Copyright, V2.4
 #
 # Marian Kyral (mkyral@email.cz)
 # (C) 2006, 2008, 2010, Frydek-Mistek, Czech Republic
@@ -25,6 +25,9 @@
 
 #
 # Changelog
+#
+# 21.11.2010 - v2.4
+# * ADD: profiles
 #
 # 31.10.2010 - v2.3
 # * CHANGE: gui improvements
@@ -93,9 +96,11 @@ class LineBorderApp():
 
       self.image = Image
       self.drawable = Drawable
-      self.dialog = builder.get_object("window1")
-      self.about = builder.get_object("aboutdialog1")
+      self.main_dialog = builder.get_object("window1")
+      self.about_dialog = builder.get_object("aboutdialog1")
+      self.profile_dialog = builder.get_object("profile_dialog")
 
+      # Border page
       self.border_width = builder.get_object("spinbutton_width")
       self.border_width_units = builder.get_object("combobox_units_width")
       self.border_height = builder.get_object("spinbutton_height")
@@ -138,6 +143,7 @@ class LineBorderApp():
       self.label_border_dist_to_border = builder.get_object("label_dist_to_border")
       self.label_border_outer_round = builder.get_object("label_outer_round")
 
+      # Text page
       self.left_text_font = builder.get_object("fontbutton_left")
       self.left_text_justify = builder.get_object("combobox_left_justify")
       self.left_text = builder.get_object("textview_left")
@@ -157,6 +163,7 @@ class LineBorderApp():
       self.label_border_color = builder.get_object("label13")
       self.label_rotate_text = builder.get_object("label24")
 
+      # Watermark page
       self.wm_type_text = builder.get_object('radiobutton_wm_text')
       self.wm_type_image = builder.get_object('radiobutton_wm_image')
       self.wm_opacity = builder.get_object('spinbutton_wm_opacity')
@@ -175,11 +182,38 @@ class LineBorderApp():
       self.label_wm_color = builder.get_object('label_wm_color')
       self.button_wm_file_open = builder.get_object('button_wm_file_open')
 
+      # Profiles page
+      self.profiles_treeview = builder.get_object('treeview_profiles')
+      self.setup_profiles_treeview()
+      self.profiles_btn_load_profile = builder.get_object('button_load_profile')
+      self.profiles_btn_update_profile = builder.get_object('button_update_profile')
+      self.profiles_btn_save_new_profile = builder.get_object('button_save_new_profile')
+      self.profiles_btn_delete_profile = builder.get_object('button_delete_profile')
+
+      # Add profile dialog
+      self.profile_dialog_name_label = builder.get_object('label_profile_name')
+      self.profile_dialog_name = builder.get_object('entry_profile_name')
+      self.profile_dialog_comment = builder.get_object('textview_profile_comment')
+      self.profile_dialog_border_cb = builder.get_object('cb_profile_borders')
+      self.profile_dialog_color_cb = builder.get_object('cb_profiles_colors')
+      self.profile_dialog_text_cb = builder.get_object('cb_profile_text')
+      self.profile_dialog_wm_cb = builder.get_object('cb_profile_wm')
+      self.profile_dialog_general_cb = builder.get_object('cb_profile_general')
+      self.image_load_profile = builder.get_object('image_load_profile')
+      #
+      self.profile_dialog_mode = None # Load | Update | Save as new
+      self.profile_dialog_actual = None # Profile to load or update
+
       # Initialize profiles
       self.profile_list = LineBorderProfile.LineBorderProfileList()
       self.profile_list.configFile = os.path.join(gimp.directory, "LineBorder.cfg")
       self.profile_list.loadProfiles()
       self.default_profile = self.profile_list.profiles['DEFAULT']
+
+      # add profiles to the treeview list
+      self.profiles_model = self.profiles_treeview.get_model()
+      for k, p in self.profile_list.profiles.iteritems() :
+        self.add_row_to_treeview(p)
 
       if not self.apply_profile(self.default_profile) :
         # Workaround :-/ (http://www.listware.net/201004/gtk-app-devel-list/88663-default-values-for-spin-buttons-in-glade.html)
@@ -191,17 +225,24 @@ class LineBorderApp():
         self.wm_opacity.set_value(25)
         self.wm_dist_to_border.set_value(5)
 
-      self.dialog.show()
+      self.main_dialog.show()
 
   def main(self):
       gtk.main()  # event loop
 
-  def on_button_about_clicked(self, widget):
-      self.about.show()
+  #
+  #  --- Handle functions for dialog signals  ---
+  #
 
+  # show the About dialog
+  def on_button_about_clicked(self, widget):
+      self.about_dialog.show()
+
+  # Hide the About dialog
   def on_aboutdialog1_destroy(self, widget, responseID = None):
       widget.hide()
 
+  # Show an error message
   def on_error(self, title, text = None):
       md = gtk.MessageDialog(None,
            gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_ERROR,
@@ -210,14 +251,7 @@ class LineBorderApp():
       md.run()
       md.destroy()
 
-  def combobox_get_id_from_desc(self, inSeq, inDesc):
-      i = 0
-      while i < len(inSeq):
-        if inSeq[i] == inDesc :
-          return i
-        i = i + 1
-      return 0
-
+  # Activate/Deactivate color items
   def on_checkbutton_actual_palette_toggled (self, widget):
       if self.actual_pallete_colors.get_active() == True:
         self.line_color.set_sensitive(False)
@@ -230,6 +264,7 @@ class LineBorderApp():
         self.label_line_color.set_sensitive(True)
         self.label_border_color.set_sensitive(True)
 
+  # Activate/Deactivate rotate_text item
   def on_combobox_text_position_changed(self, widget):
       active = self.text_position.get_active()
       if active == self.combobox_get_id_from_desc(TEXT_POSITION, "Left") or \
@@ -240,6 +275,7 @@ class LineBorderApp():
         self.rotate_text.set_sensitive(False)
         self.label_rotate_text.set_sensitive(False)
 
+  # Activate/Deactivate Watermart Text/Image sections
   def on_radiobutton_wm_text_toggled(self, widget):
       if self.wm_type_text.get_active() == True:
          self.wm_image_path.set_sensitive(False)
@@ -264,6 +300,7 @@ class LineBorderApp():
          self.label_wm_justify.set_sensitive(False)
          self.label_wm_color.set_sensitive(False)
 
+  # show the Fileopen dialog to choose watermark image
   def on_button_wm_file_open_clicked(self, widget):
       chooser = gtk.FileChooserDialog (
                       title=_('Open image'),
@@ -295,6 +332,7 @@ class LineBorderApp():
           pass
       chooser.destroy()
 
+  # Activate/Deactivate the inner Line box
   def on_checkbutton_inner_line_toggled(self, widget):
       state = self.border_inner_line.get_active()
       self.border_inner_size.set_sensitive(state)
@@ -307,6 +345,7 @@ class LineBorderApp():
       self.label_border_dist_to_image.set_sensitive(state)
       self.label_border_inner_round.set_sensitive(state)
 
+  # Activate/Deactivate the outer Line box
   def on_checkbutton_outer_line_toggled(self, widget):
       state = self.border_outer_line.get_active()
       self.border_outer_size.set_sensitive(state)
@@ -319,14 +358,354 @@ class LineBorderApp():
       self.label_border_dist_to_border.set_sensitive(state)
       self.label_border_outer_round.set_sensitive(state)
 
+  # Add the border
   def on_button_ok_clicked(self, widget):
       self.call_LineBorder()
       gtk.main_quit()
 
+  # quit
   def on_window1_destroy(self, widget):
       gtk.main_quit()
 
+  # Setup treeview on the profile page
+  #   (there is no possibility to translate columns directly in glade)
+  def setup_profiles_treeview(self):
+      # Workaround: Make column titles translatable
+      self.profiles_treeview.get_column(0).set_title(_("Profile name"))
+      self.profiles_treeview.get_column(1).set_title(_("B"))
+      self.profiles_treeview.get_column(2).set_title(_("C"))
+      self.profiles_treeview.get_column(3).set_title(_("T"))
+      self.profiles_treeview.get_column(4).set_title(_("W"))
+      self.profiles_treeview.get_column(5).set_title(_("G"))
+
+  # Show "Load the selected profile?" question?
+  def on_button_load_profile_clicked(self, widget):
+      # prepare the dialog
+      (model, iter) = self.profiles_treeview.get_selection().get_selected()
+      if iter == None :
+        self.on_error(_("No profile selected."), _("Select profile to load please."))
+        return
+      selected_profile = model.get(iter,0)[0]
+      p = self.profile_list.profiles[selected_profile]
+
+      self.reset_profile_dialog(_('Load profile?'))
+
+      icon = self.profile_dialog.render_icon(gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON)
+      self.profile_dialog.set_icon(icon)
+
+      self.profile_dialog_mode = 'Load'
+      self.profile_dialog_actual = p.profileId
+
+      self.profile_dialog_name_label.set_text('\n<b><big>' + _('Load profile') + ' ' + p.name +'?' + '</big></b>\n')
+      self.profile_dialog_name_label.set_use_markup(True)
+
+      self.profile_dialog_name.hide()
+      #self.profile_dialog_name.set_sensitive(False)
+
+      self.set_text(self.profile_dialog_comment,p.comment)
+      self.profile_dialog_comment.set_sensitive(False)
+
+      if 'all' in p.sections or 'border' in p.sections :
+        self.profile_dialog_border_cb.set_active(True)
+      else :
+        self.profile_dialog_border_cb.set_sensitive(False)
+
+      if 'all' in p.sections or 'color' in p.sections :
+        self.profile_dialog_color_cb.set_active(True)
+      else :
+        self.profile_dialog_color_cb.set_sensitive(False)
+
+      if 'all' in p.sections or 'text' in p.sections :
+        self.profile_dialog_text_cb.set_active(True)
+      else :
+        self.profile_dialog_text_cb.set_sensitive(False)
+
+      if 'all' in p.sections or 'wm' in p.sections :
+        self.profile_dialog_wm_cb.set_active(True)
+      else :
+        self.profile_dialog_wm_cb.set_sensitive(False)
+
+      if 'all' in p.sections or 'general' in p.sections :
+        self.profile_dialog_general_cb.set_active(True)
+      else :
+        self.profile_dialog_general_cb.set_sensitive(False)
+
+      self.profile_dialog.show()
+
+  # Show "Save as new profile" dialog
+  def on_button_save_new_profile_clicked(self, widget):
+      self.reset_profile_dialog(_('Save as new profile'))
+
+      icon = self.profile_dialog.render_icon(gtk.STOCK_SAVE_AS, gtk.ICON_SIZE_BUTTON)
+      self.profile_dialog.set_icon(icon)
+
+      self.profile_dialog_mode = 'SaveAs'
+      self.profile_dialog_actual = None
+
+      self.profile_dialog_border_cb.set_active(True)
+      self.profile_dialog_color_cb.set_active(True)
+      self.profile_dialog_general_cb.set_active(True)
+      self.profile_dialog.show()
+
+  # Show "Update profile" dialog
+  def on_button_update_profile_clicked(self, widget):
+      (model, iter) = self.profiles_treeview.get_selection().get_selected()
+      if iter == None :
+        self.on_error(_("No profile selected."), _("Select profile to update please."))
+        return
+      selected_profile = model.get(iter,0)[0]
+      p = self.profile_list.profiles[selected_profile]
+
+      self.reset_profile_dialog(_('Update profile'))
+
+      icon = self.profile_dialog.render_icon(gtk.STOCK_EDIT, gtk.ICON_SIZE_BUTTON)
+      self.profile_dialog.set_icon(icon)
+
+      self.profile_dialog_mode = 'Update'
+      self.profile_dialog_actual = p.profileId
+
+      self.profile_dialog_name.set_text(p.name)
+      self.set_text(self.profile_dialog_comment,p.comment)
+
+      if 'all' in p.sections or 'border' in p.sections :
+        self.profile_dialog_border_cb.set_active(True)
+
+      if 'all' in p.sections or 'color' in p.sections :
+        self.profile_dialog_color_cb.set_active(True)
+
+      if 'all' in p.sections or 'text' in p.sections :
+        self.profile_dialog_text_cb.set_active(True)
+
+      if 'all' in p.sections or 'wm' in p.sections :
+        self.profile_dialog_wm_cb.set_active(True)
+
+      if 'all' in p.sections or 'general' in p.sections :
+        self.profile_dialog_general_cb.set_active(True)
+
+      self.profile_dialog.show()
+
+  # show "Delete profile" dialog
+  def on_button_delete_profile_clicked(self, widget):
+      # prepare the dialog
+      (model, iter) = self.profiles_treeview.get_selection().get_selected()
+      if iter == None :
+        self.on_error(_("No profile selected."), _("Select profile to delete please."))
+        return
+      selected_profile = model.get(iter,0)[0]
+      p = self.profile_list.profiles[selected_profile]
+
+      self.reset_profile_dialog(_('Delete profile?'))
+
+      icon = self.profile_dialog.render_icon(gtk.STOCK_DELETE, gtk.ICON_SIZE_BUTTON)
+      self.profile_dialog.set_icon(icon)
+
+      self.profile_dialog_mode = 'Delete'
+      self.profile_dialog_actual = p.profileId
+
+      self.profile_dialog_name_label.set_text('\n<b><big>' + _('Delete profile') + ' ' + p.name +'?' + '</big></b>\n')
+      self.profile_dialog_name_label.set_use_markup(True)
+
+      self.profile_dialog_name.hide()
+      self.set_text(self.profile_dialog_comment,p.comment)
+      self.profile_dialog_comment.set_sensitive(False)
+
+      if 'all' in p.sections or 'border' in p.sections :
+        self.profile_dialog_border_cb.set_active(True)
+
+      if 'all' in p.sections or 'color' in p.sections :
+        self.profile_dialog_color_cb.set_active(True)
+
+      if 'all' in p.sections or 'text' in p.sections :
+        self.profile_dialog_text_cb.set_active(True)
+
+      if 'all' in p.sections or 'wm' in p.sections :
+        self.profile_dialog_wm_cb.set_active(True)
+
+      if 'all' in p.sections or 'general' in p.sections :
+        self.profile_dialog_general_cb.set_active(True)
+
+      self.profile_dialog_border_cb.set_sensitive(False)
+      self.profile_dialog_color_cb.set_sensitive(False)
+      self.profile_dialog_text_cb.set_sensitive(False)
+      self.profile_dialog_wm_cb.set_sensitive(False)
+      self.profile_dialog_general_cb.set_sensitive(False)
+
+      self.profile_dialog.show()
+
+  # Changes confirmed by users
+  def on_button_profile_ok_clicked (self, widget):
+      self.profile_dialog.hide()
+
+      if self.profile_dialog_mode == 'Delete' :
+        self.delete_treeview_row(self.profile_dialog_actual)
+        self.profile_list.deleteProfile(self.profile_dialog_actual)
+        return
+
+      name = self.profile_dialog_name.get_text()
+      comment = self.extract_text(self.profile_dialog_comment)
+      border_flag = self.profile_dialog_border_cb.get_active()
+      color_flag = self.profile_dialog_color_cb.get_active()
+      text_flag = self.profile_dialog_text_cb.get_active()
+      wm_flag = self.profile_dialog_wm_cb.get_active()
+      general_flag = self.profile_dialog_general_cb.get_active()
+
+      if not border_flag and not color_flag and not text_flag and not wm_flag and not general_flag :
+        if self.profile_dialog_mode == 'Load' :
+          self.on_error(_("There are no sections to load!"))
+          return
+        elif self.profile_dialog_mode == 'Update' :
+          self.on_error(_("There are no sections to save!"), _("There are no sections to save!\nTo delete profile use the 'Delete profile' button."))
+          return
+        elif self.profile_dialog_mode == 'SaveAs' :
+          self.on_error(_("There are no sections to save!"), _("There are no sections to save!\n Profile was not saved."))
+          return
+
+      sections = []
+      if border_flag and color_flag and text_flag and wm_flag and general_flag :
+        sections = ['all',]
+      else :
+        if border_flag :
+          sections.append('border')
+        if color_flag :
+          sections.append('color')
+        if text_flag :
+          sections.append('text')
+        if wm_flag :
+          sections.append('wm')
+        if general_flag :
+          sections.append('general')
+
+      if self.profile_dialog_mode == 'Load' :
+        self.apply_profile(self.profile_list.profiles[self.profile_dialog_actual], sections)
+
+      elif self.profile_dialog_mode == 'Update' :
+        profile = self.profile_list.profiles[self.profile_dialog_actual]
+
+        # Update profile name, comment and sections
+        profile.name = name
+        profile.comment = comment
+        profile.sections = sections
+
+        # Parse form to the profile
+        self.parse_form_values(profile)
+
+        # update row in the treeview
+        self.update_treeview_row(profile)
+        self.profile_list.saveProfiles()
+
+      elif self.profile_dialog_mode == 'SaveAs' :
+        # save as a new profile
+        profile_id = self.profile_list.userProfilePrefix + str(self.profile_list.maxUserProfileId + 1)
+        self.profile_list.addProfile(profile_id, name)
+        profile = self.profile_list.profiles[profile_id]
+
+        # Update profile name, comment and sections
+        profile.name = name
+        profile.comment = comment
+        profile.sections = sections
+
+        # Parse form to the profile
+        self.parse_form_values(profile)
+
+        # add new profile to the list
+        self.add_row_to_treeview(profile)
+        self.profile_list.saveProfiles()
+
+
+  def on_button_profile_cancel_clicked (self, widget, responseID = None):
+      self.profile_dialog.hide()
+
+  # Inicialization of the profile dialog
+  def reset_profile_dialog(self, title):
+      self.profile_dialog_name_label.set_text(_('Profile name:'))
+      self.profile_dialog_name_label.set_use_markup(False)
+      self.profile_dialog.set_title(title)
+      self.profile_dialog_name.set_text('')
+      self.profile_dialog_name.show()
+      self.set_text(self.profile_dialog_comment,'')
+
+      self.profile_dialog_border_cb.set_active(False)
+      self.profile_dialog_color_cb.set_active(False)
+      self.profile_dialog_text_cb.set_active(False)
+      self.profile_dialog_wm_cb.set_active(False)
+      self.profile_dialog_general_cb.set_active(False)
+
+      self.profile_dialog_name.set_sensitive(True)
+      self.profile_dialog_comment.set_sensitive(True)
+      self.profile_dialog_border_cb.set_sensitive(True)
+      self.profile_dialog_color_cb.set_sensitive(True)
+      self.profile_dialog_text_cb.set_sensitive(True)
+      self.profile_dialog_wm_cb.set_sensitive(True)
+      self.profile_dialog_general_cb.set_sensitive(True)
+
+  # Decode sections to be used in treeview booleans variables
+  def get_profile_flags (self, profile) :
+      border_flag = False
+      color_flag = False
+      text_flag = False
+      wm_flag = False
+      general_flag = False
+      if 'all' in profile.sections :
+        border_flag = True
+        color_flag = True
+        text_flag = True
+        wm_flag = True
+        general_flag = True
+      else :
+        if 'border' in profile.sections :
+          border_flag = True
+        if 'color' in profile.sections :
+          color_flag = True
+        if 'text' in profile.sections :
+          text_flag = True
+        if 'wm' in profile.sections :
+          wm_flag = True
+        if 'general' in profile.sections :
+          general_flag = True
+
+      return border_flag, color_flag, text_flag, wm_flag, general_flag
+
+  # add a new row to the treeview
+  def add_row_to_treeview(self, profile) :
+      if profile.profileId != 'DEFAULT' :
+        border_flag, color_flag, text_flag, wm_flag, general_flag = self.get_profile_flags(profile)
+        self.profiles_model.append([profile.profileId , profile.name, border_flag, color_flag, text_flag, wm_flag, general_flag])
+
+  # update treeview row
+  def update_treeview_row(self, profile) :
+      iter = self.profiles_model.get_iter_root()
+      while (iter) :
+        id = self.profiles_model.get_value(iter, 0)
+        if id == profile.profileId :
+          border_flag, color_flag, text_flag, wm_flag, general_flag = self.get_profile_flags(profile)
+          self.profiles_model.set (iter, 1, profile.name, 2, border_flag, 3, color_flag, 4, text_flag, 5, wm_flag, 6, general_flag)
+          return
+        iter = self.profiles_model.iter_next(iter)
+
+  # delete treeview row
+  def delete_treeview_row(self, profileId) :
+      iter = self.profiles_model.get_iter_root()
+      while (iter) :
+        id = self.profiles_model.get_value(iter, 0)
+        if id == profileId :
+          self.profiles_model.remove(iter)
+          return
+        iter = self.profiles_model.iter_next(iter)
+
+
+  #
   #  --- Utils ---
+  #
+
+  # iterate trought combobox descriptions and return item ID
+  def combobox_get_id_from_desc(self, inSeq, inDesc):
+    i = 0
+    while i < len(inSeq):
+      if inSeq[i] == inDesc :
+        return i
+      i = i + 1
+    return 0
+
   # extract font name form the FontButton
   def extract_font_name (self, inFont):
       delim = " "
@@ -369,6 +748,176 @@ class LineBorderApp():
       else :
         return "image"
 
+  # Add text to the TextView
+  def set_text (self, inTextView, inText):
+      if inText == None :
+        return
+      buff = inTextView.get_buffer()
+      buff.set_text(inText)
+
+
+  #
+  #  --- Main functions ---
+  #
+
+  # Update dialog setup according to given profile
+  # Sections: non mandatory - overrides the profile setting
+  def apply_profile(self, profile, sections = None):
+      if sections != None :
+        psections = sections
+      else :
+        psections = profile.sections
+
+      # Section: Border
+      if 'all' in psections or 'border' in psections :
+        self.border_width.set_value(profile.width)
+        self.border_width_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.widthUnits))
+        self.border_height.set_value(profile.height)
+        self.border_height_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.heightUnits))
+        self.border_ext_text.set_value(profile.extText)
+        self.border_ext_text_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.extTextUnits))
+        self.border_inner_border_round.set_value(profile.roundInnerBorder)
+        self.border_inner_border_round_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.roundInnerBorderUnits))
+        self.border_outer_border_round.set_value(profile.roundOuterBorder)
+        self.border_outer_border_round_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.roundOuterBorderUnits))
+        self.border_inner_line.set_active(profile.innerLine)
+        self.border_inner_size.set_value(profile.innerSize)
+        self.border_inner_size_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.innerUnits))
+        self.border_inner_round.set_value(profile.innerRound)
+        self.border_inner_round_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.innerRoundUnits))
+        self.border_dist_to_image.set_value(profile.distToImage)
+        self.border_dist_to_image_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.distToImageUnits))
+        self.border_outer_line.set_active(profile.outerLine)
+        self.border_outer_size.set_value(profile.outerSize)
+        self.border_outer_size_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.outerUnits))
+        self.border_outer_round.set_value(profile.outerRound)
+        self.border_outer_round_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.outerRoundUnits))
+        self.border_dist_to_border.set_value(profile.distToBorder)
+        self.border_dist_to_border_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.distToBorderUnits))
+        self.feather_line.set_active(self.combobox_get_id_from_desc(FEATHER, profile.featherLine))
+
+      if 'all' in psections or 'color' in psections :
+        self.actual_pallete_colors.set_active(profile.actualPallete)
+        self.line_color.set_color(gtk.gdk.Color(profile.lineColor[0] * 257, profile.lineColor[1] * 257, profile.lineColor[2] * 257))
+        self.border_color.set_color(gtk.gdk.Color((profile.borderColor[0]) * 257, profile.borderColor[1] * 257, profile.borderColor[2] * 257))
+
+      if 'all' in psections or 'text' in psections :
+        # Left text
+        self.left_text_font.set_font_name(profile.leftTextFont + " " + str(profile.leftTextFontSize))
+        self.left_text_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, profile.leftTextJustify))
+        self.set_text(self.left_text, profile.leftText)
+        # Center text
+        self.center_text_font.set_font_name(profile.centerTextFont + " " + str(profile.centerTextFontSize))
+        self.center_text_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, profile.centerTextJustify))
+        self.set_text(self.center_text, profile.centerText)
+        # Right text
+        self.right_text_font.set_font_name(profile.rightTextFont + " " + str(profile.rightTextFontSize))
+        self.right_text_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, profile.rightTextJustify))
+        self.set_text(self.right_text, profile.rightText)
+
+        self.text_position.set_active(self.combobox_get_id_from_desc(TEXT_POSITION, profile.textPosition))
+        self.rotate_text.set_active(profile.rotateText)
+
+      # Section: general
+      if 'all' in psections or 'general' in psections :
+        # Section: General
+        self.flatten_image.set_active(profile.flattenImage)
+        self.work_on_copy.set_active(profile.workOnCopy)
+
+      # Section: Watermark
+      if 'all' in psections or 'wm' in psections :
+        if profile.wmType == 'text':
+          self.wm_type_text.set_active(True)
+          self.on_radiobutton_wm_text_toggled(self.main_dialog) # trigger call on_radiobutton_wm_text_toggled()
+        else:
+          self.wm_type_image.set_active(True)
+        self.wm_opacity.set_value(profile.wmOpacity)
+        self.wm_rotation.set_value(profile.wmRotation)
+        self.wm_position.set_active(self.combobox_get_id_from_desc(WM_POSITION, profile.wmPosition))
+        self.wm_dist_to_border.set_value(profile.wmDistToBorder)
+        self.wm_dist_to_border_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.wmDistToBorderUnits))
+        self.wm_font.set_font_name(profile.wmFontName + " " + str(profile.wmFontSize))
+        self.wm_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, profile.wmJustify))
+        self.wm_color.set_color(gtk.gdk.Color(profile.wmColor[0] * 257, profile.wmColor[1] * 257, profile.wmColor[2] * 257))
+        self.set_text(self.wm_text, profile.wmText)
+        self.wm_image_path.set_text(profile.wmImagePath)
+
+      return True
+
+  # parse current settings from dialog and store it in the profile
+  def parse_form_values(self, profile):
+      # Border tab
+      if 'all' in profile.sections or 'border' in profile.sections :
+        profile.width = self.border_width.get_value()
+        profile.widthUnits = UNITS[self.border_width_units.get_active()]
+        profile.height = self.border_height.get_value()
+        profile.heightUnits = UNITS[self.border_height_units.get_active()]
+        profile.extText = self.border_ext_text.get_value()
+        profile.extTextUnits = UNITS[self.border_ext_text_units.get_active()]
+        profile.roundInnerBorder = self.border_inner_border_round.get_value()
+        profile.roundInnerBorderUnits = UNITS[self.border_inner_border_round_units.get_active()]
+        profile.roundOuterBorder = self.border_outer_border_round.get_value()
+        profile.roundOuterBorderUnits = UNITS[self.border_outer_border_round_units.get_active()]
+
+        profile.innerLine = self.border_inner_line.get_active()
+        profile.innerSize = self.border_inner_size.get_value()
+        profile.innerUnits = UNITS[self.border_inner_size_units.get_active()]
+        profile.innerRound = self.border_inner_round.get_value()
+        profile.innerRoundUnits = UNITS[self.border_inner_round_units.get_active()]
+        profile.distToImage = self.border_dist_to_image.get_value()
+        profile.distToImageUnits = UNITS[self.border_dist_to_image_units.get_active()]
+
+        profile.outerLine = self.border_outer_line.get_active()
+        profile.outerSize = self.border_outer_size.get_value()
+        profile.outerUnits = UNITS[self.border_outer_size_units.get_active()]
+        profile.outerRound = self.border_outer_round.get_value()
+        profile.outerRoundUnits = UNITS[self.border_outer_round_units.get_active()]
+        profile.distToBorder = self.border_dist_to_border.get_value()
+        profile.distToBorderUnits = UNITS[self.border_dist_to_border_units.get_active()]
+
+        profile.featherLine = FEATHER[self.feather_line.get_active()]
+
+      if 'all' in profile.sections or 'color' in profile.sections :
+        profile.actualPallete = self.actual_pallete_colors.get_active()
+        profile.lineColor = self.extract_color(self.line_color.get_color())
+        profile.borderColor = self.extract_color(self.border_color.get_color())
+
+      if 'all' in profile.sections or 'general' in profile.sections :
+        profile.flattenImage = self.flatten_image.get_active()
+        profile.workOnCopy = self.work_on_copy.get_active()
+
+      # Text tab
+      if 'all' in profile.sections or 'text' in profile.sections :
+        profile.leftTextFont = self.extract_font_name(self.left_text_font.get_font_name())
+        profile.leftTextFontSize = self.extract_font_size(self.left_text_font.get_font_name())
+        profile.leftTextJustify = JUSTIFY[self.left_text_justify.get_active()]
+        profile.leftText = self.extract_text(self.left_text)
+        profile.centerTextFont = self.extract_font_name(self.center_text_font.get_font_name())
+        profile.centerTextFontSize = self.extract_font_size(self.center_text_font.get_font_name())
+        profile.centerTextJustify = JUSTIFY[self.center_text_justify.get_active()]
+        profile.centerText = self.extract_text(self.center_text)
+        profile.rightTextFont = self.extract_font_name(self.right_text_font.get_font_name())
+        profile.rightTextFontSize = self.extract_font_size(self.right_text_font.get_font_name())
+        profile.rightTextJustify = JUSTIFY[self.right_text_justify.get_active()]
+        profile.rightText = self.extract_text(self.right_text)
+        profile.textPosition = TEXT_POSITION[self.text_position.get_active()]
+        profile.rotateText = self.rotate_text.get_active()
+
+      # Watermark tab
+      if 'all' in profile.sections or 'wm' in profile.sections :
+        profile.wmType = self.get_wm_type()
+        profile.wmOpacity = self.wm_opacity.get_value()
+        profile.wmRotation = self.wm_rotation.get_value()
+        profile.wmPosition = WM_POSITION[self.wm_position.get_active()]
+        profile.wmDistToBorder = self.wm_dist_to_border.get_value()
+        profile.wmDistToBorderUnits = UNITS[self.wm_dist_to_border_units.get_active()]
+        profile.wmFontName = self.extract_font_name(self.wm_font.get_font_name())
+        profile.wmFontSize = self.extract_font_size(self.wm_font.get_font_name())
+        profile.wmJustify = JUSTIFY[self.wm_justify.get_active()]
+        profile.wmColor =  self.extract_color(self.wm_color.get_color())
+        profile.wmText = self.extract_text(self.wm_text)
+        profile.wmImage_path = self.wm_image_path.get_text()
+
   # Extract parameters, call main function
   def call_LineBorder(self):
       image = self.image
@@ -409,153 +958,4 @@ class LineBorderApp():
                  )
       gtk.main_quit()
 
-
-  # Add text to the TextView
-  def set_text (self, inTextView, inText):
-      buff = inTextView.get_buffer()
-      buff.set_text(inText)
-
-  def apply_profile(self, profile):
-      # Section: Border
-      if 'all' in profile.sections or 'border' in profile.sections :
-        self.border_width.set_value(profile.width)
-        self.border_width_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.widthUnits))
-        self.border_height.set_value(profile.height)
-        self.border_height_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.heightUnits))
-        self.border_ext_text.set_value(profile.extText)
-        self.border_ext_text_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.extTextUnits))
-        self.border_inner_border_round.set_value(profile.roundInnerBorder)
-        self.border_inner_border_round_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.roundInnerBorderUnits))
-        self.border_outer_border_round.set_value(profile.roundOuterBorder)
-        self.border_outer_border_round_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.roundOuterBorderUnits))
-        self.border_inner_line.set_active(profile.innerLine)
-        self.border_inner_size.set_value(profile.innerSize)
-        self.border_inner_size_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.innerUnits))
-        self.border_inner_round.set_value(profile.innerRound)
-        self.border_inner_round_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.innerRoundUnits))
-        self.border_dist_to_image.set_value(profile.distToImage)
-        self.border_dist_to_image_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.distToImageUnits))
-        self.border_outer_line.set_active(profile.outerLine)
-        self.border_outer_size.set_value(profile.outerSize)
-        self.border_outer_size_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.outerUnits))
-        self.border_outer_round.set_value(profile.outerRound)
-        self.border_outer_round_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.outerRoundUnits))
-        self.border_dist_to_border.set_value(profile.distToBorder)
-        self.border_dist_to_border_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.distToBorderUnits))
-        self.feather_line.set_active(self.combobox_get_id_from_desc(FEATHER, profile.featherLine))
-
-      if 'all' in profile.sections or 'color' in profile.sections :
-        self.actual_pallete_colors.set_active(profile.actualPallete)
-        self.line_color.set_color(profile.lineColor)
-        self.border_color.set_color(profile.borderColor)
-
-      if 'all' in profile.sections or 'text' in profile.sections :
-        # Left text
-        self.left_text_font.set_font_name(profile.leftTextFont + " " + str(profile.leftTextFontSize))
-        self.left_text_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, profile.leftTextJustify))
-        self.set_text(self.left_text, profile.leftText)
-        # Center text
-        self.center_text_font.set_font_name(profile.centerTextFont + " " + str(profile.centerTextFontSize))
-        self.center_text_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, profile.centerTextJustify))
-        self.set_text(self.center_text, profile.centerText)
-        # Right text
-        self.right_text_font.set_font_name(profile.rightTextFont + " " + str(profile.rightTextFontSize))
-        self.right_text_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, profile.rightTextJustify))
-        self.set_text(self.right_text, profile.rightText)
-
-        self.text_position.set_active(self.combobox_get_id_from_desc(TEXT_POSITION, profile.textPosition))
-        self.rotate_text.set_active(profile.rotateText)
-
-      # Section: general
-      if 'all' in profile.sections or 'general' in profile.sections :
-        # Section: General
-        self.flatten_image.set_active(profile.flattenImage)
-        self.work_on_copy.set_active(profile.workOnCopy)
-
-      # Section: Watermark
-      if 'all' in profile.sections or 'wm' in profile.sections :
-        if profile.wmType == 'text':
-          self.wm_type_text.set_active(True)
-          self.on_radiobutton_wm_text_toggled(self.dialog) # trigger call on_radiobutton_wm_text_toggled()
-        else:
-          self.wm_type_image.set_active(True)
-
-      self.wm_opacity.set_value(profile.wmOpacity)
-      self.wm_rotation.set_value(profile.wmRotation)
-      self.wm_position.set_active(self.combobox_get_id_from_desc(WM_POSITION, profile.wmPosition))
-      self.wm_dist_to_border.set_value(profile.wmDistToBorder)
-      self.wm_dist_to_border_units.set_active(self.combobox_get_id_from_desc(UNITS, profile.wmDistToBorderUnits))
-      self.wm_font.set_font_name(profile.wmFontName + " " + str(profile.wmFontSize))
-      self.wm_justify.set_active(self.combobox_get_id_from_desc(JUSTIFY, profile.wmJustify))
-      self.wm_color.set_color(profile.wmColor)
-      self.set_text(self.wm_text, profile.wmText)
-      self.wm_image_path.set_text(profile.wmImagePath)
-
-      return True
-
-  def parse_form_values(self, profile):
-      # Border tab
-      profile.width = self.border_width.get_value()
-      profile.widthUnits = UNITS[self.border_width_units.get_active()]
-      profile.height = self.border_height.get_value()
-      profile.heightUnits = UNITS[self.border_height_units.get_active()]
-      profile.extText = self.border_ext_text.get_value()
-      profile.extTextUnits = UNITS[self.border_ext_text_units.get_active()]
-      profile.roundInnerBorder = self.border_inner_border_round.get_value()
-      profile.roundInnerBorderUnits = UNITS[self.border_inner_border_round_units.get_active()]
-      profile.roundOuterBorder = self.border_outer_border_round.get_value()
-      profile.roundOuterBorderUnits = UNITS[self.border_outer_border_round_units.get_active()]
-
-      profile.innerLine = self.border_inner_line.get_active()
-      profile.innerSize = self.border_inner_size.get_value()
-      profile.innerUnits = UNITS[self.border_inner_size_units.get_active()]
-      profile.innerRound = self.border_inner_round.get_value()
-      profile.innerRoundUnits = UNITS[self.border_inner_round_units.get_active()]
-      profile.distToImage = self.border_dist_to_image.get_value()
-      profile.distToImageUnits = UNITS[self.border_dist_to_image_units.get_active()]
-
-      profile.outerLine = self.border_outer_line.get_active()
-      profile.outerSize = self.border_outer_size.get_value()
-      profile.outerUnits = UNITS[self.border_outer_size_units.get_active()]
-      profile.outerRound = self.border_outer_round.get_value()
-      profile.outerRoundUnits = UNITS[self.border_outer_round_units.get_active()]
-      profile.distToBorder = self.border_dist_to_border.get_value()
-      profile.distToBorderUnits = UNITS[self.border_dist_to_border_units.get_active()]
-
-      profile.actualPallete = self.actual_pallete_colors.get_active()
-      profile.lineColor = self.extract_color(self.line_color.get_color())
-      profile.borderColor = self.extract_color(self.border_color.get_color())
-      profile.featherLine = FEATHER[self.feather_line.get_active()]
-      profile.flattenImage = self.flatten_image.get_active()
-      profile.workOnCopy = self.work_on_copy.get_active()
-
-      # Text tab
-      profile.leftTextFont = self.extract_font_name(self.left_text_font.get_font_name())
-      profile.leftTextFontSize = self.extract_font_size(self.left_text_font.get_font_name())
-      profile.leftTextJustify = JUSTIFY[self.left_text_justify.get_active()]
-      profile.leftText = self.extract_text(self.left_text)
-      profile.centerTextFont = self.extract_font_name(self.center_text_font.get_font_name())
-      profile.centerTextFontSize = self.extract_font_size(self.center_text_font.get_font_name())
-      profile.centerTextJustify = JUSTIFY[self.center_text_justify.get_active()]
-      profile.centerText = self.extract_text(self.center_text)
-      profile.rightTextFont = self.extract_font_name(self.right_text_font.get_font_name())
-      profile.rightTextFontSize = self.extract_font_size(self.right_text_font.get_font_name())
-      profile.rightTextJustify = JUSTIFY[self.right_text_justify.get_active()]
-      profile.rightText = self.extract_text(self.right_text)
-      profile.textPosition = TEXT_POSITION[self.text_position.get_active()]
-      profile.rotateText = self.rotate_text.get_active()
-
-      # Watermark tab
-      profile.wmType = self.get_wm_type()
-      profile.wmOpacity = self.wm_opacity.get_value()
-      profile.wmRotation = self.wm_rotation.get_value()
-      profile.wmPosition = WM_POSITION[self.wm_position.get_active()]
-      profile.wmDistToBorder = self.wm_dist_to_border.get_value()
-      profile.wmDistToBorderUnits = UNITS[self.wm_dist_to_border_units.get_active()]
-      profile.wmFontName = self.extract_font_name(self.wm_font.get_font_name())
-      profile.wmFontSize = self.extract_font_size(self.wm_font.get_font_name())
-      profile.wmJustify = JUSTIFY[self.wm_justify.get_active()]
-      profile.wmColor =  self.extract_color(self.wm_color.get_color())
-      profile.wmText = self.extract_text(self.wm_text)
-      profile.wmImage_path = self.wm_image_path.get_text()
 

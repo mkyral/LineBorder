@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-03 21:09+0100\n"
-"PO-Revision-Date: 2010-11-03 21:09+0100\n"
+"POT-Creation-Date: 2010-11-21 16:12+0100\n"
+"PO-Revision-Date: 2010-11-21 16:19+0100\n"
 "Last-Translator: Marian Kyral <mkyral@email.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Lokalize 1.1\n"
 
-#: ../../kym-Border.py:89 ../../kym-Border.py:90
+#: ../../kym-Border.py:84 ../../kym-Border.py:85
 msgid ""
 "Generate a line border around an image and optionaly place text on borders "
 "and inside the image."
@@ -29,15 +29,35 @@ msgstr "Vytvoří rámeček okolo obrázku včetně textu v rámečku a v obráz
 msgid "Layer With Border"
 msgstr "Vrstva s rámečkem"
 
-#: ../gui.py:77
+#: ../gui.py:53 ../gui.py:59
+msgid "Libraries not found!"
+msgstr "Knihovny nenalezeny!"
+
+#: ../gui.py:53
+msgid ""
+"The Gtk or Glade library not found.\n"
+"Check your installation please!\n"
+msgstr ""
+"Lituji, nebyly nalezeny Gtk a Glade knihovny.\n"
+"Zkontrolujte svou instalaci prosím!\n"
+
+#: ../gui.py:59
+msgid ""
+"The pygtk library not found.\n"
+"Check your installation please!\n"
+msgstr ""
+"Lituji, knihovna pygtk nebyla nalezena.\n"
+"Zkontrolujte svou instalaci prosím!\n"
+
+#: ../gui.py:86
 msgid "Cannot find the glade file: "
 msgstr "Nelze najít glade soubor:"
 
-#: ../gui.py:78
+#: ../gui.py:87
 msgid "No dialog file found!"
 msgstr "Soubor rozhraní nenalezen!"
 
-#: ../gui.py:78
+#: ../gui.py:87
 msgid ""
 "Sorry, the dialog file LineBorder.glade was not found.\n"
 "Check your installation please!"
@@ -45,55 +65,122 @@ msgstr ""
 "Lituji, soubor rozhraní LineBorder.glade nebyl nalezen.\n"
 "Zkontrolujte svou instalaci prosím!"
 
-#: ../gui.py:258
+#: ../gui.py:303
 msgid "Open image"
 msgstr "Otevřít obrázek"
 
-#: ../gui.py:267
+#: ../gui.py:312
 msgid "Images"
 msgstr "Obrázky"
 
-#: ../gui.py:456
+#. Workaround: Make column titles translatable
+#: ../gui.py:371
+msgid "Profile name"
+msgstr "Jméno profilu"
+
+#: ../gui.py:372
+msgid "B"
+msgstr "R"
+
+#: ../gui.py:373
+msgid "C"
+msgstr "B"
+
+#: ../gui.py:374
+msgid "T"
+msgstr "T"
+
+#: ../gui.py:375
+msgid "W"
+msgstr "V"
+
+#: ../gui.py:376
+msgid "G"
+msgstr "O"
+
+#: ../gui.py:383 ../gui.py:451 ../gui.py:489
+msgid "No profile selected."
+msgstr "Není vybrán profil."
+
+#: ../gui.py:383
+msgid "Select profile to load please."
+msgstr "Vyberte prosím profil pro nahrání."
+
+#: ../gui.py:388
+msgid "Load profile?"
+msgstr "Nahrát profil?"
+
+#: ../gui.py:396 ../LineBorder.glade.h:58
+msgid "Load profile"
+msgstr "Nahrát profil"
+
+#: ../gui.py:434 ../LineBorder.glade.h:74
+msgid "Save as new profile"
+msgstr "Uložit jako nový profil"
+
+#: ../gui.py:451
+msgid "Select profile to update please."
+msgstr "Vyberte prosím profil pro aktualizaci."
+
+#: ../gui.py:456 ../LineBorder.glade.h:95
+msgid "Update profile"
+msgstr "Upravit profil"
+
+#: ../gui.py:489
+msgid "Select profile to delete please."
+msgstr "Vyberte prosím profil pro smazání."
+
+#: ../gui.py:494
+msgid "Delete profile?"
+msgstr "Smazat profil?"
+
+#: ../gui.py:502 ../LineBorder.glade.h:30
+msgid "Delete profile"
+msgstr "Smazat profil"
+
+#: ../gui.py:551
+msgid "There are no sections to load!"
+msgstr "Žádná sekce pro nahrání!"
+
+#: ../gui.py:554 ../gui.py:557
+msgid "There are no sections to save!"
+msgstr "Žádná sekce pro uložení!"
+
+#: ../gui.py:554
+msgid ""
+"There are no sections to save!\n"
+"To delete profile use the 'Delete profile' button."
+msgstr ""
+"Žádná sekce pro uložení!\n"
+"Pro smazání profilu použijte tlačítko 'Smaž profil'."
+
+#: ../gui.py:557
+msgid ""
+"There are no sections to save!\n"
+" Profile was not saved."
+msgstr ""
+"Žádná sekce pro uložení!\n"
+"Profil nebyl uložen."
+
+#: ../gui.py:617 ../LineBorder.glade.h:65
+msgid "Profile name:"
+msgstr "Jméno profilu:"
+
+#: ../gui.py:928
 msgid "Cannot find the image file:"
 msgstr "Soubor s obrázkem nebyl nalezen:"
 
-#: ../gui.py:457
+#: ../gui.py:929
 msgid "File does not exists!"
 msgstr "Soubor neexistuje!"
 
-#: ../gui.py:457
+#: ../gui.py:929
 msgid "The watermark image file:"
 msgstr "Soubor vodoznaku:"
 
-#: ../gui.py:457
+#: ../gui.py:929
 msgid "does not exists or is not readable!\n"
 msgstr "neexistuje nebo nelze číst!\n"
-
-#: ../gui.py:754 ../gui.py:787 ../gui.py:885 ../gui.py:905 ../gui.py:1000
-#, python-format
-msgid "Missing section in config file. %s"
-msgstr "Chybějící sekce v konfiguračním souboru. %s"
-
-#: ../gui.py:1005
-#, python-format
-msgid "Cannot parse configuration file. %s"
-msgstr "Konfigurační soubor nelze parsovat. %s"
-
-#: ../gui.py:1006
-msgid "Configuration file error"
-msgstr "Chyba konfiguračního souboru"
-
-#: ../gui.py:1006
-msgid "Cannot parse configuration file. "
-msgstr "Nelze parsovat konfigurační soubor."
-
-#: ../gui.py:1009
-msgid "Configuration file loading error"
-msgstr "Problém při nahrávání konfiguračního souboru."
-
-#: ../gui.py:1009
-msgid "Problem opening configuration file."
-msgstr "Problém s otevřením konfiguračního souboru."
 
 #: ../LineBorder.glade.h:2
 #, no-c-format
@@ -117,78 +204,90 @@ msgid "<b>Colors</b>"
 msgstr "<b>Barvy</b>"
 
 #: ../LineBorder.glade.h:7
+msgid "<b>Comment</b>"
+msgstr "<b>Komentář</b>"
+
+#: ../LineBorder.glade.h:8
 msgid "<b>General</b>"
 msgstr "<b>Obecné</b>"
 
-#: ../LineBorder.glade.h:8
+#: ../LineBorder.glade.h:9
 msgid "<b>Image</b>"
 msgstr "<b>Obrázek</b>"
 
-#: ../LineBorder.glade.h:9
+#: ../LineBorder.glade.h:10
 msgid "<b>Inner line</b>"
 msgstr "<b>Vnitřní linka:</b>"
 
-#: ../LineBorder.glade.h:10
+#: ../LineBorder.glade.h:11
 msgid "<b>Left / Upper text</b>"
 msgstr "<b>Text: Vlevo nebo nahoře</b>"
 
-#: ../LineBorder.glade.h:11
+#: ../LineBorder.glade.h:12
 msgid "<b>Outer line</b>"
 msgstr "<b>Vnější linka:</b>"
 
-#: ../LineBorder.glade.h:12
+#: ../LineBorder.glade.h:13
 msgid "<b>Right / Bottom text</b>"
 msgstr "<b>Text: Vpravo nebo dole</b>"
 
-#: ../LineBorder.glade.h:13
+#: ../LineBorder.glade.h:14
+msgid "<b>Sections</b>"
+msgstr "<b>Sekce</b>"
+
+#: ../LineBorder.glade.h:15
 msgid "<b>Text</b>"
 msgstr "<b>Text</b>"
 
-#: ../LineBorder.glade.h:14
+#: ../LineBorder.glade.h:16
 msgid "About"
 msgstr "O programu"
 
-#: ../LineBorder.glade.h:15
+#: ../LineBorder.glade.h:17
 msgid "Block"
 msgstr "Blok"
 
-#: ../LineBorder.glade.h:16
+#: ../LineBorder.glade.h:18
 msgid "Border"
 msgstr "Rámeček"
 
-#: ../LineBorder.glade.h:17
+#: ../LineBorder.glade.h:19
 msgid "Border color:"
 msgstr "Barva rámečku:"
 
-#: ../LineBorder.glade.h:18
+#: ../LineBorder.glade.h:20
 msgid "Both"
 msgstr "Obě"
 
-#: ../LineBorder.glade.h:19
+#: ../LineBorder.glade.h:21
 msgid "Bottom"
 msgstr "Dole"
 
-#: ../LineBorder.glade.h:20
+#: ../LineBorder.glade.h:22
 msgid "Bottom-Center"
 msgstr "Dole uprostřed"
 
-#: ../LineBorder.glade.h:21
+#: ../LineBorder.glade.h:23
 msgid "Bottom-Left"
 msgstr "Vlevo dole"
 
-#: ../LineBorder.glade.h:22
+#: ../LineBorder.glade.h:24
 msgid "Bottom-Right"
 msgstr "Vpravo dole"
 
-#: ../LineBorder.glade.h:23
+#: ../LineBorder.glade.h:25
 msgid "Center"
 msgstr "Uprostřed"
 
-#: ../LineBorder.glade.h:24
+#: ../LineBorder.glade.h:26
+msgid "Color"
+msgstr "Barva"
+
+#: ../LineBorder.glade.h:27
 msgid "Color:"
 msgstr "Barva:"
 
-#: ../LineBorder.glade.h:25
+#: ../LineBorder.glade.h:28
 msgid ""
 "Czech:  Marian Kyral <mkyral@email.cz>\n"
 "Dutch: Elmar Sullock Enzlin <moroquendo@gmail.com>"
@@ -196,35 +295,47 @@ msgstr ""
 "Czech:  Marian Kyral <mkyral@email.cz>\n"
 "Dutch: Elmar Sullock Enzlin <moroquendo@gmail.com>"
 
-#: ../LineBorder.glade.h:27
+#: ../LineBorder.glade.h:31
 msgid "Distance to border:"
 msgstr "Vzdálenost k okraji"
 
-#: ../LineBorder.glade.h:28
+#: ../LineBorder.glade.h:32
 msgid "Distance to image:"
 msgstr "Vzdálenost od obrázku"
 
-#: ../LineBorder.glade.h:29
+#: ../LineBorder.glade.h:33
 msgid "Distance:"
 msgstr "Vzdálenost:"
 
-#: ../LineBorder.glade.h:30
+#: ../LineBorder.glade.h:34
+msgid "Enter comment for the  profile"
+msgstr "Vložte komentář profilu"
+
+#: ../LineBorder.glade.h:35
+msgid "Enter the profile name"
+msgstr "Vložte jméno profilu"
+
+#: ../LineBorder.glade.h:36
 msgid "Extend text border:"
 msgstr "Rozšíření rámečku s textem"
 
-#: ../LineBorder.glade.h:31
+#: ../LineBorder.glade.h:37
 msgid "Feather line:"
 msgstr "Rozmazat linky rámečku:"
 
-#: ../LineBorder.glade.h:32
+#: ../LineBorder.glade.h:38
 msgid "Flatten image:"
 msgstr "Zploštit obrázek:"
 
-#: ../LineBorder.glade.h:33
+#: ../LineBorder.glade.h:39
 msgid "Font:"
 msgstr "Písmo:"
 
-#: ../LineBorder.glade.h:34
+#: ../LineBorder.glade.h:40
+msgid "General"
+msgstr "Obecné"
+
+#: ../LineBorder.glade.h:41
 msgid ""
 "Generate a line border around an image\n"
 "with optional text on border and\n"
@@ -247,91 +358,103 @@ msgstr ""
 "Díky Elmaru Sullocku Enzlinu\n"
 "za upozornění na možnosti glade dialogů.\n"
 
-#: ../LineBorder.glade.h:45
+#: ../LineBorder.glade.h:52
 msgid "Inner"
 msgstr "Vnitřní"
 
-#: ../LineBorder.glade.h:46
+#: ../LineBorder.glade.h:53
 msgid "Justify:"
 msgstr "Zarovnání:"
 
-#: ../LineBorder.glade.h:47
+#: ../LineBorder.glade.h:54
 msgid "Left"
 msgstr "Vlevo"
 
-#: ../LineBorder.glade.h:48
+#: ../LineBorder.glade.h:55
 msgid "Line Border 2 on registry.gimp.org"
 msgstr "Line Border 2 na registry.gimp.org"
 
-#: ../LineBorder.glade.h:49
+#: ../LineBorder.glade.h:56
 msgid "Line border 2"
 msgstr "Line border 2"
 
-#: ../LineBorder.glade.h:50
+#: ../LineBorder.glade.h:57
 msgid "Line color:"
 msgstr "Barva linky:"
 
-#: ../LineBorder.glade.h:51
+#: ../LineBorder.glade.h:59
 msgid "Middle-Left"
 msgstr "Vlevo uprostřed"
 
-#: ../LineBorder.glade.h:52
+#: ../LineBorder.glade.h:60
 msgid "Middle-Right"
 msgstr "Vpravo uprostřed"
 
-#: ../LineBorder.glade.h:53
+#: ../LineBorder.glade.h:61
 msgid "None"
 msgstr "Žádnou"
 
-#: ../LineBorder.glade.h:54
+#: ../LineBorder.glade.h:62
 msgid "Opacity: "
 msgstr "Průhlednost:"
 
-#: ../LineBorder.glade.h:55
+#: ../LineBorder.glade.h:63
 msgid "Outer"
 msgstr "Vnější"
 
-#: ../LineBorder.glade.h:56
+#: ../LineBorder.glade.h:64
 msgid "Position:"
 msgstr "Pozice:"
 
-#: ../LineBorder.glade.h:57
+#: ../LineBorder.glade.h:66
+msgid "Profiles"
+msgstr "Profily"
+
+#: ../LineBorder.glade.h:67
 msgid "Right"
 msgstr "Vpravo"
 
-#: ../LineBorder.glade.h:58
+#: ../LineBorder.glade.h:68
 msgid "Rotate text to left if is placed to side"
 msgstr "Text umístěný na stranách otočit doleva."
 
-#: ../LineBorder.glade.h:59
+#: ../LineBorder.glade.h:69
 msgid "Rotate text:"
 msgstr "Otočit text:"
 
-#: ../LineBorder.glade.h:60
+#: ../LineBorder.glade.h:70
 msgid "Rotation:"
 msgstr "Otočení:"
 
-#: ../LineBorder.glade.h:61
+#: ../LineBorder.glade.h:71
 msgid "Round corners:"
 msgstr "Zaoblit rohy:"
 
-#: ../LineBorder.glade.h:62
+#: ../LineBorder.glade.h:72
 msgid "Round inner corners:"
 msgstr "Zaoblit vnitřní rohy:"
 
-#: ../LineBorder.glade.h:63
+#: ../LineBorder.glade.h:73
 msgid "Round outer corners:"
 msgstr "Zaoblit vnější rohy:"
 
-#: ../LineBorder.glade.h:64
+#: ../LineBorder.glade.h:75
+msgid "Save profile"
+msgstr "Uložit profil"
+
+#: ../LineBorder.glade.h:76
+msgid "Sections to store in profile"
+msgstr "Sekce které budou uloženy v profilu"
+
+#: ../LineBorder.glade.h:77
 msgid "Size:"
 msgstr "Velikost:"
 
-#: ../LineBorder.glade.h:65
+#: ../LineBorder.glade.h:78
 msgid "Text"
 msgstr "Text"
 
-#: ../LineBorder.glade.h:66
+#: ../LineBorder.glade.h:79
 msgid ""
 "This program is free software; you can redistribute it and/or\n"
 "modify it under the terms of the GNU General Public License\n"
@@ -349,62 +472,83 @@ msgid ""
 "USA.\n"
 msgstr ""
 "Tento program je svobodný software; můžete jej šířit a modifikovat podle \n"
-"ustanovení GNU General Public License, vydávané Free Software Foundation; "
-"a \n"
-"to buď verze 2 této licence anebo (podle vašeho uvážení) kterékoli "
+"ustanovení GNU General Public License, vydávané Free Software "
+"Foundation;\n "
+"a to buď verze 2 této licence anebo (podle vašeho uvážení) kterékoli "
 "pozdější \n"
-"verze.Tento program je rozšiřován v naději, že bude užitečný, avšak BEZ \n"
+"verze. \n"
+"\n"
+"Tento program je rozšiřován v naději, že bude užitečný, avšak BEZ \n"
 "JAKÉKOLI ZÁRUKY; neposkytují se ani odvozené záruky PRODEJNOSTI anebo \n"
-"VHODNOSTI PRO URČITÝ ÚČEL. Další podrobnosti hledejte ve GNU General "
-"Public \n"
+"VHODNOSTI PRO URČITÝ ÚČEL.\n "
+"\n"
+"Další podrobnosti hledejte ve GNU General Public \n"
 "License.Kopii GNU General Public License jste měli obdržet spolu s tímto \n"
 "programem; pokud se tak nestalo, napište o ni Free Software Foundation,"
 "Inc., \n"
 "59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n"
 
-#: ../LineBorder.glade.h:80
+#: ../LineBorder.glade.h:93
 msgid "Total size (height):"
 msgstr "Celková velikost (výška):"
 
-#: ../LineBorder.glade.h:81
+#: ../LineBorder.glade.h:94
 msgid "Total size (width):"
 msgstr "Celková velikost (šířka):"
 
-#: ../LineBorder.glade.h:82
+#: ../LineBorder.glade.h:96
 msgid "Upper"
 msgstr "Nahoře"
 
-#: ../LineBorder.glade.h:83
+#: ../LineBorder.glade.h:97
 msgid "Upper-Center"
 msgstr "Nahoře uprostřed"
 
-#: ../LineBorder.glade.h:84
+#: ../LineBorder.glade.h:98
 msgid "Upper-Left"
 msgstr "Vlevo nahoře"
 
-#: ../LineBorder.glade.h:85
+#: ../LineBorder.glade.h:99
 msgid "Upper-Right"
 msgstr "Vpravo nahoře"
 
-#: ../LineBorder.glade.h:86
+#: ../LineBorder.glade.h:100
 msgid "Use actual palette colors"
 msgstr "Použít aktuální barevnou paletu"
 
-#: ../LineBorder.glade.h:87
+#: ../LineBorder.glade.h:101
 msgid "Watermark"
 msgstr "Vodoznak"
 
-#: ../LineBorder.glade.h:88
+#: ../LineBorder.glade.h:102
 msgid "Where is text placed"
 msgstr "Kde je text umístěn"
 
-#: ../LineBorder.glade.h:89
+#: ../LineBorder.glade.h:103
 msgid "Work on copy:"
 msgstr "Pracovat s kopií:"
 
-#: ../LineBorder.glade.h:90
+#: ../LineBorder.glade.h:104
 msgid "pixels"
 msgstr "body"
+
+#~ msgid "Missing section in config file. %s"
+#~ msgstr "Chybějící sekce v konfiguračním souboru. %s"
+
+#~ msgid "Cannot parse configuration file. %s"
+#~ msgstr "Konfigurační soubor nelze parsovat. %s"
+
+#~ msgid "Configuration file error"
+#~ msgstr "Chyba konfiguračního souboru"
+
+#~ msgid "Cannot parse configuration file. "
+#~ msgstr "Nelze parsovat konfigurační soubor."
+
+#~ msgid "Configuration file loading error"
+#~ msgstr "Problém při nahrávání konfiguračního souboru."
+
+#~ msgid "Problem opening configuration file."
+#~ msgstr "Problém s otevřením konfiguračního souboru."
 
 #~ msgid "Image"
 #~ msgstr "Obrázek"

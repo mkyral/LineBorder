@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 #
-# Copyright, V2.3
+# Copyright, V2.4
 #
 # Marian Kyral (mkyral@email.cz)
 # (C) 2006, 2008, 2010, Frydek-Mistek, Czech Republic
@@ -25,6 +25,9 @@
 
 #
 # Changelog
+#
+# 21.11.2010 - v2.4
+# * ADD: profiles
 #
 # 31.10.2010 - v2.3
 # * CHANGE: gui improvements
@@ -85,7 +88,7 @@ if __name__ == "__main__":
     _("Generate a line border around an image and optionaly place text on borders and inside the image."),
     "Marian Kyral (mkyral@email.cz)",
     "Copyright 2010, Marian Kyral, Czech Republic",
-    "28.10.2010",
+    "21.11.2010",
     "<Image>/Filters/Decor/Borders/Line border 2",
     "RGB*,GRAY*",
     [],
