@@ -6,7 +6,7 @@ mode=$1
 if [ "$mode" = "-u" ]
 then
   # extract strings from the glade file
-  echo 
+  echo
   echo "Prepare .glade files"
   intltool-extract --type="gettext/glade" ../${APP}.glade
 
@@ -22,7 +22,7 @@ then
     echo "-> $_lang <-"
     if [ -f "${_lang}.po" ]
     then
-     intltool-update --dist --gettext-package=LineBorder ${_lang} 
+     intltool-update --dist --gettext-package=LineBorder ${_lang}
     else
       msginit --input=${APP}.pot --no-translator --locale=$_lang
     fi
