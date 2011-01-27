@@ -62,6 +62,7 @@ except ImportError,  e :
   self.on_error(_("Libraries not found!"), _("The pygtk library not found.\nCheck your installation please!\n"+str(e)))
 
 from LineBorder import LineBorder
+from TreeViewTooltips import TreeViewTooltips
 from . import LineBorderProfile
 
 import locale, gettext
@@ -82,6 +83,74 @@ FEATHER = ['None', 'Inner', 'Outer', 'Both']
 JUSTIFY = ['Center', 'Left', 'Right', 'Block']
 TEXT_POSITION = ['Bottom', 'Upper', 'Left', 'Right']
 WM_POSITION = ['Upper-Left', 'Upper-Center', 'Upper-Right', 'Middle-Left', 'Center', 'Middle-Right', 'Bottom-Left', 'Bottom-Center', 'Bottom-Right']
+
+profile_list = LineBorderProfile.LineBorderProfileList()
+
+class MyTreeViewTooltips(TreeViewTooltips):
+  # Overriding get_tooltip()
+  def get_tooltip(self, view, column, path):
+    title = column.get_title()
+    model = view.get_model()
+    profile_id = model[path][0]
+    profile_name = model[path][1]
+    border_section_set = model[path][2]
+    color_section_set = model[path][3]
+    text_section_set = model[path][4]
+    wm_section_set = model[path][5]
+    general_section_set = model[path][6]
+
+    if title == _('Profile name'):
+      if profile_list.profiles[profile_id].comment == '' :
+        return _('<u><big>Profile: %s</big></u>\n<i>%s</i>' % (profile_list.profiles[profile_id].name,
+                                            _('No comment')))
+      else :
+        return _('<u><big>Profile: %s</big></u>\n<i>%s</i>' % (profile_list.profiles[profile_id].name,
+                                           profile_list.profiles[profile_id].comment))
+
+    elif title == _('B'):
+      if border_section_set :
+        return _('Profile %s\ncontains Border section' % (profile_name))
+      else :
+        return _('Profile %s\ndoes not contain Border section' % (profile_name))
+
+    elif title == _('C'):
+      if color_section_set :
+        return _('Profile %s\ncontains Color section' % (profile_name))
+      else :
+        return _('Profile %s\ndoes not contain Color section' % (profile_name))
+
+    elif title == _('T'):
+      if text_section_set :
+        return _('Profile %s\ncontains Text section' % (profile_name))
+      else :
+        return _('Profile %s\ndoes not contain Text section' % (profile_name))
+
+    elif title == _('W'):
+      if wm_section_set :
+        return _('Profile %s\ncontains Watermark section' % (profile_name))
+      else :
+        return _('Profile %s\ndoes not contain Watermark section' % (profile_name))
+
+    elif title == _('G'):
+      if general_section_set :
+        return _('Profile %s\ncontains General section' % (profile_name))
+      else :
+        return _('Profile %s\ndoes not General Border section' % (profile_name))
+
+    else:
+      return None
+
+      ## By checking both column and path we have a
+      ## cell-based tooltip.
+      #model = view.get_model()
+      #customer = model[path][2]
+      #return '<big>%s %s</big>\n<i>%s</i>' % (customer.fname,
+      #customer.lname,
+      #customer.notes)
+      ## phone
+      #else:
+        #return ('<big><u>Generic Column Tooltip</u></big>\n'
+        #'Unless otherwise noted, all\narea codes are 888')
 
 class LineBorderApp():
   def __init__(self, Image = None, Drawable = None):
@@ -205,15 +274,21 @@ class LineBorderApp():
       self.profile_dialog_actual = None # Profile to load or update
 
       # Initialize profiles
-      self.profile_list = LineBorderProfile.LineBorderProfileList()
+      #self.profile_list = LineBorderProfile.LineBorderProfileList()
+      self.profile_list = profile_list
       self.profile_list.configFile = os.path.join(gimp.directory, "LineBorder.cfg")
       self.profile_list.loadProfiles()
       self.default_profile = self.profile_list.profiles['DEFAULT']
+
+      # TreeViewTooltips
+      self.tree_view_tips = MyTreeViewTooltips()
+      self.tree_view_tips.add_view(self.profiles_treeview)
 
       # add profiles to the treeview list
       self.profiles_model = self.profiles_treeview.get_model()
       for k, p in self.profile_list.profiles.iteritems() :
         self.add_row_to_treeview(p)
+      self.profiles_model.sort_column_changed()
 
       if not self.apply_profile(self.default_profile) :
         # Workaround :-/ (http://www.listware.net/201004/gtk-app-devel-list/88663-default-values-for-spin-buttons-in-glade.html)
@@ -611,6 +686,8 @@ class LineBorderApp():
         self.add_row_to_treeview(profile)
         self.profile_list.saveProfiles()
 
+      self.profiles_model.sort_column_changed()
+
 
   def on_button_profile_cancel_clicked (self, widget, responseID = None):
       self.profile_dialog.hide()
@@ -669,7 +746,7 @@ class LineBorderApp():
   def add_row_to_treeview(self, profile) :
       if profile.profileId != 'DEFAULT' :
         border_flag, color_flag, text_flag, wm_flag, general_flag = self.get_profile_flags(profile)
-        self.profiles_model.append([profile.profileId , profile.name, border_flag, color_flag, text_flag, wm_flag, general_flag])
+        add_iter = self.profiles_model.append([profile.profileId , profile.name, border_flag, color_flag, text_flag, wm_flag, general_flag])
 
   # update treeview row
   def update_treeview_row(self, profile) :
