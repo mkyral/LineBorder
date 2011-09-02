@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-27 22:02+0100\n"
+"POT-Creation-Date: 2011-09-02 07:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,227 +27,227 @@ msgstr ""
 msgid "Layer With Border"
 msgstr ""
 
-#: ../gui.py:56 ../gui.py:62
+#: ../gui.py:57 ../gui.py:63
 msgid "Libraries not found!"
 msgstr ""
 
-#: ../gui.py:56
+#: ../gui.py:57
 msgid ""
 "The Gtk or Glade library not found.\n"
 "Check your installation please!\n"
 msgstr ""
 
-#: ../gui.py:62
+#: ../gui.py:63
 msgid ""
 "The pygtk library not found.\n"
 "Check your installation please!\n"
 msgstr ""
 
 #. Workaround: Make column titles translatable
-#: ../gui.py:102 ../gui.py:449
+#: ../gui.py:103 ../gui.py:456
 msgid "Profile name"
 msgstr ""
 
-#: ../gui.py:105
+#: ../gui.py:106
 msgid "No comment"
 msgstr ""
 
-#: ../gui.py:104 ../gui.py:107
+#: ../gui.py:105 ../gui.py:108
 #, python-format
 msgid ""
 "<u><big>Profile: %s</big></u>\n"
 "<i>%s</i>"
 msgstr ""
 
-#: ../gui.py:110 ../gui.py:450
+#: ../gui.py:111 ../gui.py:457
 msgid "B"
 msgstr ""
 
-#: ../gui.py:112
+#: ../gui.py:113
 #, python-format
 msgid ""
 "Profile %s\n"
 "contains Border section"
 msgstr ""
 
-#: ../gui.py:114
+#: ../gui.py:115
 #, python-format
 msgid ""
 "Profile %s\n"
 "does not contain Border section"
 msgstr ""
 
-#: ../gui.py:116 ../gui.py:451
+#: ../gui.py:117 ../gui.py:458
 msgid "C"
 msgstr ""
 
-#: ../gui.py:118
+#: ../gui.py:119
 #, python-format
 msgid ""
 "Profile %s\n"
 "contains Color section"
 msgstr ""
 
-#: ../gui.py:120
+#: ../gui.py:121
 #, python-format
 msgid ""
 "Profile %s\n"
 "does not contain Color section"
 msgstr ""
 
-#: ../gui.py:122 ../gui.py:452
+#: ../gui.py:123 ../gui.py:459
 msgid "T"
 msgstr ""
 
-#: ../gui.py:124
+#: ../gui.py:125
 #, python-format
 msgid ""
 "Profile %s\n"
 "contains Text section"
 msgstr ""
 
-#: ../gui.py:126
+#: ../gui.py:127
 #, python-format
 msgid ""
 "Profile %s\n"
 "does not contain Text section"
 msgstr ""
 
-#: ../gui.py:128 ../gui.py:453
+#: ../gui.py:129 ../gui.py:460
 msgid "W"
 msgstr ""
 
-#: ../gui.py:130
+#: ../gui.py:131
 #, python-format
 msgid ""
 "Profile %s\n"
 "contains Watermark section"
 msgstr ""
 
-#: ../gui.py:132
+#: ../gui.py:133
 #, python-format
 msgid ""
 "Profile %s\n"
 "does not contain Watermark section"
 msgstr ""
 
-#: ../gui.py:134 ../gui.py:454
+#: ../gui.py:135 ../gui.py:461
 msgid "G"
 msgstr ""
 
-#: ../gui.py:136
+#: ../gui.py:137
 #, python-format
 msgid ""
 "Profile %s\n"
 "contains General section"
 msgstr ""
 
-#: ../gui.py:138
+#: ../gui.py:139
 #, python-format
 msgid ""
 "Profile %s\n"
 "does not General Border section"
 msgstr ""
 
-#: ../gui.py:158
+#: ../gui.py:159
 msgid "Cannot find the glade file: "
 msgstr ""
 
-#: ../gui.py:159
+#: ../gui.py:160
 msgid "No dialog file found!"
 msgstr ""
 
-#: ../gui.py:159
+#: ../gui.py:160
 msgid ""
 "Sorry, the dialog file LineBorder.glade was not found.\n"
 "Check your installation please!"
 msgstr ""
 
-#: ../gui.py:381
+#: ../gui.py:382
 msgid "Open image"
 msgstr ""
 
-#: ../gui.py:390
+#: ../gui.py:391
 msgid "Images"
 msgstr ""
 
-#: ../gui.py:461 ../gui.py:529 ../gui.py:567
+#: ../gui.py:468 ../gui.py:536 ../gui.py:574
 msgid "No profile selected."
 msgstr ""
 
-#: ../gui.py:461
+#: ../gui.py:468
 msgid "Select profile to load please."
 msgstr ""
 
-#: ../gui.py:466
+#: ../gui.py:473
 msgid "Load profile?"
 msgstr ""
 
-#: ../gui.py:474 ../LineBorder.glade.h:59
+#: ../gui.py:481 ../LineBorder.glade.h:59
 msgid "Load profile"
 msgstr ""
 
-#: ../gui.py:512 ../LineBorder.glade.h:75
+#: ../gui.py:519 ../LineBorder.glade.h:75
 msgid "Save as new profile"
 msgstr ""
 
-#: ../gui.py:529
+#: ../gui.py:536
 msgid "Select profile to update please."
 msgstr ""
 
-#: ../gui.py:534 ../LineBorder.glade.h:96
+#: ../gui.py:541 ../LineBorder.glade.h:98
 msgid "Update profile"
 msgstr ""
 
-#: ../gui.py:567
+#: ../gui.py:574
 msgid "Select profile to delete please."
 msgstr ""
 
-#: ../gui.py:572
+#: ../gui.py:579
 msgid "Delete profile?"
 msgstr ""
 
-#: ../gui.py:580 ../LineBorder.glade.h:31
+#: ../gui.py:587 ../LineBorder.glade.h:31
 msgid "Delete profile"
 msgstr ""
 
-#: ../gui.py:629
+#: ../gui.py:636
 msgid "There are no sections to load!"
 msgstr ""
 
-#: ../gui.py:632 ../gui.py:635
+#: ../gui.py:639 ../gui.py:642
 msgid "There are no sections to save!"
 msgstr ""
 
-#: ../gui.py:632
+#: ../gui.py:639
 msgid ""
 "There are no sections to save!\n"
 "To delete profile use the 'Delete profile' button."
 msgstr ""
 
-#: ../gui.py:635
+#: ../gui.py:642
 msgid ""
 "There are no sections to save!\n"
 " Profile was not saved."
 msgstr ""
 
-#: ../gui.py:697 ../LineBorder.glade.h:66
+#: ../gui.py:704 ../LineBorder.glade.h:66
 msgid "Profile name:"
 msgstr ""
 
-#: ../gui.py:1008
+#: ../gui.py:1015
 msgid "Cannot find the image file:"
 msgstr ""
 
-#: ../gui.py:1009
+#: ../gui.py:1016
 msgid "File does not exists!"
 msgstr ""
 
-#: ../gui.py:1009
+#: ../gui.py:1016
 msgid "The watermark image file:"
 msgstr ""
 
-#: ../gui.py:1009
+#: ../gui.py:1016
 msgid "does not exists or is not readable!\n"
 msgstr ""
 
@@ -510,10 +510,18 @@ msgid "Size:"
 msgstr ""
 
 #: ../LineBorder.glade.h:79
-msgid "Text"
+msgid "Swap colors"
 msgstr ""
 
 #: ../LineBorder.glade.h:80
+msgid "Swap line and border colors"
+msgstr ""
+
+#: ../LineBorder.glade.h:81
+msgid "Text"
+msgstr ""
+
+#: ../LineBorder.glade.h:82
 msgid ""
 "This program is free software; you can redistribute it and/or\n"
 "modify it under the terms of the GNU General Public License\n"
@@ -531,46 +539,46 @@ msgid ""
 "USA.\n"
 msgstr ""
 
-#: ../LineBorder.glade.h:94
+#: ../LineBorder.glade.h:96
 msgid "Total size (height):"
 msgstr ""
 
-#: ../LineBorder.glade.h:95
+#: ../LineBorder.glade.h:97
 msgid "Total size (width):"
 msgstr ""
 
-#: ../LineBorder.glade.h:97
+#: ../LineBorder.glade.h:99
 msgid "Upper"
 msgstr ""
 
-#: ../LineBorder.glade.h:98
+#: ../LineBorder.glade.h:100
 msgid "Upper-Center"
 msgstr ""
 
-#: ../LineBorder.glade.h:99
+#: ../LineBorder.glade.h:101
 msgid "Upper-Left"
 msgstr ""
 
-#: ../LineBorder.glade.h:100
+#: ../LineBorder.glade.h:102
 msgid "Upper-Right"
 msgstr ""
 
-#: ../LineBorder.glade.h:101
+#: ../LineBorder.glade.h:103
 msgid "Use actual palette colors"
 msgstr ""
 
-#: ../LineBorder.glade.h:102
+#: ../LineBorder.glade.h:104
 msgid "Watermark"
 msgstr ""
 
-#: ../LineBorder.glade.h:103
+#: ../LineBorder.glade.h:105
 msgid "Where is text placed"
 msgstr ""
 
-#: ../LineBorder.glade.h:104
+#: ../LineBorder.glade.h:106
 msgid "Work on copy:"
 msgstr ""
 
-#: ../LineBorder.glade.h:105
+#: ../LineBorder.glade.h:107
 msgid "pixels"
 msgstr ""

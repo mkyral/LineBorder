@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-27 22:02+0100\n"
-"PO-Revision-Date: 2011-01-27 22:00+0100\n"
+"POT-Creation-Date: 2011-09-02 07:38+0200\n"
+"PO-Revision-Date: 2011-09-02 07:39+0200\n"
 "Last-Translator: Marian Kyral <mkyral@email.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -29,11 +29,11 @@ msgstr "Vytvoří rámeček okolo obrázku včetně textu v rámečku a v obráz
 msgid "Layer With Border"
 msgstr "Vrstva s rámečkem"
 
-#: ../gui.py:56 ../gui.py:62
+#: ../gui.py:57 ../gui.py:63
 msgid "Libraries not found!"
 msgstr "Knihovny nenalezeny!"
 
-#: ../gui.py:56
+#: ../gui.py:57
 msgid ""
 "The Gtk or Glade library not found.\n"
 "Check your installation please!\n"
@@ -41,7 +41,7 @@ msgstr ""
 "Lituji, nebyly nalezeny Gtk a Glade knihovny.\n"
 "Zkontrolujte svou instalaci prosím!\n"
 
-#: ../gui.py:62
+#: ../gui.py:63
 msgid ""
 "The pygtk library not found.\n"
 "Check your installation please!\n"
@@ -50,15 +50,15 @@ msgstr ""
 "Zkontrolujte svou instalaci prosím!\n"
 
 #. Workaround: Make column titles translatable
-#: ../gui.py:102 ../gui.py:449
+#: ../gui.py:103 ../gui.py:456
 msgid "Profile name"
 msgstr "Jméno profilu"
 
-#: ../gui.py:105
+#: ../gui.py:106
 msgid "No comment"
 msgstr "Komentář nebyl zadán"
 
-#: ../gui.py:104 ../gui.py:107
+#: ../gui.py:105 ../gui.py:108
 #, python-format
 msgid ""
 "<u><big>Profile: %s</big></u>\n"
@@ -67,11 +67,11 @@ msgstr ""
 "<u><big>Profil: %s</big></u>\n"
 "<i>%s</i>"
 
-#: ../gui.py:110 ../gui.py:450
+#: ../gui.py:111 ../gui.py:457
 msgid "B"
 msgstr "R"
 
-#: ../gui.py:112
+#: ../gui.py:113
 #, python-format
 msgid ""
 "Profile %s\n"
@@ -80,7 +80,7 @@ msgstr ""
 "Profil %s\n"
 "obsahuje sekci Rámeček"
 
-#: ../gui.py:114
+#: ../gui.py:115
 #, python-format
 msgid ""
 "Profile %s\n"
@@ -89,11 +89,11 @@ msgstr ""
 "Profil %s\n"
 "neobsahuje sekci Rámeček"
 
-#: ../gui.py:116 ../gui.py:451
+#: ../gui.py:117 ../gui.py:458
 msgid "C"
 msgstr "B"
 
-#: ../gui.py:118
+#: ../gui.py:119
 #, python-format
 msgid ""
 "Profile %s\n"
@@ -102,7 +102,7 @@ msgstr ""
 "Profil %s\n"
 "obsahuje sekci Barvy"
 
-#: ../gui.py:120
+#: ../gui.py:121
 #, python-format
 msgid ""
 "Profile %s\n"
@@ -111,11 +111,11 @@ msgstr ""
 "Profil %s\n"
 "neobsahuje sekci Barvy"
 
-#: ../gui.py:122 ../gui.py:452
+#: ../gui.py:123 ../gui.py:459
 msgid "T"
 msgstr "T"
 
-#: ../gui.py:124
+#: ../gui.py:125
 #, python-format
 msgid ""
 "Profile %s\n"
@@ -124,7 +124,7 @@ msgstr ""
 "Profil %s\n"
 "obsahuje sekci Text"
 
-#: ../gui.py:126
+#: ../gui.py:127
 #, python-format
 msgid ""
 "Profile %s\n"
@@ -133,11 +133,11 @@ msgstr ""
 "Profil %s\n"
 "neobsahuje sekci Text"
 
-#: ../gui.py:128 ../gui.py:453
+#: ../gui.py:129 ../gui.py:460
 msgid "W"
 msgstr "V"
 
-#: ../gui.py:130
+#: ../gui.py:131
 #, python-format
 msgid ""
 "Profile %s\n"
@@ -146,7 +146,7 @@ msgstr ""
 "Profil %s\n"
 "obsahuje sekci Vodoznak"
 
-#: ../gui.py:132
+#: ../gui.py:133
 #, python-format
 msgid ""
 "Profile %s\n"
@@ -155,11 +155,11 @@ msgstr ""
 "Profil %s\n"
 "neobsahuje sekci Vodoznak"
 
-#: ../gui.py:134 ../gui.py:454
+#: ../gui.py:135 ../gui.py:461
 msgid "G"
 msgstr "O"
 
-#: ../gui.py:136
+#: ../gui.py:137
 #, python-format
 msgid ""
 "Profile %s\n"
@@ -168,7 +168,7 @@ msgstr ""
 "Profil %s\n"
 "obsahuje sekci Obecné"
 
-#: ../gui.py:138
+#: ../gui.py:139
 #, python-format
 msgid ""
 "Profile %s\n"
@@ -177,15 +177,15 @@ msgstr ""
 "Profil %s\n"
 "neobsahuje sekci Obecné"
 
-#: ../gui.py:158
+#: ../gui.py:159
 msgid "Cannot find the glade file: "
 msgstr "Nelze najít glade soubor:"
 
-#: ../gui.py:159
+#: ../gui.py:160
 msgid "No dialog file found!"
 msgstr "Soubor rozhraní nenalezen!"
 
-#: ../gui.py:159
+#: ../gui.py:160
 msgid ""
 "Sorry, the dialog file LineBorder.glade was not found.\n"
 "Check your installation please!"
@@ -193,63 +193,63 @@ msgstr ""
 "Lituji, soubor rozhraní LineBorder.glade nebyl nalezen.\n"
 "Zkontrolujte svou instalaci prosím!"
 
-#: ../gui.py:381
+#: ../gui.py:382
 msgid "Open image"
 msgstr "Otevřít obrázek"
 
-#: ../gui.py:390
+#: ../gui.py:391
 msgid "Images"
 msgstr "Obrázky"
 
-#: ../gui.py:461 ../gui.py:529 ../gui.py:567
+#: ../gui.py:468 ../gui.py:536 ../gui.py:574
 msgid "No profile selected."
 msgstr "Není vybrán profil."
 
-#: ../gui.py:461
+#: ../gui.py:468
 msgid "Select profile to load please."
 msgstr "Vyberte prosím profil pro nahrání."
 
-#: ../gui.py:466
+#: ../gui.py:473
 msgid "Load profile?"
 msgstr "Nahrát profil?"
 
-#: ../gui.py:474 ../LineBorder.glade.h:59
+#: ../gui.py:481 ../LineBorder.glade.h:59
 msgid "Load profile"
 msgstr "Nahrát profil"
 
-#: ../gui.py:512 ../LineBorder.glade.h:75
+#: ../gui.py:519 ../LineBorder.glade.h:75
 msgid "Save as new profile"
 msgstr "Uložit jako nový profil"
 
-#: ../gui.py:529
+#: ../gui.py:536
 msgid "Select profile to update please."
 msgstr "Vyberte prosím profil pro aktualizaci."
 
-#: ../gui.py:534 ../LineBorder.glade.h:96
+#: ../gui.py:541 ../LineBorder.glade.h:98
 msgid "Update profile"
 msgstr "Upravit profil"
 
-#: ../gui.py:567
+#: ../gui.py:574
 msgid "Select profile to delete please."
 msgstr "Vyberte prosím profil pro smazání."
 
-#: ../gui.py:572
+#: ../gui.py:579
 msgid "Delete profile?"
 msgstr "Smazat profil?"
 
-#: ../gui.py:580 ../LineBorder.glade.h:31
+#: ../gui.py:587 ../LineBorder.glade.h:31
 msgid "Delete profile"
 msgstr "Smazat profil"
 
-#: ../gui.py:629
+#: ../gui.py:636
 msgid "There are no sections to load!"
 msgstr "Žádná sekce pro nahrání!"
 
-#: ../gui.py:632 ../gui.py:635
+#: ../gui.py:639 ../gui.py:642
 msgid "There are no sections to save!"
 msgstr "Žádná sekce pro uložení!"
 
-#: ../gui.py:632
+#: ../gui.py:639
 msgid ""
 "There are no sections to save!\n"
 "To delete profile use the 'Delete profile' button."
@@ -257,7 +257,7 @@ msgstr ""
 "Žádná sekce pro uložení!\n"
 "Pro smazání profilu použijte tlačítko 'Smaž profil'."
 
-#: ../gui.py:635
+#: ../gui.py:642
 msgid ""
 "There are no sections to save!\n"
 " Profile was not saved."
@@ -265,23 +265,23 @@ msgstr ""
 "Žádná sekce pro uložení!\n"
 "Profil nebyl uložen."
 
-#: ../gui.py:697 ../LineBorder.glade.h:66
+#: ../gui.py:704 ../LineBorder.glade.h:66
 msgid "Profile name:"
 msgstr "Jméno profilu:"
 
-#: ../gui.py:1008
+#: ../gui.py:1015
 msgid "Cannot find the image file:"
 msgstr "Soubor s obrázkem nebyl nalezen:"
 
-#: ../gui.py:1009
+#: ../gui.py:1016
 msgid "File does not exists!"
 msgstr "Soubor neexistuje!"
 
-#: ../gui.py:1009
+#: ../gui.py:1016
 msgid "The watermark image file:"
 msgstr "Soubor vodoznaku:"
 
-#: ../gui.py:1009
+#: ../gui.py:1016
 msgid "does not exists or is not readable!\n"
 msgstr "neexistuje nebo nelze číst!\n"
 
@@ -556,10 +556,18 @@ msgid "Size:"
 msgstr "Velikost:"
 
 #: ../LineBorder.glade.h:79
+msgid "Swap colors"
+msgstr "Prohodit barvy"
+
+#: ../LineBorder.glade.h:80
+msgid "Swap line and border colors"
+msgstr "Prohodí barvu rámečku a linky"
+
+#: ../LineBorder.glade.h:81
 msgid "Text"
 msgstr "Text"
 
-#: ../LineBorder.glade.h:80
+#: ../LineBorder.glade.h:82
 msgid ""
 "This program is free software; you can redistribute it and/or\n"
 "modify it under the terms of the GNU General Public License\n"
@@ -592,47 +600,47 @@ msgstr ""
 "Inc., \n"
 "59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n"
 
-#: ../LineBorder.glade.h:94
+#: ../LineBorder.glade.h:96
 msgid "Total size (height):"
 msgstr "Celková velikost (výška):"
 
-#: ../LineBorder.glade.h:95
+#: ../LineBorder.glade.h:97
 msgid "Total size (width):"
 msgstr "Celková velikost (šířka):"
 
-#: ../LineBorder.glade.h:97
+#: ../LineBorder.glade.h:99
 msgid "Upper"
 msgstr "Nahoře"
 
-#: ../LineBorder.glade.h:98
+#: ../LineBorder.glade.h:100
 msgid "Upper-Center"
 msgstr "Nahoře uprostřed"
 
-#: ../LineBorder.glade.h:99
+#: ../LineBorder.glade.h:101
 msgid "Upper-Left"
 msgstr "Vlevo nahoře"
 
-#: ../LineBorder.glade.h:100
+#: ../LineBorder.glade.h:102
 msgid "Upper-Right"
 msgstr "Vpravo nahoře"
 
-#: ../LineBorder.glade.h:101
+#: ../LineBorder.glade.h:103
 msgid "Use actual palette colors"
 msgstr "Použít aktuální barevnou paletu"
 
-#: ../LineBorder.glade.h:102
+#: ../LineBorder.glade.h:104
 msgid "Watermark"
 msgstr "Vodoznak"
 
-#: ../LineBorder.glade.h:103
+#: ../LineBorder.glade.h:105
 msgid "Where is text placed"
 msgstr "Kde je text umístěn"
 
-#: ../LineBorder.glade.h:104
+#: ../LineBorder.glade.h:106
 msgid "Work on copy:"
 msgstr "Pracovat s kopií:"
 
-#: ../LineBorder.glade.h:105
+#: ../LineBorder.glade.h:107
 msgid "pixels"
 msgstr "body"
 

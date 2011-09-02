@@ -26,8 +26,9 @@
 #
 # Changelog
 #
-# 21.11.2010 - v2.4
+# 21.11.2010, 02.09.2011 - v2.4
 # * ADD: profiles
+# * ADD: Swap colors button
 #
 # 31.10.2010 - v2.3
 # * CHANGE: gui improvements
@@ -437,6 +438,12 @@ class LineBorderApp():
   def on_button_ok_clicked(self, widget):
       self.call_LineBorder()
       gtk.main_quit()
+
+  # Add the border
+  def on_button_swap_colors_clicked(self, widget):
+      tmp_color = self.border_color.get_color()
+      self.border_color.set_color(self.line_color.get_color())
+      self.line_color.set_color(tmp_color)
 
   # quit
   def on_window1_destroy(self, widget):
