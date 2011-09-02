@@ -288,7 +288,7 @@ class LineBorderApp():
       self.profiles_model = self.profiles_treeview.get_model()
       for k, p in self.profile_list.profiles.iteritems() :
         self.add_row_to_treeview(p)
-      self.profiles_model.sort_column_changed()
+      self.profiles_model.set_sort_column_id(1, gtk.SORT_ASCENDING)
 
       if not self.apply_profile(self.default_profile) :
         # Workaround :-/ (http://www.listware.net/201004/gtk-app-devel-list/88663-default-values-for-spin-buttons-in-glade.html)

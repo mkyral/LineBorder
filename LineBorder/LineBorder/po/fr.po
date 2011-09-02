@@ -1,14 +1,14 @@
 # Czech translations for LineBorder package.
 # Copyright (C) 2010 THE LineBorder'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the LineBorder package.
-#
+# 
 #  <mkyral@email.cz>, 2010.
 # Marian Kyral <mkyral@email.cz>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-03 21:09+0100\n"
+"POT-Creation-Date: 2011-01-27 22:02+0100\n"
 "PO-Revision-Date: 2011-01-13 19:31+0100\n"
 "Last-Translator: BARBET BRIGITTE <B.barbet@wanadoo.fr>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -19,25 +19,155 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Lokalize 1.1\n"
 
-#: ../../kym-Border.py:89
-#: ../../kym-Border.py:90
-msgid "Generate a line border around an image and optionaly place text on borders and inside the image."
-msgstr "Génère une bordure autour d'une image et, sur option, place le texte sur les bordures et sur l'image."
+#: ../../kym-Border.py:87 ../../kym-Border.py:88
+msgid ""
+"Generate a line border around an image and optionaly place text on borders "
+"and inside the image."
+msgstr ""
+"Génère une bordure autour d'une image et, sur option, place le texte sur les "
+"bordures et sur l'image."
 
-#: ../LineBorder.py:248
-#: ../LineBorder.py:273
+#: ../LineBorder.py:248 ../LineBorder.py:273
 msgid "Layer With Border"
 msgstr "Calque avec bordure"
 
-#: ../gui.py:77
+#: ../gui.py:56 ../gui.py:62
+msgid "Libraries not found!"
+msgstr ""
+
+#: ../gui.py:56
+#, fuzzy
+msgid ""
+"The Gtk or Glade library not found.\n"
+"Check your installation please!\n"
+msgstr ""
+"Désolé, le fichier de dialogue LineBorder.glade n'a pas été trouvé. \n"
+"Vérifiez votre installation s'il vous plaît !"
+
+#: ../gui.py:62
+#, fuzzy
+msgid ""
+"The pygtk library not found.\n"
+"Check your installation please!\n"
+msgstr ""
+"Désolé, le fichier de dialogue LineBorder.glade n'a pas été trouvé. \n"
+"Vérifiez votre installation s'il vous plaît !"
+
+#. Workaround: Make column titles translatable
+#: ../gui.py:102 ../gui.py:449
+msgid "Profile name"
+msgstr ""
+
+#: ../gui.py:105
+msgid "No comment"
+msgstr ""
+
+#: ../gui.py:104 ../gui.py:107
+#, python-format
+msgid ""
+"<u><big>Profile: %s</big></u>\n"
+"<i>%s</i>"
+msgstr ""
+
+#: ../gui.py:110 ../gui.py:450
+msgid "B"
+msgstr ""
+
+#: ../gui.py:112
+#, python-format
+msgid ""
+"Profile %s\n"
+"contains Border section"
+msgstr ""
+
+#: ../gui.py:114
+#, python-format
+msgid ""
+"Profile %s\n"
+"does not contain Border section"
+msgstr ""
+
+#: ../gui.py:116 ../gui.py:451
+msgid "C"
+msgstr ""
+
+#: ../gui.py:118
+#, python-format
+msgid ""
+"Profile %s\n"
+"contains Color section"
+msgstr ""
+
+#: ../gui.py:120
+#, python-format
+msgid ""
+"Profile %s\n"
+"does not contain Color section"
+msgstr ""
+
+#: ../gui.py:122 ../gui.py:452
+msgid "T"
+msgstr ""
+
+#: ../gui.py:124
+#, python-format
+msgid ""
+"Profile %s\n"
+"contains Text section"
+msgstr ""
+
+#: ../gui.py:126
+#, python-format
+msgid ""
+"Profile %s\n"
+"does not contain Text section"
+msgstr ""
+
+#: ../gui.py:128 ../gui.py:453
+msgid "W"
+msgstr ""
+
+#: ../gui.py:130
+#, python-format
+msgid ""
+"Profile %s\n"
+"contains Watermark section"
+msgstr ""
+
+#: ../gui.py:132
+#, python-format
+msgid ""
+"Profile %s\n"
+"does not contain Watermark section"
+msgstr ""
+
+#: ../gui.py:134 ../gui.py:454
+msgid "G"
+msgstr ""
+
+#: ../gui.py:136
+#, python-format
+msgid ""
+"Profile %s\n"
+"contains General section"
+msgstr ""
+
+#: ../gui.py:138
+#, python-format
+msgid ""
+"Profile %s\n"
+"does not General Border section"
+msgstr ""
+
+#: ../gui.py:158
 msgid "Cannot find the glade file: "
 msgstr "Ne trouve pas le fichier Glade :"
 
-#: ../gui.py:78
+#: ../gui.py:159
 msgid "No dialog file found!"
 msgstr "Pas de fichier de dialogue trouvé !"
 
-#: ../gui.py:78
+#: ../gui.py:159
 msgid ""
 "Sorry, the dialog file LineBorder.glade was not found.\n"
 "Check your installation please!"
@@ -45,59 +175,93 @@ msgstr ""
 "Désolé, le fichier de dialogue LineBorder.glade n'a pas été trouvé. \n"
 "Vérifiez votre installation s'il vous plaît !"
 
-#: ../gui.py:258
+#: ../gui.py:381
 msgid "Open image"
 msgstr "Ouvrir l'image"
 
-#: ../gui.py:267
+#: ../gui.py:390
 msgid "Images"
 msgstr "Images"
 
-#: ../gui.py:456
+#: ../gui.py:461 ../gui.py:529 ../gui.py:567
+msgid "No profile selected."
+msgstr ""
+
+#: ../gui.py:461
+msgid "Select profile to load please."
+msgstr ""
+
+#: ../gui.py:466
+msgid "Load profile?"
+msgstr ""
+
+#: ../gui.py:474 ../LineBorder.glade.h:59
+msgid "Load profile"
+msgstr ""
+
+#: ../gui.py:512 ../LineBorder.glade.h:75
+msgid "Save as new profile"
+msgstr ""
+
+#: ../gui.py:529
+msgid "Select profile to update please."
+msgstr ""
+
+#: ../gui.py:534 ../LineBorder.glade.h:96
+msgid "Update profile"
+msgstr ""
+
+#: ../gui.py:567
+msgid "Select profile to delete please."
+msgstr ""
+
+#: ../gui.py:572
+msgid "Delete profile?"
+msgstr ""
+
+#: ../gui.py:580 ../LineBorder.glade.h:31
+msgid "Delete profile"
+msgstr ""
+
+#: ../gui.py:629
+msgid "There are no sections to load!"
+msgstr ""
+
+#: ../gui.py:632 ../gui.py:635
+msgid "There are no sections to save!"
+msgstr ""
+
+#: ../gui.py:632
+msgid ""
+"There are no sections to save!\n"
+"To delete profile use the 'Delete profile' button."
+msgstr ""
+
+#: ../gui.py:635
+msgid ""
+"There are no sections to save!\n"
+" Profile was not saved."
+msgstr ""
+
+#: ../gui.py:697 ../LineBorder.glade.h:66
+msgid "Profile name:"
+msgstr ""
+
+#: ../gui.py:1008
 msgid "Cannot find the image file:"
 msgstr "Ne trouve pas le fichierd'image :"
 
-#: ../gui.py:457
+#: ../gui.py:1009
 msgid "File does not exists!"
 msgstr "Le fichier n'existe pas !"
 
-#: ../gui.py:457
+#: ../gui.py:1009
 msgid "The watermark image file:"
 msgstr "Fichier de l'image filigrane :"
 
-#: ../gui.py:457
+#: ../gui.py:1009
 msgid "does not exists or is not readable!\n"
 msgstr "n'existe pas ou n'est pas lisible !\n"
-
-#: ../gui.py:754
-#: ../gui.py:787
-#: ../gui.py:885
-#: ../gui.py:905
-#: ../gui.py:1000
-#, python-format
-msgid "Missing section in config file. %s"
-msgstr "Section manquante dans le fichier de configuration. %s"
-
-#: ../gui.py:1005
-#, python-format
-msgid "Cannot parse configuration file. %s"
-msgstr "Impossible d'analyser le fichier de configuration. %s"
-
-#: ../gui.py:1006
-msgid "Configuration file error"
-msgstr "Erreur de fichier de configuration"
-
-#: ../gui.py:1006
-msgid "Cannot parse configuration file. "
-msgstr "Impossible d'analyser le fichier de configuration."
-
-#: ../gui.py:1009
-msgid "Configuration file loading error"
-msgstr "Erreur de chargement du fichier de configuration"
-
-#: ../gui.py:1009
-msgid "Problem opening configuration file."
-msgstr "Problème à l'ouverture du fichier de configuration."
 
 #: ../LineBorder.glade.h:2
 #, no-c-format
@@ -121,115 +285,145 @@ msgid "<b>Colors</b>"
 msgstr "<b>Couleurs</b>"
 
 #: ../LineBorder.glade.h:7
+#, fuzzy
+msgid "<b>Comment</b>"
+msgstr "<b>Texte</b>"
+
+#: ../LineBorder.glade.h:8
 msgid "<b>General</b>"
 msgstr "<b>Général</b>"
 
-#: ../LineBorder.glade.h:8
+#: ../LineBorder.glade.h:9
 msgid "<b>Image</b>"
 msgstr "<b>Image</b>"
 
-#: ../LineBorder.glade.h:9
+#: ../LineBorder.glade.h:10
 msgid "<b>Inner line</b>"
 msgstr "<b>Trait intérieur</b>"
 
-#: ../LineBorder.glade.h:10
+#: ../LineBorder.glade.h:11
 msgid "<b>Left / Upper text</b>"
 msgstr "<b>Texte Gauche / Haut</b>"
 
-#: ../LineBorder.glade.h:11
+#: ../LineBorder.glade.h:12
 msgid "<b>Outer line</b>"
 msgstr "<b>Trait extérieur</b>"
 
-#: ../LineBorder.glade.h:12
+#: ../LineBorder.glade.h:13
 msgid "<b>Right / Bottom text</b>"
 msgstr "<b>Texte Droit / Bas</b>"
 
-#: ../LineBorder.glade.h:13
+#: ../LineBorder.glade.h:14
+#, fuzzy
+msgid "<b>Sections</b>"
+msgstr "<b>Texte</b>"
+
+#: ../LineBorder.glade.h:15
 msgid "<b>Text</b>"
 msgstr "<b>Texte</b>"
 
-#: ../LineBorder.glade.h:14
+#: ../LineBorder.glade.h:16
 msgid "About"
 msgstr "À propos"
 
-#: ../LineBorder.glade.h:15
+#: ../LineBorder.glade.h:17
 msgid "Block"
 msgstr "Block"
 
-#: ../LineBorder.glade.h:16
+#: ../LineBorder.glade.h:18
 msgid "Border"
 msgstr "Bordure"
 
-#: ../LineBorder.glade.h:17
+#: ../LineBorder.glade.h:19
 msgid "Border color:"
 msgstr "Couleur de la bordure :"
 
-#: ../LineBorder.glade.h:18
+#: ../LineBorder.glade.h:20
 msgid "Both"
 msgstr "Les deux"
 
-#: ../LineBorder.glade.h:19
+#: ../LineBorder.glade.h:21
 msgid "Bottom"
 msgstr "Bas"
 
-#: ../LineBorder.glade.h:20
+#: ../LineBorder.glade.h:22
 msgid "Bottom-Center"
 msgstr "Bas-Centre"
 
-#: ../LineBorder.glade.h:21
+#: ../LineBorder.glade.h:23
 msgid "Bottom-Left"
 msgstr "Bas-Gauche"
 
-#: ../LineBorder.glade.h:22
+#: ../LineBorder.glade.h:24
 msgid "Bottom-Right"
 msgstr "Bas-Droite"
 
-#: ../LineBorder.glade.h:23
+#: ../LineBorder.glade.h:25
 msgid "Center"
 msgstr "Centre"
 
-#: ../LineBorder.glade.h:24
+#: ../LineBorder.glade.h:26
+#, fuzzy
+msgid "Color"
+msgstr "Couleur :"
+
+#: ../LineBorder.glade.h:27
 msgid "Color:"
 msgstr "Couleur :"
 
-#: ../LineBorder.glade.h:25
+#: ../LineBorder.glade.h:28
+#, fuzzy
 msgid ""
 "Czech:  Marian Kyral <mkyral@email.cz>\n"
-"Dutch: Elmar Sullock Enzlin <moroquendo@gmail.com>"
+"Dutch: Elmar Sullock Enzlin <moroquendo@gmail.com>\n"
+"French: Brigitte Barbet <B.barbet@wanadoo.fr>"
 msgstr ""
 "Czech:  Marian Kyral <mkyral@email.cz>\n"
 "Dutch: Elmar Sullock Enzlin <moroquendo@gmail.com>\n"
 "Français : Brigitte Barbet <b.barbet@wanadoo.fr>"
 
-#: ../LineBorder.glade.h:27
+#: ../LineBorder.glade.h:32
 msgid "Distance to border:"
 msgstr "Distance du bord externe :"
 
-#: ../LineBorder.glade.h:28
+#: ../LineBorder.glade.h:33
 msgid "Distance to image:"
 msgstr "Distance de l'image :"
 
-#: ../LineBorder.glade.h:29
+#: ../LineBorder.glade.h:34
 msgid "Distance:"
 msgstr "Distance :"
 
-#: ../LineBorder.glade.h:30
+#: ../LineBorder.glade.h:35
+msgid "Enter comment for the  profile"
+msgstr ""
+
+#: ../LineBorder.glade.h:36
+msgid "Enter the profile name"
+msgstr ""
+
+#: ../LineBorder.glade.h:37
 msgid "Extend text border:"
 msgstr "Extension bordure pour texte :"
 
-#: ../LineBorder.glade.h:31
+#: ../LineBorder.glade.h:38
 msgid "Feather line:"
 msgstr "Trait flouté :"
 
-#: ../LineBorder.glade.h:32
+#: ../LineBorder.glade.h:39
 msgid "Flatten image:"
 msgstr "Aplatir l'image :"
 
-#: ../LineBorder.glade.h:33
+#: ../LineBorder.glade.h:40
 msgid "Font:"
 msgstr "Police :"
 
-#: ../LineBorder.glade.h:34
+#: ../LineBorder.glade.h:41
+#, fuzzy
+msgid "General"
+msgstr "<b>Général</b>"
+
+#: ../LineBorder.glade.h:42
 msgid ""
 "Generate a line border around an image\n"
 "with optional text on border and\n"
@@ -253,91 +447,103 @@ msgstr ""
 "Remerciements à Elmar Sullock Enzlin\n"
 "pour ses conseils à propos des boîtes de dialogue glade.\n"
 
-#: ../LineBorder.glade.h:45
+#: ../LineBorder.glade.h:53
 msgid "Inner"
 msgstr "Intérieur"
 
-#: ../LineBorder.glade.h:46
+#: ../LineBorder.glade.h:54
 msgid "Justify:"
 msgstr "Alignement :"
 
-#: ../LineBorder.glade.h:47
+#: ../LineBorder.glade.h:55
 msgid "Left"
 msgstr "Gauche"
 
-#: ../LineBorder.glade.h:48
+#: ../LineBorder.glade.h:56
 msgid "Line Border 2 on registry.gimp.org"
 msgstr "Line Border 2 sur registry.gimp.org"
 
-#: ../LineBorder.glade.h:49
+#: ../LineBorder.glade.h:57
 msgid "Line border 2"
 msgstr "Line border 2 "
 
-#: ../LineBorder.glade.h:50
+#: ../LineBorder.glade.h:58
 msgid "Line color:"
 msgstr "Couleur du trait :"
 
-#: ../LineBorder.glade.h:51
+#: ../LineBorder.glade.h:60
 msgid "Middle-Left"
 msgstr "Milieu (vert.)-Gauche"
 
-#: ../LineBorder.glade.h:52
+#: ../LineBorder.glade.h:61
 msgid "Middle-Right"
 msgstr "Milieu (vert.)-Droit"
 
-#: ../LineBorder.glade.h:53
+#: ../LineBorder.glade.h:62
 msgid "None"
 msgstr "Aucun"
 
-#: ../LineBorder.glade.h:54
+#: ../LineBorder.glade.h:63
 msgid "Opacity: "
 msgstr "Opacité :"
 
-#: ../LineBorder.glade.h:55
+#: ../LineBorder.glade.h:64
 msgid "Outer"
 msgstr "Extérieur :"
 
-#: ../LineBorder.glade.h:56
+#: ../LineBorder.glade.h:65
 msgid "Position:"
 msgstr "Position :"
 
-#: ../LineBorder.glade.h:57
+#: ../LineBorder.glade.h:67
+msgid "Profiles"
+msgstr ""
+
+#: ../LineBorder.glade.h:68
 msgid "Right"
 msgstr "Droite "
 
-#: ../LineBorder.glade.h:58
+#: ../LineBorder.glade.h:69
 msgid "Rotate text to left if is placed to side"
 msgstr "Rotation du texte à gauche s'il est placé à côté"
 
-#: ../LineBorder.glade.h:59
+#: ../LineBorder.glade.h:70
 msgid "Rotate text:"
 msgstr "Rotation du texte :"
 
-#: ../LineBorder.glade.h:60
+#: ../LineBorder.glade.h:71
 msgid "Rotation:"
 msgstr "Rotation :"
 
-#: ../LineBorder.glade.h:61
+#: ../LineBorder.glade.h:72
 msgid "Round corners:"
 msgstr "Coins arrondis :"
 
-#: ../LineBorder.glade.h:62
+#: ../LineBorder.glade.h:73
 msgid "Round inner corners:"
 msgstr "Coins intérieurs arrondis :"
 
-#: ../LineBorder.glade.h:63
+#: ../LineBorder.glade.h:74
 msgid "Round outer corners:"
 msgstr "Coins extérieurs arrondis :"
 
-#: ../LineBorder.glade.h:64
+#: ../LineBorder.glade.h:76
+msgid "Save profile"
+msgstr ""
+
+#: ../LineBorder.glade.h:77
+msgid "Sections to store in profile"
+msgstr ""
+
+#: ../LineBorder.glade.h:78
 msgid "Size:"
 msgstr "Taille :"
 
-#: ../LineBorder.glade.h:65
+#: ../LineBorder.glade.h:79
 msgid "Text"
 msgstr "Texte"
 
-#: ../LineBorder.glade.h:66
+#: ../LineBorder.glade.h:80
 msgid ""
 "This program is free software; you can redistribute it and/or\n"
 "modify it under the terms of the GNU General Public License\n"
@@ -351,10 +557,12 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, "
+"USA.\n"
 msgstr ""
 "Ce programme est un logiciel libre ; vous pouvez le redistribuer et/ou\n"
-"le modifier selon les termes de la Licence Publique Générale GNU ntelle que publiée par la Free Software Foundation ; soit la version 2\n"
+"le modifier selon les termes de la Licence Publique Générale GNU ntelle que "
+"publiée par la Free Software Foundation ; soit la version 2\n"
 "de la Licence, ou (à votre choix) toute version ultérieure. n\n"
 "Ce programme est distribué dans l'espoir qu'il sera utile,\n"
 "mais SANS AUCUNE GARANTIE, sans même la garantie implicite de\n"
@@ -363,51 +571,70 @@ msgstr ""
 "\n"
 "Vous devriez avoir reçu une copie de la license GNU General Public\n"
 "avec ce programme, sinon, écrivez à la Free Software\n"
-"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, "
+"USA.\n"
 
-#: ../LineBorder.glade.h:80
+#: ../LineBorder.glade.h:94
 msgid "Total size (height):"
 msgstr "Taille totale (hauteur) :"
 
-#: ../LineBorder.glade.h:81
+#: ../LineBorder.glade.h:95
 msgid "Total size (width):"
 msgstr "Taille totale (largeur) :"
 
-#: ../LineBorder.glade.h:82
+#: ../LineBorder.glade.h:97
 msgid "Upper"
 msgstr "Haut :"
 
-#: ../LineBorder.glade.h:83
+#: ../LineBorder.glade.h:98
 msgid "Upper-Center"
 msgstr "Haut-Centre (Horiz.)"
 
-#: ../LineBorder.glade.h:84
+#: ../LineBorder.glade.h:99
 msgid "Upper-Left"
 msgstr "Haut-Gauche"
 
-#: ../LineBorder.glade.h:85
+#: ../LineBorder.glade.h:100
 msgid "Upper-Right"
 msgstr "Haut-Droit"
 
-#: ../LineBorder.glade.h:86
+#: ../LineBorder.glade.h:101
 msgid "Use actual palette colors"
 msgstr "Utiliser la palette des couleurs active."
 
-#: ../LineBorder.glade.h:87
+#: ../LineBorder.glade.h:102
 msgid "Watermark"
 msgstr "Filigrane"
 
-#: ../LineBorder.glade.h:88
+#: ../LineBorder.glade.h:103
 msgid "Where is text placed"
 msgstr "Où est placé le texte"
 
-#: ../LineBorder.glade.h:89
+#: ../LineBorder.glade.h:104
 msgid "Work on copy:"
 msgstr "Travailler sur une copie :"
 
-#: ../LineBorder.glade.h:90
+#: ../LineBorder.glade.h:105
 msgid "pixels"
 msgstr "pixels"
+
+#~ msgid "Missing section in config file. %s"
+#~ msgstr "Section manquante dans le fichier de configuration. %s"
+
+#~ msgid "Cannot parse configuration file. %s"
+#~ msgstr "Impossible d'analyser le fichier de configuration. %s"
+
+#~ msgid "Configuration file error"
+#~ msgstr "Erreur de fichier de configuration"
+
+#~ msgid "Cannot parse configuration file. "
+#~ msgstr "Impossible d'analyser le fichier de configuration."
+
+#~ msgid "Configuration file loading error"
+#~ msgstr "Erreur de chargement du fichier de configuration"
+
+#~ msgid "Problem opening configuration file."
+#~ msgstr "Problème à l'ouverture du fichier de configuration."
 
 #~ msgid "Image"
 #~ msgstr "Obrázek"
