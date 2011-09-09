@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LineBorder 2 release 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-08 17:00+0200\n"
+"POT-Creation-Date: 2011-09-09 19:19+0200\n"
 "PO-Revision-Date: 2011-09-08 17:00+0100\n"
 "Last-Translator: Elmar Sullock Enzlin <moroquendo@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -25,8 +25,8 @@ msgid ""
 "Generate a line border around an image and optionaly place text on borders "
 "and inside the image."
 msgstr ""
-"Maakt een rand rondom een afbeelding en plaatst optioneel tekst in de rand"
-"en/of in de afbeelding."
+"Maakt een rand rondom een afbeelding en plaatst optioneel tekst in de randen/"
+"of in de afbeelding."
 
 #: ../LineBorder.py:248 ../LineBorder.py:273
 msgid "Layer With Border"
@@ -37,22 +37,20 @@ msgid "Libraries not found!"
 msgstr "Bibliotheken niet gevonden!"
 
 #: ../gui.py:57
-#, fuzzy
 msgid ""
 "The Gtk or Glade library not found.\n"
 "Check your installation please!\n"
 msgstr ""
 "De GTK of Glade bibliotheek niet gevonden.\n"
-"Controleer de installatie van de plugin!"
+"Controleer de installatie van de plugin!\n"
 
 #: ../gui.py:63
-#, fuzzy
 msgid ""
 "The pygtk library not found.\n"
 "Check your installation please!\n"
 msgstr ""
 "De pygtk bibliotheek niet gevonden.\n"
-"Controleer de installatie van de plugin!"
+"Controleer de installatie van de plugin!\n"
 
 #. Workaround: Make column titles translatable
 #: ../gui.py:103 ../gui.py:456
@@ -312,7 +310,6 @@ msgid "<b>Colors</b>"
 msgstr "<b>Kleuren</b>"
 
 #: ../LineBorder.glade.h:7
-#, fuzzy
 msgid "<b>Comment</b>"
 msgstr "<b>Commentaar</b>"
 
@@ -341,7 +338,6 @@ msgid "<b>Right / Bottom text</b>"
 msgstr "<b>Tekst rechts of onder</b>"
 
 #: ../LineBorder.glade.h:14
-#, fuzzy
 msgid "<b>Sections</b>"
 msgstr "<b>Secties</b>"
 
@@ -390,7 +386,6 @@ msgid "Center"
 msgstr "Gecentreerd"
 
 #: ../LineBorder.glade.h:26
-#, fuzzy
 msgid "Color"
 msgstr "Kleur:"
 
@@ -399,15 +394,14 @@ msgid "Color:"
 msgstr "Kleur:"
 
 #: ../LineBorder.glade.h:28
-#, fuzzy
 msgid ""
 "Czech:  Marian Kyral <mkyral@email.cz>\n"
 "Dutch: Elmar Sullock Enzlin <moroquendo@gmail.com>\n"
 "French: Brigitte Barbet <B.barbet@wanadoo.fr>"
 msgstr ""
-"Czech:  Marian Kyral <mkyral@email.cz>\n"
-"Dutch: Elmar Sullock Enzlin <moroquendo@gmail.com>"
-"French: Brigitte Barbet <B.barbet@wanadoo.fr>"
+"Tjechisch:  Marian Kyral <mkyral@email.cz>\n"
+"Nederlands: Elmar Sullock Enzlin <moroquendo@gmail.com>\n"
+"Frans: Brigitte Barbet <B.barbet@wanadoo.fr>"
 
 #: ../LineBorder.glade.h:32
 msgid "Distance to border:"
@@ -446,7 +440,6 @@ msgid "Font:"
 msgstr "Lettertype:"
 
 #: ../LineBorder.glade.h:41
-#, fuzzy
 msgid "General"
 msgstr "Algemeen"
 
