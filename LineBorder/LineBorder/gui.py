@@ -1000,7 +1000,7 @@ class LineBorderApp():
         profile.wmJustify = JUSTIFY[self.wm_justify.get_active()]
         profile.wmColor =  self.extract_color(self.wm_color.get_color())
         profile.wmText = self.extract_text(self.wm_text)
-        profile.wmImage_path = self.wm_image_path.get_text()
+        profile.wmImagePath = self.wm_image_path.get_text()
 
   # Extract parameters, call main function
   def call_LineBorder(self):
@@ -1011,7 +1011,7 @@ class LineBorderApp():
       self.profile_list.saveProfiles()
 
       if self.default_profile.wmType == 'image' and self.default_profile.wmImagePath :
-        if not os.path.exists(wm_image_path.decode('unicode_escape')):
+        if not os.path.exists(self.default_profile.wmImagePath.decode('unicode_escape')):
           print _("Cannot find the image file:") + " " + self.default_profile.wmImagePath
           self.on_error(_("File does not exists!"), _("The watermark image file:") + "\n\n" + self.default_profile.wmImagePath + "\n\n" + _("does not exists or is not readable!\n"))
           return
